@@ -16,13 +16,11 @@ const Home = () => {
         <div>
           <h1 className="text-2">Welcome to <br /> Taxi App</h1>
           <h2>login as:</h2>
-          <button className="btn btn-1" onClick={() => handleStart("admin")}>
-            Admin
-          </button><br />
-          <button className="btn btn-1" onClick={() => handleStart("user")}>
+
+          <button className="btn btn-1" onClick={() => handleStart("collector")}>
             Passenger
           </button><br />
-          <button className="btn btn-1" onClick={() => handleStart("driver")}>
+          <button className="btn btn-1" onClick={() => handleStart("holder")}>
             Driver
           </button><br />
         </div>

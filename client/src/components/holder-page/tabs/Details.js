@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import API_Driver from '../../../APIs/API_Driver';
+import API_Holder from '../../../APIs/API_Holder';
 import '../../../App.css'
 
 function Details() {
@@ -17,15 +17,12 @@ function Details() {
   const [driver, setDriver] = useState(initialDriver);
 
   useEffect(() => {
-    new API_Driver().getAllDrivers().then(data => {
-      const driver = data.find(d => d.id.toString() === userId);
-      setDriver(driver);
-    })
-  }, [driver])
+
+  }, [])
 
   const handleAvailability = (status) => {
     driver.availability = status;
-    new API_Driver().updateDriver(driver).then(data => {
+    new API_Holder().updateDriver(driver).then(data => {
       setDriver(driver);
     })
   }
