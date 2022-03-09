@@ -18,8 +18,8 @@ const getCollectorById = (req, res) => {
 const postCollector = (req, res) => {
     var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
     sqlCon.query(
-        `INSERT INTO collectors (name, email, phone, password, created_at, updated_at)
-        SELECT ?,?,?,?,?,?
+        `INSERT INTO collectors (name, address, email, phone, password, created_at, updated_at)
+        SELECT ?,?,?,?,?,?,?
         FROM DUAL
         WHERE NOT EXISTS(
             SELECT 1
@@ -29,6 +29,7 @@ const postCollector = (req, res) => {
         LIMIT 1;`,
         [
             req.body.name,
+            req.body.address,
             req.body.email,
             req.body.phone,
             req.body.password,
@@ -61,6 +62,7 @@ const updateCollector = (req, res) => {
         UPDATE collectors 
         SET 
         name = '${req.body.name}',
+        address = '${req.body.address}',
         email = '${req.body.email}',
         phone = '${req.body.phone}',
         password = '${req.body.password}',
