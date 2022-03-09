@@ -1,24 +1,26 @@
 const sqlCon = require("./connection");
 const DateTimeService = require('../services/DateTimeService');
 
-const vehicles = [
+const categories = [
     {
-        name: "Car",
-        type: "Car",
-        charge_per_meter: 1.0,
-        capacity: 4
+        name: "Electronic",
+        price_per_kg: 100.00,
     },
     {
-        name: "Minivan",
-        type: "Minivan",
-        charge_per_meter: 2.0,
-        capacity: 6
+        name: "Furniture",
+        price_per_kg: 80.00,
     },
     {
-        name: "Van",
-        type: "Van",
-        charge_per_meter: 5.0,
-        capacity: 8
+        name: "Plastic",
+        price_per_kg: 60.00,
+    },
+    {
+        name: "Stationery",
+        price_per_kg: 40.00,
+    },
+    {
+        name: "Other",
+        price_per_kg: 20.00,
     }
 ]
 
@@ -26,56 +28,26 @@ class Seed {
 
     constructor() {
         this.createAllTables();
-        this.insertAdmins();
-        vehicles.forEach(vehicle => {
-            this.insertVehicle(vehicle);
+        categories.forEach(category => {
+            this.insertCategory(category);
         });
     }
 
-    insertAdmins() {
+    insertCategory(category) {
         var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
         sqlCon.query(
-        `
-        INSERT INTO admins (name, phone, email, password, created_at)
-        SELECT ?,?,?,?,?
-        FROM DUAL
-        WHERE NOT EXISTS(
-            SELECT 1
-            FROM admins
-            WHERE email = 'admin@gmail.com'
-        )
-        LIMIT 1;`, 
-        [
-            "Admin",
-            "0812223333",
-            "admin@gmail.com",
-            "password",
-            currentLocalTime
-        ]
-        , (err, results) => {
-            if (err) {
-                console.log(err.message);
-            }
-        });
-    }
-
-    insertVehicle(vehicle) {
-        var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
-        sqlCon.query(
-            `INSERT INTO vehicles (name, type, charge_per_meter, capacity, created_at, updated_at)
-            SELECT ?,?,?,?,?,?
+            `INSERT INTO categories (name, price_per_kg, created_at, updated_at)
+            SELECT ?,?,?,?
             FROM DUAL
             WHERE NOT EXISTS(
                 SELECT 1
-                FROM vehicles
-                WHERE name = '${vehicle.name}' AND type = '${vehicle.type}'
+                FROM categories
+                WHERE name = '${category.name}'
             )
             LIMIT 1;`,
             [
-                vehicle.name,
-                vehicle.type,
-                vehicle.charge_per_meter,
-                vehicle.capacity,
+                category.name,
+                category.price_per_kg,
                 currentLocalTime,
                 currentLocalTime,
             ]
@@ -89,9 +61,10 @@ class Seed {
     createAllTables() {
         let createTables = 
         `    
-        CREATE TABLE if not exists admins (
+        CREATE TABLE if not exists collectors (
             id INT NOT NULL AUTO_INCREMENT,
             name VARCHAR(100),
+            address VARCHAR(100),
             email VARCHAR(100),
             phone VARCHAR(100),
             password VARCHAR(100),
@@ -100,9 +73,10 @@ class Seed {
             PRIMARY KEY (id)
         );
 
-        CREATE TABLE if not exists users (
+        CREATE TABLE if not exists holders (
             id INT NOT NULL AUTO_INCREMENT,
             name VARCHAR(100),
+            address VARCHAR(100),
             email VARCHAR(100),
             phone VARCHAR(100),
             password VARCHAR(100),
@@ -111,47 +85,41 @@ class Seed {
             PRIMARY KEY (id)
         );
 
-        CREATE TABLE if not exists drivers (
+        CREATE TABLE if not exists categories (
             id INT NOT NULL AUTO_INCREMENT,
             name VARCHAR(100),
-            email VARCHAR(100),
-            phone VARCHAR(100),
-            password VARCHAR(100),
-            license_id VARCHAR(100),
-            availability BOOLEAN,
+            price_per_kg DECIMAL(13,2),
             created_at DATETIME,
             updated_at DATETIME,
             PRIMARY KEY (id)
         );
 
-        CREATE TABLE if not exists vehicles (
+        CREATE TABLE if not exists products (
             id INT NOT NULL AUTO_INCREMENT,
             name VARCHAR(100),
-            type VARCHAR(100),
-            charge_per_meter DECIMAL(13,2),
-            capacity INT,
-            created_at DATETIME,
-            updated_at DATETIME,
-            PRIMARY KEY (id)
-        );
-
-        CREATE TABLE if not exists bookings (
-            id INT NOT NULL AUTO_INCREMENT,
-            start_location VARCHAR(100),
-            end_location VARCHAR(100),
-            distance DECIMAL(13,2),
-            total_charge DECIMAL(13,2),
+            brand VARCHAR(100),
+            weight DECIMAL(13,2),
+            usage_time VARCHAR(100),
             status VARCHAR(100),
-            duration DECIMAL(13,2),
-            user_id INT,
-            driver_id INT,
-            vehicle_id INT,
+            holder_id INT,
+            category_id INT,
             created_at DATETIME,
             updated_at DATETIME,
             PRIMARY KEY (id),
-            FOREIGN KEY (user_id) REFERENCES users(id),
-            FOREIGN KEY (driver_id) REFERENCES drivers(id),
-            FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)
+            FOREIGN KEY (holder_id) REFERENCES holders(id),
+            FOREIGN KEY (category_id) REFERENCES categories(id)
+        );
+
+        CREATE TABLE if not exists orders (
+            id INT NOT NULL AUTO_INCREMENT,
+            status VARCHAR(100),
+            collector_id INT,
+            product_id INT,
+            created_at DATETIME,
+            updated_at DATETIME,    
+            PRIMARY KEY (id),
+            FOREIGN KEY (collector_id) REFERENCES collectors(id),
+            FOREIGN KEY (product_id) REFERENCES products(id)
         );
         `;
 

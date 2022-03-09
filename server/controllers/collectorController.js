@@ -1,37 +1,37 @@
 const sqlCon = require("../db/connection");
 const DateTimeService = require('../services/DateTimeService');
 
-const getAllVehicles = (req, res) => {
-    sqlCon.query("SELECT * FROM vehicles", (err, results) => {
+const getAllCollectors = (req, res) => {
+    sqlCon.query("SELECT * FROM collectors", (err, results) => {
         if(err) return res.sendStatus(400);
         return res.send(results);
     })
 };
 
-const getVehicleById = (req, res) => {
-    sqlCon.query(`SELECT * FROM vehicles WHERE id = ${req.params.id}`, (err, results) => {
+const getCollectorById = (req, res) => {
+    sqlCon.query(`SELECT * FROM collectors WHERE id = ${req.params.id}`, (err, results) => {
         if(err) return res.sendStatus(400);
         return res.send(results);
     })
 }
 
-const postVehicle = (req, res) => {
+const postCollector = (req, res) => {
     var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
     sqlCon.query(
-        `INSERT INTO vehicles (name, type, charge_per_meter, capacity, created_at, updated_at)
+        `INSERT INTO collectors (name, email, phone, password, created_at, updated_at)
         SELECT ?,?,?,?,?,?
         FROM DUAL
         WHERE NOT EXISTS(
             SELECT 1
-            FROM vehicles
-            WHERE name = '${req.body.name}' AND type = '${req.body.type}'
+            FROM collectors
+            WHERE email = '${req.body.email}' AND password = '${req.body.password}'
         )
         LIMIT 1;`,
         [
             req.body.name,
-            req.body.type,
-            req.body.charge_per_meter,
-            req.body.capacity,
+            req.body.email,
+            req.body.phone,
+            req.body.password,
             currentLocalTime,
             currentLocalTime,
         ]
@@ -41,19 +41,29 @@ const postVehicle = (req, res) => {
     })
 }
 
-const updateVehicle = (req, res) => {
+const loginCollector = (req, res) => {
+    sqlCon.query(
+        `SELECT * FROM collectors WHERE email = "${req.body.email}" AND password = "${req.body.password}"`
+    , (err, results) => {
+        if(err) return res.sendStatus(400);
+        if(results.length == 0) return res.sendStatus(404);
+        return res.send(results[0]);
+    })
+}
+
+const updateCollector = (req, res) => {
     var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
     var updatedAt = new Date(currentLocalTime).toISOString();
   
     sqlCon.query(
         `
         SET SQL_MODE='ALLOW_INVALID_DATES';
-        UPDATE vehicles 
+        UPDATE collectors 
         SET 
         name = '${req.body.name}',
-        type = '${req.body.type}',
-        charge_per_meter = '${req.body.charge_per_meter}',
-        capacity = '${req.body.capacity}',
+        email = '${req.body.email}',
+        phone = '${req.body.phone}',
+        password = '${req.body.password}',
         updated_at = '${updatedAt}'
         WHERE id = '${req.body.id}';`
     , (err, results) => {
@@ -63,9 +73,9 @@ const updateVehicle = (req, res) => {
     })
 }
 
-const deleteVehicle = (req, res) => {
+const deleteCollector = (req, res) => {
     sqlCon.query(
-        `DELETE FROM vehicles WHERE id = ${req.params.id};`
+        `DELETE FROM collectors WHERE id = ${req.params.id};`
     , (err, results) => {
         if(err) return res.sendStatus(400);
         return res.send(results); 
@@ -73,10 +83,11 @@ const deleteVehicle = (req, res) => {
 }
 
 module.exports = {
-    getAllVehicles,
-    getVehicleById,
-    postVehicle,
-    updateVehicle,
-    deleteVehicle
+    getAllCollectors,
+    getCollectorById,
+    postCollector,
+    loginCollector,
+    updateCollector,
+    deleteCollector
 };
 
