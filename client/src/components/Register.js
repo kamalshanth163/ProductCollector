@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import '../App.css';
 import { useHistory } from 'react-router';
-import API_User from '../APIs/API_User';
-import API_Driver from '../APIs/API_Driver';
+import API_Collector from '../APIs/API_Collector';
+import API_Holder from '../APIs/API_Holder';
 
 const Register = () => {
   const userType = localStorage.getItem("user-type");
 
   var initialUser = {
     name: "",
+    address: "",
     license_id: "",
     availability: true,
     email: "",
@@ -21,30 +22,30 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(userType === "user"){
-      var passenger = {
+    if(userType === "collector"){
+      var collector = {
         name: user.name,
+        address: user.address,
         email: user.email,
         phone: user.phone,
         password: user.password,
       }
-      new API_User().postUser(passenger).then(data => {
+      new API_Collector().postCollector(collector).then(data => {
         localStorage.setItem("user-id", data.insertId);
-        history.push('/user-page');
+        history.push('/collector-page');
       });
     }
-    else if(userType === "driver"){
-      var driver = {
+    else if(userType === "holder"){
+      var holder = {
         name: user.name,
+        address: user.address,
         email: user.email,
         phone: user.phone,
         password: user.password,
-        license_id: user.license_id,
-        availability: user.availability
       }
-      new API_Driver().postDriver(driver).then(data => {
+      new API_Holder().postHolder(holder).then(data => {
         localStorage.setItem("user-id", data.insertId);
-        history.push('/driver-page');
+        history.push('/holder-page');
       });
     }
   }
@@ -64,6 +65,9 @@ const Register = () => {
 
           <label for="name"><b>Name</b></label>
           <input type="text" placeholder="Enter your name" name="name" id="name" required onChange={(e)=>handleChange(e)}/>
+
+          <label for="address"><b>Address</b></label>
+          <input type="text" placeholder="Enter your address" name="address" id="address" required onChange={(e)=>handleChange(e)}/>
 
           <label for="phone"><b>Phone</b></label>
           <input type="text" placeholder="Enter your phone number" name="phone" id="phone" required onChange={(e)=>handleChange(e)}/>

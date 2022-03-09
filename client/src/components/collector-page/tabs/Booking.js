@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import API_Driver from '../../../APIs/API_Driver';
-import API_User from '../../../APIs/API_User';
+import API_Holder from '../../../APIs/API_Holder';
+import API_Collector from '../../../APIs/API_Collector';
 import '../../../App.css'
 
 function Booking() {
@@ -24,8 +24,7 @@ function Booking() {
   const [totalCharge, setTotalCharge] = useState(0);
 
   useEffect(() => {
-    getAllDrivers();
-    getAllVehicles();
+
   }, [])
 
   const handleSubmit = (e) => {
@@ -34,13 +33,13 @@ function Booking() {
     booking.user_id = userId;
     booking.status = "Pending";
     booking.total_charge = totalCharge;
-    new API_User().postBooking(booking).then(data => {
+    new API_Collector().postBooking(booking).then(data => {
       alert("Trip booked successfully");
     })
 
     var driver = drivers.find(i => i.id.toString() === booking.driver_id.toString());
     driver.availability = 0;
-    new API_Driver().updateDriver(driver).then(data => {
+    new API_Holder().updateDriver(driver).then(data => {
       console.log(data);
     })
 
@@ -50,18 +49,6 @@ function Booking() {
     
   const handleChange = (e) => {
     setBooking({...booking, [e.target.name]: e.target.value});
-  }
-
-  const getAllVehicles = () => {
-    new API_User().getAllVehicles().then(data => {
-      setVehicles([...data]);
-    })
-  }
-
-  const getAllDrivers = () => {
-    new API_Driver().getAllDrivers().then(data => {
-      setDrivers([...data]);
-    })
   }
 
   const calculateTotalCharge = (e) => {

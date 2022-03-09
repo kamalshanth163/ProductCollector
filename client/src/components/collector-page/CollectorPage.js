@@ -6,29 +6,29 @@ import {
   Link,
   useRouteMatch
 } from "react-router-dom";
-import Dashboard from './tabs/Dashboard';
+import Booking from './tabs/Booking';
 
-const AdminPage = () => {
+const UserPage = () => {
   let { path, url } = useRouteMatch();
 
   return (
 
-  <div className='admin-page'>
+  <div className='user-page'>
     <div>
       <div>
 
-        <h1>Admin page</h1>
+        <h1>Collector page</h1>
         <table className='admin-menu'>
           <tr>
             <td>
-              <Link className="menu-link" to={`${url}/dashboard`}>Dashboard</Link>
+              <Link className="menu-link" to={`${url}/booking`}>Booking</Link>
             </td>
           </tr>
         </table>
 
         <Switch>
-          <Route path={`${path}`} exact component = {Dashboard} />
-          <Route path={`${path}/dashboard`} component = {Dashboard} />
+          <Route path={`${path}`} exact component = {Booking} />
+          <Route path={`${path}/booking`} component = {Booking} />
         </Switch>
 
       </div>
@@ -38,4 +38,4 @@ const AdminPage = () => {
   );
 }
 
-export default AdminPage;
+export default UserPage;

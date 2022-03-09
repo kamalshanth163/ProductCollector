@@ -1,14 +1,14 @@
 import Config from "../config";
 var baseUrl = Config.api_url;
 
-class API_Driver {
-    async postDriver(driver){
+class API_Collector {
+    async postCollector(collector){
         var result =
-            fetch(`${baseUrl}drivers`,
+            fetch(`${baseUrl}collectors`,
             {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(driver)           
+                body: JSON.stringify(collector)           
             })
             .then((response) => response.json())
             .then((a) => {
@@ -17,13 +17,13 @@ class API_Driver {
         return result;
     }
 
-    async updateDriver(driver){
+    async updateCollector(collector){
         var result =
-            fetch(`${baseUrl}drivers`,
+            fetch(`${baseUrl}collectors`,
             {
                 method: "PUT",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(driver)           
+                body: JSON.stringify(collector)           
             })
             .then((response) => response.json())
             .then((a) => {
@@ -32,9 +32,9 @@ class API_Driver {
         return result;
     }
 
-    async getAllDrivers(){
+    async getAllCollectors(){
         var result =
-            fetch(`${baseUrl}drivers`)
+            fetch(`${baseUrl}collectors`)
             .then((response) => response.json())
             .then((a) => {
                 return a;
@@ -42,9 +42,9 @@ class API_Driver {
         return result;
     }
 
-    async deleteDriver(driverId){
+    async deleteCollector(collectorId){
         var result =
-            fetch(`${baseUrl}drivers/${driverId}`, {
+            fetch(`${baseUrl}collectors/${collectorId}`, {
                 method: 'DELETE',
             })
             .then((response) => response.json())
@@ -54,38 +54,13 @@ class API_Driver {
         return result;
     }
 
-    async loginDriver(driver){
+    async loginCollector(collector){
         var result =
-            fetch(`${baseUrl}drivers/login`,
+            fetch(`${baseUrl}collectors/login`,
             {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(driver)           
-            })
-            .then((response) => response.json())
-            .then((a) => {
-                return a;
-            });
-        return result;
-    }
-
-    async getAllBookings(){
-        var result =
-            fetch(`${baseUrl}bookings`)
-            .then((response) => response.json())
-            .then((a) => {
-                return a;
-            });
-        return result;
-    }
-
-    async updateBooking(booking){
-        var result =
-            fetch(`${baseUrl}bookings`,
-            {
-                method: "PUT",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(booking)           
+                body: JSON.stringify(collector)           
             })
             .then((response) => response.json())
             .then((a) => {
@@ -95,4 +70,4 @@ class API_Driver {
     }
 }
 
-export default API_Driver;
+export default API_Collector;

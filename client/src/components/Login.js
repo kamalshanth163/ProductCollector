@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import '../App.css';
-import API_Admin from '../APIs/API_Admin';
-import API_User from '../APIs/API_User';
-import API_Driver from '../APIs/API_Driver';
+import API_Collector from '../APIs/API_Collector';
+import API_Holder from '../APIs/API_Holder';
 
 const Login = () => {
   const userType = localStorage.getItem("user-type");
@@ -20,22 +19,16 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(userType === "admin"){
-      new API_Admin().loginAdmin(userData).then(data => {
+    if(userType === "collector"){
+      new API_Collector().loginCollector(userData).then(data => {
         localStorage.setItem("user-id", data.id);
-        history.push('/admin-page');
+        history.push('/collector-page');
       });
     }
-    else if(userType === "user"){
-      new API_User().loginUser(userData).then(data => {
+    else if(userType === "holder"){
+      new API_Holder().loginHolder(userData).then(data => {
         localStorage.setItem("user-id", data.id);
-        history.push('/user-page');
-      });
-    }
-    else if(userType === "driver"){
-      new API_Driver().loginDriver(userData).then(data => {
-        localStorage.setItem("user-id", data.id);
-        history.push('/driver-page');
+        history.push('/holder-page');
       });
     }
   }
@@ -60,14 +53,10 @@ const Login = () => {
           <input type="password" placeholder="Enter Password" name="password" id="psw" onChange={(e)=>handleChange(e)} required />
           <button type="submit" className="loginbtn" onClick={(e) => handleSubmit(e)}>Login</button>
           
-          {
-            userType !== "admin" 
-            ?
-            <div class="container signup">
-              <p>Do not have an account? <a href="./register-page">Register</a>.</p>
-            </div> 
-            : ""
-          }
+          <div class="container signup">
+            <p>Do not have an account? <a href="./register-page">Register</a>.</p>
+          </div>
+          
         </div>       
       </form>
     </div>

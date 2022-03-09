@@ -18,8 +18,8 @@ const getHolderById = (req, res) => {
 const postHolder = (req, res) => {
     var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
     sqlCon.query(
-        `INSERT INTO holders (name, email, phone, password, license_id, availability, created_at, updated_at)
-        SELECT ?,?,?,?,?,?,?,?
+        `INSERT INTO holders (name, address, email, phone, password, created_at, updated_at)
+        SELECT ?,?,?,?,?,?,?
         FROM DUAL
         WHERE NOT EXISTS(
             SELECT 1
@@ -29,11 +29,10 @@ const postHolder = (req, res) => {
         LIMIT 1;`,
         [
             req.body.name,
+            req.body.address,
             req.body.email,
             req.body.phone,
             req.body.password,
-            req.body.license_id,
-            req.body.availability,
             currentLocalTime,
             currentLocalTime,
         ]
@@ -63,11 +62,10 @@ const updateHolder = (req, res) => {
         UPDATE holders 
         SET 
         name = '${req.body.name}',
+        address = '${req.body.address}',
         email = '${req.body.email}',
         phone = '${req.body.phone}',
         password = '${req.body.password}',
-        license_id = '${req.body.license_id}',
-        availability = '${req.body.availability}',
         updated_at = '${updatedAt}'
         WHERE id = '${req.body.id}';`
     , (err, results) => {
