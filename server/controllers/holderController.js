@@ -1,29 +1,29 @@
 const sqlCon = require("../db/connection");
 const DateTimeService = require('../services/DateTimeService');
 
-const getAllUsers = (req, res) => {
-    sqlCon.query("SELECT * FROM users", (err, results) => {
+const getAllHolders = (req, res) => {
+    sqlCon.query("SELECT * FROM holders", (err, results) => {
         if(err) return res.sendStatus(400);
         return res.send(results);
     })
 };
 
-const getUserById = (req, res) => {
-    sqlCon.query(`SELECT * FROM users WHERE id = ${req.params.id}`, (err, results) => {
+const getHolderById = (req, res) => {
+    sqlCon.query(`SELECT * FROM holders WHERE id = ${req.params.id}`, (err, results) => {
         if(err) return res.sendStatus(400);
         return res.send(results);
     })
 }
 
-const postUser = (req, res) => {
+const postHolder = (req, res) => {
     var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
     sqlCon.query(
-        `INSERT INTO users (name, email, phone, password, created_at, updated_at)
-        SELECT ?,?,?,?,?,?
+        `INSERT INTO holders (name, email, phone, password, license_id, availability, created_at, updated_at)
+        SELECT ?,?,?,?,?,?,?,?
         FROM DUAL
         WHERE NOT EXISTS(
             SELECT 1
-            FROM users
+            FROM holders
             WHERE email = '${req.body.email}' AND password = '${req.body.password}'
         )
         LIMIT 1;`,
@@ -32,6 +32,8 @@ const postUser = (req, res) => {
             req.body.email,
             req.body.phone,
             req.body.password,
+            req.body.license_id,
+            req.body.availability,
             currentLocalTime,
             currentLocalTime,
         ]
@@ -41,9 +43,9 @@ const postUser = (req, res) => {
     })
 }
 
-const loginUser = (req, res) => {
+const loginHolder = (req, res) => {
     sqlCon.query(
-        `SELECT * FROM users WHERE email = "${req.body.email}" AND password = "${req.body.password}"`
+        `SELECT * FROM holders WHERE email = "${req.body.email}" AND password = "${req.body.password}"`
     , (err, results) => {
         if(err) return res.sendStatus(400);
         if(results.length == 0) return res.sendStatus(404);
@@ -51,31 +53,32 @@ const loginUser = (req, res) => {
     })
 }
 
-const updateUser = (req, res) => {
+const updateHolder = (req, res) => {
     var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
     var updatedAt = new Date(currentLocalTime).toISOString();
   
     sqlCon.query(
         `
         SET SQL_MODE='ALLOW_INVALID_DATES';
-        UPDATE users 
+        UPDATE holders 
         SET 
         name = '${req.body.name}',
         email = '${req.body.email}',
         phone = '${req.body.phone}',
         password = '${req.body.password}',
+        license_id = '${req.body.license_id}',
+        availability = '${req.body.availability}',
         updated_at = '${updatedAt}'
         WHERE id = '${req.body.id}';`
     , (err, results) => {
-        console.log(err)
         if(err) return res.sendStatus(400);
         return res.send(results); 
     })
 }
 
-const deleteUser = (req, res) => {
+const deleteHolder = (req, res) => {
     sqlCon.query(
-        `DELETE FROM users WHERE id = ${req.params.id};`
+        `DELETE FROM holders WHERE id = ${req.params.id};`
     , (err, results) => {
         if(err) return res.sendStatus(400);
         return res.send(results); 
@@ -83,11 +86,11 @@ const deleteUser = (req, res) => {
 }
 
 module.exports = {
-    getAllUsers,
-    getUserById,
-    postUser,
-    loginUser,
-    updateUser,
-    deleteUser
+    getAllHolders,
+    getHolderById,
+    postHolder,
+    loginHolder,
+    updateHolder,
+    deleteHolder
 };
 
