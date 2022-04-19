@@ -1,4 +1,4 @@
-.topnav {
+/* .topnav {
   background-color: rgb(27, 175, 106);
   overflow: hidden;
   height: auto;
@@ -115,7 +115,6 @@
 
 .home-page{
   background: url("./assets/home-bg.jpg");
-  /* background: #111; */
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
@@ -360,4 +359,4 @@
 
 .holder-page form{
   margin-top: -30px;
-}
+} */

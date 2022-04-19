@@ -1,11 +1,15 @@
 import React from 'react';
 import '../../App.css'
+import NavBar from '../NavBar';
 
 function Products() {
 
   return (
-    <div className="products-page row">
-      <h1>Products</h1>
+    <div>
+      <NavBar />
+      <div className="products-page row">
+        <h1>Products</h1>
+      </div>
     </div>
   );
 }

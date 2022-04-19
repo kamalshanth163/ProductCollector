@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../App.css';
+import '../styles/Login.css';
 import { useHistory } from 'react-router';
 import API_Collector from '../APIs/API_Collector';
 import API_Holder from '../APIs/API_Holder';
@@ -32,8 +32,8 @@ const Register = () => {
       }
       new API_Collector().postCollector(collector).then(data => {
         localStorage.setItem("user-id", data.insertId);
-        alert("Successfully registered as product collector");
-        history.push('/collector-page');
+        localStorage.setItem("user-name", user.name);
+        history.push('/dashboard');
       });
     }
     else if(userType === "holder"){
@@ -46,8 +46,8 @@ const Register = () => {
       }
       new API_Holder().postHolder(holder).then(data => {
         localStorage.setItem("user-id", data.insertId);
-        alert("Successfully registered as product holder");
-        history.push('/holder-page');
+        localStorage.setItem("user-name", user.name);
+        history.push('/dashboard');
       });
     }
   }
@@ -61,34 +61,34 @@ const Register = () => {
       <button className="back-btn"  onClick={(e) => history.push('/')}>Back to Home</button>
       <form>
         <div class="container">
-          <h1>Register as {userType}</h1>
+          <h1>Register <span className='span'>as {userType}</span></h1>
           <p>Fill this form to create an account.</p>
           <hr />
+          <div className="form-outline mb-4">
+            <label className="form-label" for="name"><b>Name</b></label><br />
+            <input className="form-control" type="text" placeholder="Enter your name" name="name" id="name" required onChange={(e)=>handleChange(e)}/>
+          </div>
+          <div className="form-outline mb-4">
+            <label className="form-label" for="address"><b>Address</b></label><br />
+            <input className="form-control" type="text" placeholder="Enter your address" name="address" id="address" required onChange={(e)=>handleChange(e)}/>
+          </div>
+          <div className="form-outline mb-4">
+            <label className="form-label" for="phone"><b>Phone</b></label><br />
+            <input className="form-control" type="text" placeholder="Enter your phone number" name="phone" id="phone" required onChange={(e)=>handleChange(e)}/>
+          </div>
+          <div className="form-outline mb-4">
+            <label className="form-label" for="email"><b>Email</b></label><br />
+            <input className="form-control" type="text" placeholder="Enter Email" name="email" id="email" required onChange={(e)=>handleChange(e)}/>
+          </div>
+          <div className="form-outline mb-4">
+            <label className="form-label" for="password"><b>Password</b></label><br />
+            <input className="form-control" type="password" placeholder="Enter Password" name="password" id="password" required onChange={(e)=>handleChange(e)}/>
+          </div>
 
-          <label for="name"><b>Name</b></label><br />
-          <input type="text" placeholder="Enter your name" name="name" id="name" required onChange={(e)=>handleChange(e)}/>
-          <br />
-
-          <label for="address"><b>Address</b></label><br />
-          <input type="text" placeholder="Enter your address" name="address" id="address" required onChange={(e)=>handleChange(e)}/>
-          <br />
-
-          <label for="phone"><b>Phone</b></label><br />
-          <input type="text" placeholder="Enter your phone number" name="phone" id="phone" required onChange={(e)=>handleChange(e)}/>
-          <br />
-
-          <label for="email"><b>Email</b></label><br />
-          <input type="text" placeholder="Enter Email" name="email" id="email" required onChange={(e)=>handleChange(e)}/>
-          <br />
-
-          <label for="password"><b>Password</b></label><br />
-          <input type="password" placeholder="Enter Password" name="password" id="password" required onChange={(e)=>handleChange(e)}/>
-          <br />
-
-          <button type="submit" class="registerbtn" onClick={(e) => handleSubmit(e)}>Register</button>
+          <button type="submit" class="registerbtn btn btn-primary btn-block mb-4" onClick={(e) => handleSubmit(e)}>Register</button>
 
           <div class="signin">
-            <p>Already have an account? <a href="./login-page">Sign in</a>.</p>
+            <p>Already have an account? <a href="./login-page">Login</a>.</p>
           </div>
         </div>        
       </form>

@@ -6,11 +6,15 @@ import { NavLink } from 'react-router-dom';
 const NavBar = () => {
 
   const history = useHistory();
+  const userName = localStorage.getItem("user-name");
+  const userType = localStorage.getItem("user-type");
 
   const handleLogout = (e) => {
     e.preventDefault();
-    localStorage.clear();
-    history.push('/');
+    if (window.confirm("Are you sure you want to logout?")) {
+      localStorage.clear();
+      history.push('/');
+    }
   }
 
   return (
@@ -22,32 +26,38 @@ const NavBar = () => {
                 <span className="navbar-toggler-icon"></span>
               </button>
               <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul className="navbar-nav me-auto main-links">
-                  <li className="nav-item">
-                    <NavLink className="navLink active" to="/">Home</NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="navLink" to="/dashboard">Dashboard</NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="navLink" to="/products">Products</NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="navLink" to="/orders">Orders</NavLink>
-                  </li>
-                </ul>
+                  { userName !== null && userType !== "admin"
+                    ? 
+                    <ul className="navbar-nav me-auto main-links">
+                      <li className="nav-item">
+                        <NavLink className="navLink" to="/dashboard">Dashboard</NavLink>
+                      </li>
+                      <li className="nav-item">
+                        <NavLink className="navLink" to="/products">Products</NavLink>
+                      </li>
+                      <li className="nav-item">
+                        <NavLink className="navLink" to="/orders">Orders</NavLink>
+                      </li>
+                    </ul>
+                    : <ul className="navbar-nav me-auto main-links"></ul>
+                  }
 
                 <ul className="navbar-nav mr-auto">
                   <li className="nav-item">
-                    <NavLink className="navLink" to="/account">John</NavLink>
+                    <NavLink className="navLink" to="/account">{userName}</NavLink>
                   </li>
                 </ul>
 
-                <ul className="navbar-nav mr-auto">
-                  <li className="nav-item">
-                    <button className="btn btn-primary">Logout</button>
-                  </li>
-                </ul>
+                { userName !== null
+                    ? 
+                    <ul className="navbar-nav mr-auto">
+                      <li className="nav-item">
+                        <button className="btn btn-primary" onClick={(e) => handleLogout(e)}>Logout</button>
+                      </li>
+                    </ul>
+                    :
+                    ""
+                }
               </div>
             </div>
           </nav>

@@ -1,11 +1,15 @@
 import React from 'react';
 import '../../App.css'
+import NavBar from '../NavBar';
 
 function Account() {
 
   return (
-    <div className="account-page row">
-      <h1>Account</h1>
+    <div>
+      <NavBar />
+      <div className="account-page row">
+        <h1>Account</h1>
+      </div>
     </div>
   );
 }
