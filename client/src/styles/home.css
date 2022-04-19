@@ -1,0 +1,21 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    padding: 0px 80px;
+    background: #222;
+    color: white;
+}
+
+.navLink{
+    color: white;
+    margin: 20px;
+    text-decoration: none;
+}
+
+.main-links{
+    margin-left: 20px;
+}

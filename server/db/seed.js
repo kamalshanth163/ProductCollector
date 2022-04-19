@@ -101,6 +101,7 @@ class Seed {
             weight DECIMAL(13,2),
             usage_time VARCHAR(100),
             status VARCHAR(100),
+            image VARCHAR(100),
             holder_id INT,
             category_id INT,
             created_at DATETIME,
