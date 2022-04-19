@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../App.css';
+import '../styles/Home.css';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ const NavBar = () => {
                 <span className="navbar-toggler-icon"></span>
               </button>
               <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul className="navbar-nav">
+                <ul className="navbar-nav me-auto main-links">
                   <li className="nav-item">
                     <NavLink className="navLink active" to="/">Home</NavLink>
                   </li>
@@ -35,8 +35,17 @@ const NavBar = () => {
                   <li className="nav-item">
                     <NavLink className="navLink" to="/orders">Orders</NavLink>
                   </li>
+                </ul>
+
+                <ul className="navbar-nav mr-auto">
                   <li className="nav-item">
-                    <NavLink className="navLink" to="/account">Account</NavLink>
+                    <NavLink className="navLink" to="/account">John</NavLink>
+                  </li>
+                </ul>
+
+                <ul className="navbar-nav mr-auto">
+                  <li className="nav-item">
+                    <button className="btn btn-primary">Logout</button>
                   </li>
                 </ul>
               </div>
