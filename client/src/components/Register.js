@@ -32,6 +32,7 @@ const Register = () => {
       }
       new API_Collector().postCollector(collector).then(data => {
         localStorage.setItem("user-id", data.insertId);
+        alert("Successfully registered as product collector");
         history.push('/collector-page');
       });
     }
@@ -45,6 +46,7 @@ const Register = () => {
       }
       new API_Holder().postHolder(holder).then(data => {
         localStorage.setItem("user-id", data.insertId);
+        alert("Successfully registered as product holder");
         history.push('/holder-page');
       });
     }
@@ -56,36 +58,32 @@ const Register = () => {
 
   return (
     <div className="register-page">
-      <h3 className="back-btn"  onClick={(e) => history.push('/')}>Back to Home</h3>
+      <button className="back-btn"  onClick={(e) => history.push('/')}>Back to Home</button>
       <form>
         <div class="container">
           <h1>Register as {userType}</h1>
           <p>Fill this form to create an account.</p>
           <hr />
 
-          <label for="name"><b>Name</b></label>
+          <label for="name"><b>Name</b></label><br />
           <input type="text" placeholder="Enter your name" name="name" id="name" required onChange={(e)=>handleChange(e)}/>
+          <br />
 
-          <label for="address"><b>Address</b></label>
+          <label for="address"><b>Address</b></label><br />
           <input type="text" placeholder="Enter your address" name="address" id="address" required onChange={(e)=>handleChange(e)}/>
+          <br />
 
-          <label for="phone"><b>Phone</b></label>
+          <label for="phone"><b>Phone</b></label><br />
           <input type="text" placeholder="Enter your phone number" name="phone" id="phone" required onChange={(e)=>handleChange(e)}/>
+          <br />
 
-          {
-            userType === "driver" ? 
-            <div>
-              <label for="license_id"><b>License id</b></label>
-              <input type="text" placeholder="Enter your license id" name="license_id" id="license_id" required onChange={(e)=>handleChange(e)}/>
-            </div>
-            : ""
-          }
-
-          <label for="email"><b>Email</b></label>
+          <label for="email"><b>Email</b></label><br />
           <input type="text" placeholder="Enter Email" name="email" id="email" required onChange={(e)=>handleChange(e)}/>
+          <br />
 
-          <label for="password"><b>Password</b></label>
+          <label for="password"><b>Password</b></label><br />
           <input type="password" placeholder="Enter Password" name="password" id="password" required onChange={(e)=>handleChange(e)}/>
+          <br />
 
           <button type="submit" class="registerbtn" onClick={(e) => handleSubmit(e)}>Register</button>
 

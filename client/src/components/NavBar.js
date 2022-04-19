@@ -15,28 +15,33 @@ const NavBar = () => {
 
   return (
     <div>
-        <div class="topnav">      
-            <div className="nav-topbar">
-              <table>
-                <tr>
-                  <td>
-                    <NavLink className="logo nav-link" to="/">
-                      <h1 className="main-text">PCPC</h1>
-                    </NavLink>
-                    
-                    <NavLink className="nav-link" to="/">
-                      <button className='home-btn btn'>Home</button>
-                    </NavLink>
-
-                    <NavLink className="nav-link" to="/">
-                      <button className='logout-btn btn' onClick={(e) => handleLogout(e)}>Logout</button>
-                    </NavLink>
-                    
-                  </td>
-                </tr>
-              </table>
+          <nav className="navbar navbar-expand-lg">
+            <div className="container-fluid">
+              <h2>PCPC</h2>
+              <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+              </button>
+              <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul className="navbar-nav">
+                  <li className="nav-item">
+                    <NavLink className="navLink active" to="/">Home</NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="navLink" to="/dashboard">Dashboard</NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="navLink" to="/products">Products</NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="navLink" to="/orders">Orders</NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="navLink" to="/account">Account</NavLink>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
+          </nav>
     </div>
   );
 }

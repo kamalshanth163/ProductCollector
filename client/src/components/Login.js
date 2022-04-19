@@ -22,12 +22,14 @@ const Login = () => {
     if(userType === "collector"){
       new API_Collector().loginCollector(userData).then(data => {
         localStorage.setItem("user-id", data.id);
+        alert("Successfully logged in as product collector");
         history.push('/collector-page');
       });
     }
     else if(userType === "holder"){
       new API_Holder().loginHolder(userData).then(data => {
         localStorage.setItem("user-id", data.id);
+        alert("Successfully logged in as product holder");
         history.push('/holder-page');
       });
     }
@@ -39,18 +41,21 @@ const Login = () => {
 
   return (
     <div className="login-page">
-      <h3 className="back-btn" onClick={(e) => history.push('/')}>Back to Home</h3>
+      <button className="back-btn" onClick={(e) => history.push('/')}>Back to Home</button>
       <form>
         <div class="container">
-          <h1>Login as {userType}</h1>
+          <h1>Login as product {userType}</h1>
           <p>Fill this form & login to your account.</p>
           <hr />
 
-          <label for="email"><b>Email</b></label>
+          <label for="email"><b>Email</b></label><br />
           <input type="text" placeholder="Enter Email" name="email" id="email" onChange={(e)=>handleChange(e)} required />
+          <br />
 
-          <label for="password"><b>Password</b></label>
+          <label for="password"><b>Password</b></label><br />
           <input type="password" placeholder="Enter Password" name="password" id="psw" onChange={(e)=>handleChange(e)} required />
+          <br />
+
           <button type="submit" className="loginbtn" onClick={(e) => handleSubmit(e)}>Login</button>
           
           <div class="container signup">

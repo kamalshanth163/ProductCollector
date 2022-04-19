@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import "../App.css";
+import "../styles/home.css";
 
 const Home = () => {
   const history = useHistory();
@@ -13,17 +13,24 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="banner">
-        <div>
-          <h1 className="text-2">Welcome to <br /> Taxi App</h1>
-          <h2>login as:</h2>
-
-          <button className="btn btn-1" onClick={() => handleStart("collector")}>
-            Passenger
-          </button><br />
-          <button className="btn btn-1" onClick={() => handleStart("holder")}>
-            Driver
-          </button><br />
-        </div>
+        <table>
+          <tr>
+            <td>
+              <h1 className="text-2">Welcome to <br /> Post-Consumer Product Collector</h1>
+            </td>
+            <td>
+              <div className='link-area'>
+                <h2>Continue as:</h2>
+                <button className="btn btn-1" onClick={() => handleStart("collector")}>
+                  Product Collector
+                </button><br />
+                <button className="btn btn-1" onClick={() => handleStart("holder")}>
+                  Product Holder
+                </button><br />
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   );

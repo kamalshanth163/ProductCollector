@@ -6,62 +6,59 @@ function Details() {
 
   const userId = localStorage.getItem("user-id");
 
-  var initialDriver = {
+  var initialHolder = {
     name: "",
-    license_id: "",
-    availability: 1,
+    address: "",
     email: "",
     phone: "",
     password: "",
   }
-  const [driver, setDriver] = useState(initialDriver);
 
   useEffect(() => {
 
   }, [])
 
-  const handleAvailability = (status) => {
-    driver.availability = status;
-    new API_Holder().updateDriver(driver).then(data => {
-      setDriver(driver);
-    })
+  const handleChange = (e) => {
+
+  }
+  
+  const handleSubmit = (e) => {
+
   }
 
   return (
-    <div className="driver-details-page row">
-      <h1>Driver Details Page</h1>
+    <div className="holder-page row">
+      <h1>Add a product</h1>
+      <form>
+        <div class="container">
+        
+          <p>Fill this form to add a product.</p>
+          <hr />
 
-      <table>
-        <tr>
-          <td>Driver's name</td>
-          <td>{driver.name}</td>
-        </tr>
-        <tr>
-          <td>Phone number</td>
-          <td>{driver.phone}</td>
-        </tr>
-        <tr>
-          <td>Email address</td>
-          <td>{driver.email}</td>
-        </tr>
-        <tr>
-          <td>Driving license id</td>
-          <td>{driver.license_id}</td>
-        </tr>
-        <tr>
-          <td>Availability (Currently { driver.availability === 1 ? "Available" : "Busy"})</td>
-          <td>
-          {
-            driver.availability === 1
-            ? 
-            <button onClick={(e) => handleAvailability(0)}>Set as Busy</button>
-            :
-            <button onClick={(e) => handleAvailability(1)}>Set as Available</button>
-          }
-          </td>
-        </tr>
-      </table>
+          <label for="name"><b>Name</b></label><br />
+          <input type="text" placeholder="Enter your name" name="name" id="name" required onChange={(e)=>handleChange(e)}/>
+          <br />
 
+          <label for="address"><b>Brand</b></label><br />
+          <input type="text" placeholder="Enter your address" name="address" id="address" required onChange={(e)=>handleChange(e)}/>
+          <br />
+
+          <label for="phone"><b>Weight</b></label><br />
+          <input type="text" placeholder="Enter your phone number" name="phone" id="phone" required onChange={(e)=>handleChange(e)}/>
+          <br />
+
+          <label for="email"><b>Usage</b></label><br />
+          <input type="text" placeholder="Enter Email" name="email" id="email" required onChange={(e)=>handleChange(e)}/>
+          <br />
+          <br />
+
+          {/* <label for="password"><b>Password</b></label><br />
+          <input type="password" placeholder="Enter Password" name="password" id="password" required onChange={(e)=>handleChange(e)}/>
+          <br /> */}
+
+          <button type="submit" class="registerbtn" onClick={(e) => handleSubmit(e)}>Add product</button>
+        </div>        
+      </form>
     </div>
   );
 }
