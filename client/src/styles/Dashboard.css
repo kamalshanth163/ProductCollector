@@ -1,0 +1,45 @@
+
+.dashboard-page{
+    padding: 30px 100px;
+}
+
+.dashboard-page .container{
+    padding: 30px 100px;
+}
+
+.dashboard-page .analytics{
+    margin-bottom: 20px;
+}
+
+.dashboard-page .analytics .box{
+    background: rgb(236, 236, 236);
+    border-radius: 20px;
+    margin: 20px;
+    width: 20%;
+    height: auto;
+    padding: 20px;
+}
+
+.dashboard-page .reports .box{
+    background: rgb(219, 219, 219);
+    border-radius: 20px;
+    margin: 20px;
+    width: 20%;
+    height: auto;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.dashboard-page .box h2{
+    font-size: 20px;
+}
+
+.dashboard-page .reports .box span{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.dashboard-page .analytics .box span{
+    font-size: 40px;
+    font-weight: bold;
+}
