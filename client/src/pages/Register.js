@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
 import { useHistory } from 'react-router';
-import API_Collector from '../APIs/API_Collector';
-import API_Holder from '../APIs/API_Holder';
+import API from '../APIs/API';
 
 const Register = () => {
   const userType = localStorage.getItem("user-type");
@@ -30,7 +29,7 @@ const Register = () => {
         phone: user.phone,
         password: user.password,
       }
-      new API_Collector().postCollector(collector).then(data => {
+      new API().postCollector(collector).then(data => {
         localStorage.setItem("user-id", data.insertId);
         localStorage.setItem("user-name", user.name);
         history.push('/dashboard');
@@ -44,7 +43,7 @@ const Register = () => {
         phone: user.phone,
         password: user.password,
       }
-      new API_Holder().postHolder(holder).then(data => {
+      new API().postHolder(holder).then(data => {
         localStorage.setItem("user-id", data.insertId);
         localStorage.setItem("user-name", user.name);
         history.push('/dashboard');

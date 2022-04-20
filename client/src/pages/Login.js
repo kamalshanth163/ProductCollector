@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import '../styles/Login.css';
-import API_Collector from '../APIs/API_Collector';
-import API_Holder from '../APIs/API_Holder';
+import API from '../APIs/API';
 
 const Login = () => {
   const userType = localStorage.getItem("user-type");
@@ -20,14 +19,14 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(userType === "collector"){
-      new API_Collector().loginCollector(userData).then(data => {
+      new API().loginCollector(userData).then(data => {
         localStorage.setItem("user-id", data.id);
         localStorage.setItem("user-name", data.name);
         history.push('./dashboard');
       });
     }
     else if(userType === "holder"){
-      new API_Holder().loginHolder(userData).then(data => {
+      new API().loginHolder(userData).then(data => {
         localStorage.setItem("user-id", data.id);
         localStorage.setItem("user-name", data.name);
         history.push('./dashboard');

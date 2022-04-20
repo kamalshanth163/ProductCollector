@@ -116,6 +116,7 @@ class Seed {
             status VARCHAR(100),
             collector_id INT,
             product_id INT,
+            price DECIMAL(13,2),
             created_at DATETIME,
             updated_at DATETIME,    
             PRIMARY KEY (id),
