@@ -11,23 +11,31 @@
     margin-bottom: 20px;
 }
 
+.dashboard-page .box{
+    text-align: center;
+}
+
 .dashboard-page .analytics .box{
     background: rgb(236, 236, 236);
     border-radius: 20px;
-    margin: 20px;
-    width: 20%;
+    margin: 10px 10px;
     height: auto;
-    padding: 20px;
+    padding: 20px 40px;
 }
 
 .dashboard-page .reports .box{
-    background: rgb(219, 219, 219);
+    background: rgb(235, 235, 235);
     border-radius: 20px;
     margin: 20px;
     width: 20%;
     height: auto;
     padding: 20px;
     cursor: pointer;
+}
+
+.dashboard-page .reports .box:hover{
+    background: rgb(39, 39, 39);
+    color: white;
 }
 
 .dashboard-page .box h2{

@@ -74,8 +74,8 @@ function Dashboard() {
             { data.map((i) => {
               return (
                 <div className="col box">
-                  <h2>{i.title}</h2>
                   <span>{Array.isArray(i.data) ? i.data.length : i.data}</span>
+                  <h2>{i.title}</h2>
                 </div>
               )
             })}           
