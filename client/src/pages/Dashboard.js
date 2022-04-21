@@ -33,6 +33,8 @@ function Dashboard() {
     var pendingOrders = orders.filter(x => x.status == "pending");
     var completedOrders = orders.filter(x => x.status == "completed");
 
+    var ordersTotalPrice = completedOrders.reduce((acc, current) => acc + current.price, 0);
+
     var allData = [];
 
     if(userType == "admin"){
@@ -48,6 +50,7 @@ function Dashboard() {
       allData.push({title: "Orders", data: [...orders], isReport: true});
       allData.push({title: "Pending Orders", data: [...pendingOrders], isReport: true});
       allData.push({title: "Completed Orders", data: [...completedOrders], isReport: true});
+      allData.push({title: "Total Expense (LKR)", data: ordersTotalPrice, isReport: false});
     }
     else if(userType == "holder"){
       allData.push({title: "Products", data: [...db.products], isReport: true});
@@ -55,6 +58,7 @@ function Dashboard() {
       allData.push({title: "Orders", data: [...orders], isReport: true});
       allData.push({title: "Pending Orders", data: [...pendingOrders], isReport: true});
       allData.push({title: "Completed Orders", data: [...completedOrders], isReport: true});
+      allData.push({title: "Total Income (LKR)", data: ordersTotalPrice, isReport: false});
     }
     setData([...allData]);
   }
@@ -71,7 +75,7 @@ function Dashboard() {
               return (
                 <div className="col box">
                   <h2>{i.title}</h2>
-                  <span>{i.data.length}</span>
+                  <span>{Array.isArray(i.data) ? i.data.length : i.data}</span>
                 </div>
               )
             })}           
