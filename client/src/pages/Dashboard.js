@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Dashboard.css'
 import NavBar from '../components/NavBar';
+import API from '../APIs/API';
 
 function Dashboard() {
 
@@ -8,12 +9,55 @@ function Dashboard() {
   const userId = localStorage.getItem("user-id");
   const userName = localStorage.getItem("user-name");
 
-  const entity = {
-    title: "Title",
-    data: [],
-    isReport: true
+  const [data, setData] = useState([]);
+  const [db, setDb] = useState({});
+
+  useEffect(() => {
+    new API().getDashboardData().then((data) => {
+      console.log(data)
+      setDb({...data});
+      getAndSetData(data);
+    })
+  }, [])
+
+  const getAndSetData = (db) => {
+    var orders = [];
+    if(userType == "collector"){
+      orders = db.orders.filter(x => x.collector_id == userId);
+    } 
+    else if(userType == "holder"){
+      var productByHolderId = db.products.find(x => x.holder_id == userId);
+      orders = db.orders.filter(x => x.product_id == (productByHolderId == null ? 0 : productByHolderId.id));
+    }
+
+    var pendingOrders = orders.filter(x => x.status == "pending");
+    var completedOrders = orders.filter(x => x.status == "completed");
+
+    var allData = [];
+
+    if(userType == "admin"){
+      allData.push({title: "Products", data: [...db.products], isReport: true});
+      allData.push({title: "Categories", data: [...db.categories], isReport: true});
+      allData.push({title: "Orders", data: [...db.orders], isReport: true});
+      allData.push({title: "Collectors", data: [...db.collectors], isReport: true});
+      allData.push({title: "Holders", data: [...db.holders], isReport: true});
+    }
+    else if(userType == "collector"){
+      allData.push({title: "Products", data: [...db.products], isReport: true});
+      allData.push({title: "Categories", data: [...db.categories], isReport: true});
+      allData.push({title: "Orders", data: [...orders], isReport: true});
+      allData.push({title: "Pending Orders", data: [...pendingOrders], isReport: true});
+      allData.push({title: "Completed Orders", data: [...completedOrders], isReport: true});
+    }
+    else if(userType == "holder"){
+      allData.push({title: "Products", data: [...db.products], isReport: true});
+      allData.push({title: "Categories", data: [...db.categories], isReport: true});
+      allData.push({title: "Orders", data: [...orders], isReport: true});
+      allData.push({title: "Pending Orders", data: [...pendingOrders], isReport: true});
+      allData.push({title: "Completed Orders", data: [...completedOrders], isReport: true});
+    }
+    setData([...allData]);
   }
-  const [data, setData] = useState([entity]);
 
   return (
     <div>
@@ -36,11 +80,15 @@ function Dashboard() {
           <div className="row reports">
             <h1>Reports</h1>
             { data.map((i) => {
-              return (
-                <div className="col box">
-                  <span>{i.title}</span>
-                </div>
-              )
+              if(i.isReport){
+                return (
+                  <div className="col box">
+                    <span>Generate {i.title} Report</span>
+                  </div>
+                )
+              } else {
+                return ""
+              }
             })}         
           </div>
         </div>

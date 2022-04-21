@@ -31,6 +31,61 @@ class Seed {
         categories.forEach(category => {
             this.insertCategory(category);
         });
+
+        // // seed an order and a product temporarily
+        // var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
+
+        // sqlCon.query(
+        //     `INSERT INTO products (name, brand, weight, usage_time, status, image, holder_id, category_id, created_at, updated_at)
+        //     SELECT ?,?,?,?,?,?,?,?,?,?
+        //     FROM DUAL
+        //     WHERE NOT EXISTS(
+        //         SELECT 1
+        //         FROM products
+        //         WHERE name = 'Laptop'
+        //     )
+        //     LIMIT 1;`,
+        //     [
+        //         'Laptop',
+        //         "Dell",
+        //         2.3,
+        //         12,
+        //         "available",
+        //         "",
+        //         1,
+        //         1,
+        //         currentLocalTime,
+        //         currentLocalTime,
+        //     ]
+        // , (err, results) => {
+        //     if (err) {
+        //         console.log(err.message);
+        //     }
+        // });
+
+        // sqlCon.query(
+        //     `INSERT INTO orders (status, collector_id, product_id, price, created_at, updated_at)
+        //     SELECT ?,?,?,?,?,?
+        //     FROM DUAL
+        //     WHERE NOT EXISTS(
+        //         SELECT 1
+        //         FROM orders
+        //         WHERE collector_id = 1 AND product_id = 2
+        //     )
+        //     LIMIT 1;`,
+        //     [
+        //         'pending',
+        //         1,
+        //         2,
+        //         120.50,
+        //         currentLocalTime,
+        //         currentLocalTime,
+        //     ]
+        // , (err, results) => {
+        //     if (err) {
+        //         console.log(err.message);
+        //     }
+        // });
     }
 
     insertCategory(category) {
@@ -57,6 +112,8 @@ class Seed {
             }
         });
     }
+
+
 
     createAllTables() {
         let createTables = 

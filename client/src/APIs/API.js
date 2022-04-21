@@ -109,6 +109,21 @@ class API {
         return result;
     }
 
+    async loginHolder(holder){
+        var result =
+            fetch(`${baseUrl}holders/login`,
+            {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(holder)           
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
     async deleteHolder(holderId){
         var result =
             fetch(`${baseUrl}holders/${holderId}`, {
@@ -121,14 +136,39 @@ class API {
         return result;
     }
 
-    async loginHolder(holder){
+    async getAllOrders(){
         var result =
-            fetch(`${baseUrl}holders/login`,
-            {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(holder)           
-            })
+            fetch(`${baseUrl}orders`)
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
+    async getAllProducts(){
+        var result =
+            fetch(`${baseUrl}products`)
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
+    async getAllCategories(){
+        var result =
+            fetch(`${baseUrl}categories`)
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
+    async getDashboardData(){
+        var result =
+            fetch(`${baseUrl}common/dashboard-data`)
             .then((response) => response.json())
             .then((a) => {
                 return a;
