@@ -11,6 +11,7 @@ const Login = () => {
     password: "",
   }
   const [userData, setUserData] = useState(initialUserData);
+  const [showHiddenPassword, setShowHiddenPassword] = useState(false);
 
   useEffect(() => {
     setUserData(initialUserData);
@@ -45,6 +46,10 @@ const Login = () => {
     setUserData({...userData, [e.target.name]: e.target.value});
   }
 
+  const showPassword = (status) => {
+    setShowHiddenPassword(status);
+  }
+
   return (
     <div>
       <div className="login-page">
@@ -61,8 +66,9 @@ const Login = () => {
             </div>
 
             <div className="form-outline mb-4">
-              <label className="form-label" for="password"><b>Password</b></label><br />
-              <input className="form-control" type="password" placeholder="Enter Password" name="password" id="psw" onChange={(e)=>handleChange(e)} required />
+              <label className="form-label" for="password"><b>Password</b></label>
+                <span style={{"cursor": "pointer"}} onClick={(e)=>showPassword(!showHiddenPassword)}>{showHiddenPassword ? " hide" : " show"}</span><br />
+              <input className="form-control" type={showHiddenPassword ? "text" : "password"} placeholder="Enter Password" name="password" id="psw" onChange={(e)=>handleChange(e)} required />
             </div>
 
             <button type="submit" className="loginbtn btn btn-primary btn-block mb-4" onClick={(e) => handleSubmit(e)}>Login</button>

@@ -81,7 +81,7 @@ const Register = () => {
           </div>
           <div className="form-outline mb-4">
             <label className="form-label" for="password"><b>Password</b></label><br />
-            <input className="form-control" type="password" placeholder="Enter Password" name="password" id="password" required onChange={(e)=>handleChange(e)}/>
+            <input className="form-control" type="text" placeholder="Enter Password" name="password" id="password" required onChange={(e)=>handleChange(e)}/>
           </div>
 
           <button type="submit" class="registerbtn btn btn-primary btn-block mb-4" onClick={(e) => handleSubmit(e)}>Register</button>
