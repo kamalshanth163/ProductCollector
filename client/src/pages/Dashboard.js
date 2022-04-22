@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import '../styles/Dashboard.css'
 import NavBar from '../components/NavBar';
 import API from '../APIs/API';
+import * as XLSX from 'xlsx';
+import TextService from '../services/TextService';
 
 function Dashboard() {
 
@@ -14,11 +16,18 @@ function Dashboard() {
 
   useEffect(() => {
     new API().getDashboardData().then((data) => {
-      console.log(data)
       setDb({...data});
       getAndSetData(data);
     })
   }, [])
+
+  const generateReport = (title, data) => {
+    var userTypeCapitalized = new TextService().capitalize(userType);
+    var wb = XLSX.utils.book_new(); 
+    var ws = XLSX.utils.json_to_sheet(data);
+    XLSX.utils.book_append_sheet(wb, ws, title);
+    XLSX.writeFile(wb, `${title} - ${userName} - ${userTypeCapitalized} - ${new Date().toDateString()}.xlsx`);
+  }
 
   const getAndSetData = (db) => {
     var orders = [];
@@ -86,7 +95,7 @@ function Dashboard() {
             { data.map((i) => {
               if(i.isReport){
                 return (
-                  <div className="col box">
+                  <div className="col box" onClick={() => generateReport(i.title, i.data)}>
                     <span>Generate {i.title} Report</span>
                   </div>
                 )

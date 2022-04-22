@@ -1,0 +1,12 @@
+class TextService {
+
+    constructor() {
+
+    }
+
+    capitalize(str) {
+        return str[0].toUpperCase() + str.slice(1).toLowerCase();
+    }
+}
+
+export default TextService;
