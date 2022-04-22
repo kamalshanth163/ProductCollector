@@ -31,17 +31,25 @@ function Dashboard() {
 
   const getAndSetData = (db) => {
     var orders = [];
+    var products = [];
+
     if(userType == "collector"){
       orders = db.orders.filter(x => x.collector_id == userId);
+      var collectorOrderedProductIds = orders.map(x => {
+        if(x.collector_id == userId) return x.product_id;
+      });
+      products = db.products.filter(x => collectorOrderedProductIds.includes(x.id));
     } 
     else if(userType == "holder"){
-      var productByHolderId = db.products.find(x => x.holder_id == userId);
-      orders = db.orders.filter(x => x.product_id == (productByHolderId == null ? 0 : productByHolderId.id));
+      var holderProductIds = db.products.map(x => {
+        if(x.holder_id == userId) return x.id;
+      });
+      orders = db.orders.filter(x => holderProductIds.includes(x.product_id));
+      products = db.products.filter(x => x.holder_id == userId);
     }
 
     var pendingOrders = orders.filter(x => x.status == "pending");
     var completedOrders = orders.filter(x => x.status == "completed");
-
     var ordersTotalPrice = completedOrders.reduce((acc, current) => acc + current.price, 0);
 
     var allData = [];
@@ -54,16 +62,14 @@ function Dashboard() {
       allData.push({title: "Holders", data: [...db.holders], isReport: true});
     }
     else if(userType == "collector"){
-      allData.push({title: "Products", data: [...db.products], isReport: true});
-      allData.push({title: "Categories", data: [...db.categories], isReport: true});
+      allData.push({title: "Products", data: [...products], isReport: true});
       allData.push({title: "Orders", data: [...orders], isReport: true});
       allData.push({title: "Pending Orders", data: [...pendingOrders], isReport: true});
       allData.push({title: "Completed Orders", data: [...completedOrders], isReport: true});
       allData.push({title: "Total Expense (LKR)", data: ordersTotalPrice, isReport: false});
     }
     else if(userType == "holder"){
-      allData.push({title: "Products", data: [...db.products], isReport: true});
-      allData.push({title: "Categories", data: [...db.categories], isReport: true});
+      allData.push({title: "Products", data: [...products], isReport: true});
       allData.push({title: "Orders", data: [...orders], isReport: true});
       allData.push({title: "Pending Orders", data: [...pendingOrders], isReport: true});
       allData.push({title: "Completed Orders", data: [...completedOrders], isReport: true});
