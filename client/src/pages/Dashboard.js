@@ -35,12 +35,17 @@ function Dashboard() {
       orders = db.orders.filter(x => x.collector_id == userId);
     } 
     else if(userType == "holder"){
-      var productByHolderId = db.products.find(x => x.holder_id == userId);
-      orders = db.orders.filter(x => x.product_id == (productByHolderId == null ? 0 : productByHolderId.id));
+      var productIdsByHolder = db.products.map(x => {
+        if(x.holder_id == userId) return x.id;
+      });
+      orders = db.orders.filter(x => productIdsByHolder.includes(x.product_id));
     }
 
     var pendingOrders = orders.filter(x => x.status == "pending");
     var completedOrders = orders.filter(x => x.status == "completed");
+
+    console.log(orders)
+    console.log(completedOrders)
 
     var ordersTotalPrice = completedOrders.reduce((acc, current) => acc + current.price, 0);
 

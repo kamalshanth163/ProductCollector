@@ -33,7 +33,7 @@ class Seed {
         });
 
         // // seed an order and a product temporarily
-        // var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
+        var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
 
         // sqlCon.query(
         //     `INSERT INTO products (name, brand, weight, usage_time, status, image, holder_id, category_id, created_at, updated_at)
@@ -63,6 +63,34 @@ class Seed {
         //     }
         // });
 
+        sqlCon.query(
+            `INSERT INTO products (name, brand, weight, usage_time, status, image, holder_id, category_id, created_at, updated_at)
+            SELECT ?,?,?,?,?,?,?,?,?,?
+            FROM DUAL
+            WHERE NOT EXISTS(
+                SELECT 1
+                FROM products
+                WHERE name = 'Table'
+            )
+            LIMIT 1;`,
+            [
+                'Table',
+                "Damro",
+                3.2,
+                5,
+                "available",
+                "",
+                1,
+                3,
+                currentLocalTime,
+                currentLocalTime,
+            ]
+        , (err, results) => {
+            if (err) {
+                console.log(err.message);
+            }
+        });
+
         // sqlCon.query(
         //     `INSERT INTO orders (status, collector_id, product_id, price, created_at, updated_at)
         //     SELECT ?,?,?,?,?,?
@@ -86,6 +114,30 @@ class Seed {
         //         console.log(err.message);
         //     }
         // });
+
+        sqlCon.query(
+            `INSERT INTO orders (status, collector_id, product_id, price, created_at, updated_at)
+            SELECT ?,?,?,?,?,?
+            FROM DUAL
+            WHERE NOT EXISTS(
+                SELECT 1
+                FROM orders
+                WHERE collector_id = 1 AND product_id = 3
+            )
+            LIMIT 1;`,
+            [
+                'completed',
+                1,
+                3,
+                210.00,
+                currentLocalTime,
+                currentLocalTime,
+            ]
+        , (err, results) => {
+            if (err) {
+                console.log(err.message);
+            }
+        });
     }
 
     insertCategory(category) {
