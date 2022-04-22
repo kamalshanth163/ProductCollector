@@ -55,25 +55,25 @@ function Dashboard() {
     var allData = [];
 
     if(userType == "admin"){
-      allData.push({title: "Products", data: [...db.products], isReport: true});
-      allData.push({title: "Categories", data: [...db.categories], isReport: true});
-      allData.push({title: "Orders", data: [...db.orders], isReport: true});
-      allData.push({title: "Collectors", data: [...db.collectors], isReport: true});
-      allData.push({title: "Holders", data: [...db.holders], isReport: true});
+      allData.push({title: "Products", data: [...db.products], type: "list", isReport: true});
+      allData.push({title: "Categories", data: [...db.categories], type: "list", isReport: true});
+      allData.push({title: "Orders", data: [...db.orders], type: "list", isReport: true});
+      allData.push({title: "Collectors", data: [...db.collectors], type: "list", isReport: true});
+      allData.push({title: "Holders", data: [...db.holders], type: "list", isReport: true});
     }
     else if(userType == "collector"){
-      allData.push({title: "Products", data: [...products], isReport: true});
-      allData.push({title: "Orders", data: [...orders], isReport: true});
-      allData.push({title: "Pending Orders", data: [...pendingOrders], isReport: true});
-      allData.push({title: "Completed Orders", data: [...completedOrders], isReport: true});
-      allData.push({title: "Total Expense (LKR)", data: ordersTotalPrice, isReport: false});
+      allData.push({title: "Products", data: [...products], type: "list", isReport: true});
+      allData.push({title: "Orders", data: [...orders], type: "list", isReport: true});
+      allData.push({title: "Pending Orders", data: [...pendingOrders], type: "list", isReport: true});
+      allData.push({title: "Completed Orders", data: [...completedOrders], type: "list", isReport: true});
+      allData.push({title: "Total Expense", data: ordersTotalPrice.toFixed(2), type: "money", isReport: false});
     }
     else if(userType == "holder"){
-      allData.push({title: "Products", data: [...products], isReport: true});
-      allData.push({title: "Orders", data: [...orders], isReport: true});
-      allData.push({title: "Pending Orders", data: [...pendingOrders], isReport: true});
-      allData.push({title: "Completed Orders", data: [...completedOrders], isReport: true});
-      allData.push({title: "Total Income (LKR)", data: ordersTotalPrice, isReport: false});
+      allData.push({title: "Products", data: [...products], type: "list", isReport: true});
+      allData.push({title: "Orders", data: [...orders], type: "list", isReport: true});
+      allData.push({title: "Pending Orders", data: [...pendingOrders], type: "list", isReport: true});
+      allData.push({title: "Completed Orders", data: [...completedOrders], type: "list", isReport: true});
+      allData.push({title: "Total Income", data: ordersTotalPrice.toFixed(2), type: "money", isReport: false});
     }
     setData([...allData]);
   }
@@ -89,7 +89,8 @@ function Dashboard() {
             { data.map((i) => {
               return (
                 <div className="col box">
-                  <span>{Array.isArray(i.data) ? i.data.length : i.data}</span>
+                  {i.type == "money" ? <span style={{fontSize: "20px"}}> LKR </span> : ""}
+                  <span>{i.type == "list" ? i.data.length : i.data}</span>
                   <h2>{i.title}</h2>
                 </div>
               )
