@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import "../styles/Home.css";
-import NavBar from './NavBar';
+import NavBar from '../components/NavBar';
 
 const Home = () => {
   const history = useHistory();

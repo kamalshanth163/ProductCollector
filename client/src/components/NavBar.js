@@ -26,28 +26,49 @@ const NavBar = () => {
                 <span className="navbar-toggler-icon"></span>
               </button>
               <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                  { userName !== null && userType !== "admin"
+
+                  {(() => {
+                    if(userName == null){
+                      return (<ul className="navbar-nav me-auto main-links"></ul>);
+                    }
+                    else {
+                      if (userType === "admin"){
+                          return (
+                            <ul className="navbar-nav me-auto main-links">
+                              <li className="nav-item">
+                                <NavLink className="navLink" to="/dashboard">Dashboard</NavLink>
+                              </li>
+                            </ul>
+                          )
+                      } else {
+                        return (
+                          <ul className="navbar-nav me-auto main-links">
+                            <li className="nav-item">
+                              <NavLink className="navLink" to="/dashboard">Dashboard</NavLink>
+                            </li>
+                            <li className="nav-item">
+                              <NavLink className="navLink" to="/products">Products</NavLink>
+                            </li>
+                            <li className="nav-item">
+                              <NavLink className="navLink" to="/orders">Orders</NavLink>
+                            </li>
+                          </ul>
+                        )
+                      }
+                    }
+                  })()}
+
+                { userName !== null
                     ? 
-                    <ul className="navbar-nav me-auto main-links">
+                    <ul className="navbar-nav mr-auto">
                       <li className="nav-item">
-                        <NavLink className="navLink" to="/dashboard">Dashboard</NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink className="navLink" to="/products">Products</NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink className="navLink" to="/orders">Orders</NavLink>
+                        <NavLink className="navLink" to="/account">{userName}</NavLink>
                       </li>
                     </ul>
-                    : <ul className="navbar-nav me-auto main-links"></ul>
-                  }
-
-                <ul className="navbar-nav mr-auto">
-                  <li className="nav-item">
-                    <NavLink className="navLink" to="/account">{userName}</NavLink>
-                  </li>
-                </ul>
-
+                    :
+                    ""
+                }
+                
                 { userName !== null
                     ? 
                     <ul className="navbar-nav mr-auto">
