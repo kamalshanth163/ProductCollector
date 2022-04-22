@@ -89,7 +89,7 @@ function Dashboard() {
             { data.map((i) => {
               return (
                 <div className="col box">
-                  {i.type == "money" ? <span style={{fontSize: "20px"}}> LKR </span> : ""}
+                  {i.type == "money" ? <span style={{fontSize: "18px"}}> LKR </span> : ""}
                   <span>{i.type == "list" ? i.data.length : i.data}</span>
                   <h2>{i.title}</h2>
                 </div>
