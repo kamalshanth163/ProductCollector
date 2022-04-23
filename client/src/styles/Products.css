@@ -1,0 +1,40 @@
+
+.products-page{
+  padding: 30px 100px;
+}
+
+.products-page .container{
+  padding: 30px 100px;
+}
+
+.products-page .analytics{
+  margin-bottom: 20px;
+}
+
+.products-page .box{
+  text-align: center;
+}
+
+.products-page .products .box{
+  background: rgb(235, 235, 235);
+  border-radius: 20px;
+  margin: 20px;
+  width: 20%;
+  height: auto;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.products-page .box h2{
+  font-size: 20px;
+}
+
+.products-page .products .box span{
+  font-size: 20px;
+}
+
+.products-page .analytics .box span{
+  font-size: 40px;
+  font-weight: bold;
+}
+  
