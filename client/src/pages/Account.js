@@ -91,15 +91,15 @@ function Account() {
             <div class="container">
               <h1>Account details</h1>
               <p>View admin account details</p>
-              <div className="form-outline mb-4">
+              <div className="form-outline mb-3">
                 <label className="form-label" for="name"><b>Name</b></label><br />
                 <input className="form-control" type="text" placeholder="Enter your name" name="name" id="name" value={admin.name} readOnly required onChange={(e)=>handleChange(e)}/>
               </div>
-              <div className="form-outline mb-4">
+              <div className="form-outline mb-3">
                 <label className="form-label" for="email"><b>Email</b></label><br />
                 <input className="form-control" type="text" placeholder="Enter Email" name="email" id="email" value={admin.email} readOnly required onChange={(e)=>handleChange(e)}/>
               </div>
-              <div className="form-outline mb-4">
+              <div className="form-outline mb-3">
                 <label className="form-label" for="password"><b>Password</b></label> 
                 <span style={{"cursor": "pointer"}} onClick={(e)=>showPassword(!showHiddenPassword)}>{showHiddenPassword ? " hide" : " show"}</span><br />
                 <input className="form-control" type={showHiddenPassword ? "text" : "password"} placeholder="Enter Password" name="password" id="password" value={admin.password} readOnly required onChange={(e)=>handleChange(e)}/>
@@ -112,29 +112,29 @@ function Account() {
               <h1>Account details</h1>
               <p>View, Edit and Save account details</p>
               <hr />
-              <div className="form-outline mb-4">
+              <div className="form-outline mb-3">
                 <label className="form-label" for="name"><b>Name</b></label><br />
                 <input className="form-control" type="text" placeholder="Enter your name" name="name" id="name" value={user.name} readOnly required onChange={(e)=>handleChange(e)}/>
               </div>
-              <div className="form-outline mb-4">
+              <div className="form-outline mb-3">
                 <label className="form-label" for="address"><b>Address</b></label><br />
                 <input className="form-control" type="text" placeholder="Enter your address" name="address" id="address" value={user.address} required onChange={(e)=>handleChange(e)}/>
               </div>
-              <div className="form-outline mb-4">
+              <div className="form-outline mb-3">
                 <label className="form-label" for="phone"><b>Phone</b></label><br />
                 <input className="form-control" type="text" placeholder="Enter your phone number" name="phone" id="phone" value={user.phone} required onChange={(e)=>handleChange(e)}/>
               </div>
-              <div className="form-outline mb-4">
+              <div className="form-outline mb-3">
                 <label className="form-label" for="email"><b>Email</b></label><br />
                 <input className="form-control" type="text" placeholder="Enter Email" name="email" id="email" value={user.email} required onChange={(e)=>handleChange(e)}/>
               </div>
-              <div className="form-outline mb-4">
+              <div className="form-outline mb-3">
                 <label className="form-label" for="password"><b>Password</b></label> 
                 <span style={{"cursor": "pointer"}} onClick={(e)=>showPassword(!showHiddenPassword)}>{showHiddenPassword ? " hide" : " show"}</span><br />
                 <input className="form-control" type={showHiddenPassword ? "text" : "password"} placeholder="Enter Password" name="password" id="password" value={user.password} required onChange={(e)=>handleChange(e)}/>
               </div>
 
-              <button type="submit" class="btn btn-primary btn-block mb-4" onClick={(e) => handleSubmit(e)}>Save</button>
+              <button type="submit" class="btn btn-primary btn-block mb-3" onClick={(e) => handleSubmit(e)}>Save</button>
             </div>
           </form>
         }

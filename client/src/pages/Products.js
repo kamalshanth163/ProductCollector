@@ -11,12 +11,13 @@ function Products() {
 
   var initialProduct = {
     name: "",
-    address: "",
-    license_id: "",
-    availability: true,
-    email: "",
-    phone: "",
-    password: "",
+    brand: "",
+    weight: 0,
+    usage_time: "",
+    description: "",
+    image: "",
+    holder_id: 0,
+    category_id: 0,
   }
 
   const [products, setProducts] = useState([]);
@@ -24,65 +25,79 @@ function Products() {
 
   useEffect(() => {
     new API().getAllProducts().then((data) => {
-      setProducts([...data]);
+      setProducts([...data, ...data, ...data, ...data]);
     })
   })
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); 
+  }
+
+  const handleChange = (e) => {
+
+  }
+
+  const handleSearch = (e) => {
+
+  }
 
   return (
     <div>
       <NavBar />
-      <div className="products-page row">
-        {/* <h1>Products</h1> */}
+      <div className="products-page">
+        <h1>Products</h1>
         <div className="container">
           <div className="row products">
-            <h1>Products</h1>
-            <div className="col-lg-8">
-            { products.map((i) => {
-              return (
-                <div className="col box">
-                  <h2>{i.name}</h2>
-                  <span>{i.brand}</span>
-                </div>
-              )
-            })}
-            </div>
-            <div className="col-lg-4">
-            { products.map((i) => {
-              return (
-                <div className="col box">
-                  <form>
-                    <div class="container">
-                      <h1>Account details</h1>
-                      <p>View, Edit and Save account details</p>
-                      <hr />
-                      <div className="form-outline mb-4">
-                        <label className="form-label" for="name"><b>Name</b></label><br />
-                        <input className="form-control" type="text" placeholder="Enter your name" name="name" id="name" value={user.name} readOnly required onChange={(e)=>handleChange(e)}/>
-                      </div>
-                      <div className="form-outline mb-4">
-                        <label className="form-label" for="address"><b>Address</b></label><br />
-                        <input className="form-control" type="text" placeholder="Enter your address" name="address" id="address" value={user.address} required onChange={(e)=>handleChange(e)}/>
-                      </div>
-                      <div className="form-outline mb-4">
-                        <label className="form-label" for="phone"><b>Phone</b></label><br />
-                        <input className="form-control" type="text" placeholder="Enter your phone number" name="phone" id="phone" value={user.phone} required onChange={(e)=>handleChange(e)}/>
-                      </div>
-                      <div className="form-outline mb-4">
-                        <label className="form-label" for="email"><b>Email</b></label><br />
-                        <input className="form-control" type="text" placeholder="Enter Email" name="email" id="email" value={user.email} required onChange={(e)=>handleChange(e)}/>
-                      </div>
-                      <div className="form-outline mb-4">
-                        <label className="form-label" for="password"><b>Password</b></label> 
-                        <span style={{"cursor": "pointer"}} onClick={(e)=>showPassword(!showHiddenPassword)}>{showHiddenPassword ? " hide" : " show"}</span><br />
-                        <input className="form-control" type={showHiddenPassword ? "text" : "password"} placeholder="Enter Password" name="password" id="password" value={user.password} required onChange={(e)=>handleChange(e)}/>
-                      </div>
-
-                      <button type="submit" class="btn btn-primary btn-block mb-4" onClick={(e) => handleSubmit(e)}>Save</button>
+            <div className="col-lg-4 product-form">
+              <h3>Create a product</h3>
+              <form>
+                  <hr />
+                  <div className="form-outline mb-2">
+                    <label className="form-label" for="name"><b>Name</b></label><br />
+                    <input className="form-control" type="text" placeholder="Enter product name" name="name" id="name" value={product.name} required onChange={(e)=>handleChange(e)}/>
+                  </div>
+                  <div className="form-outline mb-2">
+                    <label className="form-label" for="name"><b>Brand</b></label><br />
+                    <input className="form-control" type="text" placeholder="Enter product name" name="brand" id="brand" value={product.brand} required onChange={(e)=>handleChange(e)}/>
+                  </div>
+                  <div className="form-outline mb-2 row">
+                    <div className='col'>
+                      <label className="form-label" for="name"><b>Weight</b></label><br />
+                      <input className="form-control" type="text" placeholder="Enter product name" name="name" id="name" value={product.name} required onChange={(e)=>handleChange(e)}/>
                     </div>
-                  </form>
+                    <div className='col'>
+                      <label className="form-label" for="name"><b>Usage time</b></label><br />
+                      <input className="form-control" type="text" placeholder="Enter product name" name="brand" id="brand" value={product.brand} required onChange={(e)=>handleChange(e)}/>
+                    </div>
+                  </div>                  
+
+                  <button type="submit" class="btn btn-primary btn-block mt-4" onClick={(e) => handleSubmit(e)}>Create</button>
+              </form>
+            </div>
+            <div className="col-lg-8 product-list">
+              <div className="row product-search mb-3">
+                <div className='col'>
+                  <input className="form-control" type="text" placeholder="Name" name="name" id="name" value={product.name} required onChange={(e)=>handleChange(e)}/>
                 </div>
-              )
-            })}
+                <div className='col'>
+                  <input className="form-control" type="text" placeholder="Brand" name="name" id="name" value={product.name} required onChange={(e)=>handleChange(e)}/>
+                </div>
+                <div className='col'>
+                  <button type="submit" class="btn btn-primary btn-block" onClick={(e) => handleSearch(e)}>Search</button>
+                </div>
+              </div>
+              <div className="row">
+                { products.map((i) => {
+                  return (
+                    <div className="col box">
+                      <img alt='img' />
+                      <h4>{i.name}</h4>
+                      <h6>{i.brand}</h6>
+                      <p>{i.description}</p>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>

@@ -58,8 +58,6 @@ class Seed {
         });
     }
 
-
-
     createAllTables() {
         let createTables = 
         `    

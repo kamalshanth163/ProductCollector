@@ -7,7 +7,7 @@
   padding: 30px 100px;
 }
 
-.products-page .analytics{
+.products-page .products{
   margin-bottom: 20px;
 }
 
@@ -18,15 +18,11 @@
 .products-page .products .box{
   background: rgb(235, 235, 235);
   border-radius: 20px;
-  margin: 20px;
+  margin: 10px;
   width: 20%;
   height: auto;
   padding: 20px;
   cursor: pointer;
-}
-
-.products-page .box h2{
-  font-size: 20px;
 }
 
 .products-page .products .box span{
@@ -36,5 +32,13 @@
 .products-page .analytics .box span{
   font-size: 40px;
   font-weight: bold;
+}
+
+.products-page .products .product-list{
+  background: rgb(255, 255, 255);
+}
+
+.products-page .product-search{
+  width: 100%;
 }
   

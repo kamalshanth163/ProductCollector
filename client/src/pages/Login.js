@@ -60,18 +60,18 @@ const Login = () => {
             <h1>Login <span className='span'>as {userType}</span></h1>
             <p>Fill this form & login to your account.</p>
             <hr />
-            <div className="form-outline mb-4">
+            <div className="form-outline mb-3">
               <label className="form-label" for="email"><b>Email</b></label><br />
               <input className="form-control" type="text" placeholder="Enter Email" name="email" id="email" onChange={(e)=>handleChange(e)} required />
             </div>
 
-            <div className="form-outline mb-4">
+            <div className="form-outline mb-3">
               <label className="form-label" for="password"><b>Password</b></label>
                 <span style={{"cursor": "pointer"}} onClick={(e)=>showPassword(!showHiddenPassword)}>{showHiddenPassword ? " hide" : " show"}</span><br />
               <input className="form-control" type={showHiddenPassword ? "text" : "password"} placeholder="Enter Password" name="password" id="psw" onChange={(e)=>handleChange(e)} required />
             </div>
 
-            <button type="submit" className="loginbtn btn btn-primary btn-block mb-4" onClick={(e) => handleSubmit(e)}>Login</button>
+            <button type="submit" className="loginbtn btn btn-primary btn-block mb-3" onClick={(e) => handleSubmit(e)}>Login</button>
             
             {
               userType !== "admin" ?

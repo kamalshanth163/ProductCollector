@@ -63,28 +63,28 @@ const Register = () => {
           <h1>Register <span className='span'>as {userType}</span></h1>
           <p>Fill this form to create an account.</p>
           <hr />
-          <div className="form-outline mb-4">
+          <div className="form-outline mb-3">
             <label className="form-label" for="name"><b>Name</b></label><br />
             <input className="form-control" type="text" placeholder="Enter your name" name="name" id="name" required onChange={(e)=>handleChange(e)}/>
           </div>
-          <div className="form-outline mb-4">
+          <div className="form-outline mb-3">
             <label className="form-label" for="address"><b>Address</b></label><br />
             <input className="form-control" type="text" placeholder="Enter your address" name="address" id="address" required onChange={(e)=>handleChange(e)}/>
           </div>
-          <div className="form-outline mb-4">
+          <div className="form-outline mb-3">
             <label className="form-label" for="phone"><b>Phone</b></label><br />
             <input className="form-control" type="text" placeholder="Enter your phone number" name="phone" id="phone" required onChange={(e)=>handleChange(e)}/>
           </div>
-          <div className="form-outline mb-4">
+          <div className="form-outline mb-3">
             <label className="form-label" for="email"><b>Email</b></label><br />
             <input className="form-control" type="text" placeholder="Enter Email" name="email" id="email" required onChange={(e)=>handleChange(e)}/>
           </div>
-          <div className="form-outline mb-4">
+          <div className="form-outline mb-3">
             <label className="form-label" for="password"><b>Password</b></label><br />
             <input className="form-control" type="text" placeholder="Enter Password" name="password" id="password" required onChange={(e)=>handleChange(e)}/>
           </div>
 
-          <button type="submit" class="registerbtn btn btn-primary btn-block mb-4" onClick={(e) => handleSubmit(e)}>Register</button>
+          <button type="submit" class="registerbtn btn btn-primary btn-block mb-3" onClick={(e) => handleSubmit(e)}>Register</button>
 
           <div class="signin">
             <p>Already have an account? <a href="./login-page">Login</a>.</p>

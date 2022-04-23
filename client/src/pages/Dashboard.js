@@ -30,6 +30,7 @@ function Dashboard() {
   }
 
   const getAndSetData = (db) => {
+
     var orders = [];
     var products = [];
 
