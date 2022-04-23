@@ -25,7 +25,7 @@ function Account() {
   var admin = {
     name: "Admin",
     email: "admin@gmail.com",
-    password: "password"
+    password: "admin"
   }
 
   useEffect(() => {

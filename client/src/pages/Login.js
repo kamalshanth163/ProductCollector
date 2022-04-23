@@ -34,7 +34,7 @@ const Login = () => {
       });
     }
     else if(userType === "admin"){
-      if(userData.email == "admin@gmail.com" && userData.password == "password"){
+      if(userData.email == "admin@gmail.com" && userData.password == "admin"){
         localStorage.setItem("user-id", 0);
         localStorage.setItem("user-name", "Admin");
         history.push('./dashboard');
