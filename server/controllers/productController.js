@@ -15,29 +15,50 @@ const getProductById = (req, res) => {
     })
 }
 
+const uploadProductImages = (req, res) => {
+
+    // console.log("productId", productId);
+    // console.log("files: ", files[0].name);
+
+    if(files == null) return res.sendStatus(400).json({ msg: 'No files uploaded' });
+
+    // for(i=)
+    console.log(files);
+}
+
 const postProduct = (req, res) => {
     var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
+
+    // var images = uploadProductImages(req.body.image);
+    // req.body.image = "";
+
     sqlCon.query(
-        `INSERT INTO products (name, address, email, phone, password, created_at, updated_at)
-        SELECT ?,?,?,?,?,?,?
+        `INSERT INTO products (name, brand, weight, usage_time, description, image, holder_id, category_id, created_at, updated_at)
+        SELECT ?,?,?,?,?,?,?,?,?,?
         FROM DUAL
         WHERE NOT EXISTS(
             SELECT 1
             FROM products
-            WHERE email = '${req.body.email}' AND password = '${req.body.password}'
+            WHERE name = '${req.body.name}' AND brand = '${req.body.brand}'
         )
         LIMIT 1;`,
         [
             req.body.name,
-            req.body.address,
-            req.body.email,
-            req.body.phone,
-            req.body.password,
+            req.body.brand,
+            req.body.weight,
+            req.body.usage_time,
+            req.body.description,
+            req.body.image,
+            req.body.holder_id,
+            req.body.category_id,
             currentLocalTime,
             currentLocalTime,
         ]
     , (err, results) => {
-        if(err) return res.sendStatus(400);
+        if(err) {
+            console.log(err);
+            return res.sendStatus(400)
+        };
         return res.send(results); 
     })
 }
@@ -52,10 +73,13 @@ const updateProduct = (req, res) => {
         UPDATE products 
         SET 
         name = '${req.body.name}',
-        address = '${req.body.address}',
-        email = '${req.body.email}',
-        phone = '${req.body.phone}',
-        password = '${req.body.password}',
+        brand = '${req.body.brand}',
+        weight = '${req.body.weight}',
+        usage_time = '${req.body.usage_time}',
+        description = '${req.body.description}',
+        image = '${req.body.image}',
+        holder_id = '${req.body.holder_id}',
+        category_id = '${req.body.category_id}',
         updated_at = '${updatedAt}'
         WHERE id = '${req.body.id}';`
     , (err, results) => {
@@ -78,6 +102,7 @@ module.exports = {
     getProductById,
     postProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    uploadProductImages
 };
 

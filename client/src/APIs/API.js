@@ -175,6 +175,36 @@ class API {
             });
         return result;
     }
+
+    async postProduct(product){
+        var result =
+            fetch(`${baseUrl}products`,
+            {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(product)           
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
+    async updateProduct(product){
+        var result =
+            fetch(`${baseUrl}products`,
+            {
+                method: "PUT",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(product)           
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
 }
 
 export default API;
