@@ -15,14 +15,21 @@ function Products() {
     name: "",
     brand: "",
     weight: 0,
-    usage_time: "",
+    usage_time: 0,
     description: "",
     image: "",
     holder_id: 0,
     category_id: 1,
   }
 
+  var InitialProductSearch = {
+    name: "",
+    brand: ""
+  }
+
   const [products, setProducts] = useState([]);
+  const [displayProducts, setDisplayProducts] = useState([]);
+  const [productSearch, setProductSearch] = useState(InitialProductSearch);
   const [categories, setCategories] = useState([]);
   const [product, setProduct] = useState(initialProduct);
   const [uploadedImages, setUploadedImages] = useState({});
@@ -30,7 +37,8 @@ function Products() {
 
   useEffect(() => {
     new API().getAllProducts().then((data) => {
-      setProducts([...data]);
+      setProducts([...data.reverse()]);
+      setDisplayProducts([...data]);
     })
     new API().getAllCategories().then((data) => {
       setCategories([...data]);
@@ -64,6 +72,7 @@ function Products() {
         }
       });
     }
+    setUploadedImages({});
     setProduct(initialProduct);
   }
 
@@ -80,6 +89,7 @@ function Products() {
       }
       setAction("create");
     })
+    setUploadedImages({});
     setProduct(initialProduct);
   } 
 
@@ -117,8 +127,28 @@ function Products() {
     }
   }
 
-  const handleSearch = (e) => {
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setProductSearch({...productSearch, [e.target.name]: e.target.value});
 
+    var { name, brand } = productSearch;
+    var searchResult = [];
+    if(name != "" && brand != ""){
+      searchResult = products.filter(p => p.name.toLowerCase().includes(productSearch.name.toLowerCase()) && p.brand.toLowerCase().includes(productSearch.brand.toLowerCase()));
+    }
+    else if(name != ""){
+      searchResult = products.filter(p => p.name.toLowerCase().includes(productSearch.name.toLowerCase()));
+    }
+    else if(brand != ""){
+      searchResult = products.filter(p => p.brand.toLowerCase().includes(productSearch.brand.toLowerCase()));
+    }
+  
+    setDisplayProducts(searchResult);
+  }
+  
+  const handleViewAll = () => {
+    setDisplayProducts([...products]);
+    setProductSearch(initialProduct);
   }
 
   return (
@@ -128,7 +158,7 @@ function Products() {
         <h1>Products</h1>
         <div className="container">
           <div className="row products">
-            <div className="col-lg-4 product-form">
+            <div className="col-lg-3 product-form">
               <h3>{ action == "edit" ? "Edit the product" : "Create a product"}</h3>
               <form>
                   <hr />
@@ -173,30 +203,31 @@ function Products() {
                   {action == "edit" 
                     ? 
                     <div>
-                      <button type="submit" class="btn btn-primary btn-block mt-4" onClick={(e) => handleEdit(e)}>Save</button>
-                      <button type="submit" class="btn btn-secondary btn-block mt-4 mx-2" onClick={(e) => handleAction(e, "create")}>Back to Create</button>
-                      <button type="submit" class="btn btn-block mt-4 mx-2" onClick={(e) => handleDelete(e)}>Delete</button>
+                      <button type="submit" className="btn btn-primary btn-block mt-4" onClick={(e) => handleEdit(e)}>Save</button>
+                      <button type="submit" className="btn btn-success btn-block mt-4 mx-2" onClick={(e) => handleAction(e, "create")}>Back to Create</button>
+                      <button type="submit" className="btn btn-danger btn-block mt-4" onClick={(e) => handleDelete(e)}>Delete</button>
                     </div>
-                    : <button type="submit" class="btn btn-primary btn-block mt-4" onClick={(e) => handleCreate(e)}>Create</button>
+                    : <button type="submit" className="btn btn-success btn-block mt-4" onClick={(e) => handleCreate(e)}>Create</button>
                   }
               </form>
             </div>
             <div className="col-lg-8 product-list">
               <div className="row product-search mb-3">
                 <div className='col'>
-                  <input className="form-control" type="text" placeholder="Name" name="name" id="name" value={product.name} required onChange={(e)=>handleChange(e)}/>
+                  <input className="form-control" type="text" placeholder="Name" name="name" id="name" value={productSearch.name} required onChange={(e)=>handleSearchChange(e)}/>
                 </div>
                 <div className='col'>
-                  <input className="form-control" type="text" placeholder="Brand" name="name" id="name" value={product.name} required onChange={(e)=>handleChange(e)}/>
+                  <input className="form-control" type="text" placeholder="Brand" name="brand" id="brand" value={productSearch.brand} required onChange={(e)=>handleSearchChange(e)}/>
                 </div>
                 <div className='col'>
-                  <button type="submit" className="btn btn-primary btn-block" onClick={(e) => handleSearch(e)}>Search</button>
+                  {/* <button type="submit" className="btn btn-dark btn-block" onClick={(e) => handleSearch(e)}>Search</button> */}
+                  <button type="submit" className="btn btn-light btn-block mx-2" onClick={(e) => handleViewAll(e)}>View all</button>
                 </div>
               </div>
               <div className="row">
-                { products.map((i) => {
+                { displayProducts.map((i) => {
                   return (
-                    <div className="col box" key={i.id}>
+                    <div className="col-lg-3 box" key={i.id}>
                       {i.image != "" 
                         ? <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${i.image.split(',')[0]}`)}/>
                         : <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${emptyImage}`)}/>
@@ -206,7 +237,10 @@ function Products() {
                         <h6>{i.brand}</h6>
                         <p>{i.description}</p>
                       </div>
-                      <button type="submit" class="btn btn-secondary btn-block mt-4 mx-2" onClick={(e) => handleAction(e, "edit", i)}>Edit</button>
+                      <div className='row actions'>
+                        <button type="submit" className="col btn btn-light btn-block" onClick={(e) => handleAction(e, "edit", i)}>Edit</button>
+                        <button type="submit" className="col btn btn-dark btn-block" onClick={(e) => handleAction(e, "view", i)}>View</button>
+                      </div>
                     </div>
                   )
                 })}
