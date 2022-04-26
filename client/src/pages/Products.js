@@ -124,6 +124,7 @@ function Products() {
   const handleDelete = (e) => {
     if (window.confirm("Are you sure you want to delete?")) {
       new API().deleteProduct(product.id).then(data => {});
+      handleViewAll();
     }
   }
 
@@ -155,10 +156,10 @@ function Products() {
     <div>
       <NavBar />
       <div className="products-page">
-        <h1>Products</h1>
+        {/* <h1>Products</h1> */}
         <div className="container">
           <div className="row products">
-            <div className="col-lg-3 product-form">
+            <div className="col-lg-4 product-form">
               <h3>{ action == "edit" ? "Edit the product" : "Create a product"}</h3>
               <form>
                   <hr />
@@ -211,7 +212,7 @@ function Products() {
                   }
               </form>
             </div>
-            <div className="col-lg-8 product-list">
+            <div className="col-lg-7 product-list">
               <div className="row product-search mb-3">
                 <div className='col'>
                   <input className="form-control" type="text" placeholder="Name" name="name" id="name" value={productSearch.name} required onChange={(e)=>handleSearchChange(e)}/>
@@ -221,7 +222,7 @@ function Products() {
                 </div>
                 <div className='col'>
                   {/* <button type="submit" className="btn btn-dark btn-block" onClick={(e) => handleSearch(e)}>Search</button> */}
-                  <button type="submit" className="btn btn-light btn-block mx-2" onClick={(e) => handleViewAll(e)}>View all</button>
+                  <button type="submit" className="btn btn-light btn-block" onClick={(e) => handleViewAll(e)}>View all</button>
                 </div>
               </div>
               <div className="row">

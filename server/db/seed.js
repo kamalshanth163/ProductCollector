@@ -99,7 +99,7 @@ class Seed {
             name VARCHAR(100),
             brand VARCHAR(100),
             weight DECIMAL(13,2),
-            usage_time VARCHAR(100),
+            usage_time DECIMAL(13,2),
             description VARCHAR(100),
             image VARCHAR(100),
             holder_id INT,

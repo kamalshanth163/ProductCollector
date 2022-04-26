@@ -1,10 +1,10 @@
 
 .products-page{
-  padding: 30px 100px;
+  padding: 40px 60px 0px 180px;
 }
 
 .products-page .container{
-  padding: 30px 60px;
+  padding: 20px 60px 0px 0px;
 }
 
 .products-page .products{
@@ -25,8 +25,8 @@
 }
 
 .products-page .products .product-list{
-  background: rgb(255, 255, 255);
-  margin-left: 20px;
+  margin: 0 auto;
+  margin-left: 40px;
 }
 
 .products-page .product-search{
@@ -34,6 +34,7 @@
 }
 
 .products-page .product-img{
+  margin-top: 10px;
   min-width: 120px;
   max-width: 120px;
   min-height: 120px;
@@ -41,17 +42,19 @@
 }
   
 .products-page .box-text{
-  padding: 10px;
+  padding: 10px 2px;
+  min-height: 140px;
+  overflow: hidden;
 }
   
 .products-page .products .box{
   background: rgb(248, 248, 248);
-  border-radius: 10px;
-  margin: 10px;
-  padding: 20px;
+  border: 1px solid rgb(190, 190, 190);
+  margin: 20px;
+  padding: 10px 20px;
   height: auto;
   cursor: pointer;
-  box-shadow: 2px 2px 10px rgb(194, 194, 194);
+  /* box-shadow: 2px 2px 10px rgb(194, 194, 194); */
 }
 
 .products-page .products .box .actions button{
