@@ -16,21 +16,25 @@ const getProductById = (req, res) => {
 }
 
 const uploadProductImages = (req, res) => {
-
-    // console.log("productId", productId);
-    // console.log("files: ", files[0].name);
-
-    if(files == null) return res.sendStatus(400).json({ msg: 'No files uploaded' });
-
-    // for(i=)
-    console.log(files);
+    if(req.files == null) return res.sendStatus(400).json({ msg: 'No files uploaded' });
+    var uploadedFileNames = saveUploadedImages(req.params.productId, req.files);
+    return res.send(uploadedFileNames); 
 }
+
+const saveUploadedImages = (productId, files) => {
+    var fileNames = Object.keys(files).map((f, i) => {
+      var extension = files[f].name.split(".")[1];
+      var fileName = `${productId}_${i+1}.${extension}`;
+      var file = files[f];
+
+      file.mv(`${__dirname}/../../client/public/uploads/product-images/${fileName}`);
+      return fileName;
+    });
+    return fileNames;
+  }
 
 const postProduct = (req, res) => {
     var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
-
-    // var images = uploadProductImages(req.body.image);
-    // req.body.image = "";
 
     sqlCon.query(
         `INSERT INTO products (name, brand, weight, usage_time, description, image, holder_id, category_id, created_at, updated_at)
@@ -56,7 +60,6 @@ const postProduct = (req, res) => {
         ]
     , (err, results) => {
         if(err) {
-            console.log(err);
             return res.sendStatus(400)
         };
         return res.send(results); 

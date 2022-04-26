@@ -19,7 +19,7 @@
   background: rgb(235, 235, 235);
   border-radius: 20px;
   margin: 10px;
-  width: 20%;
+  width: 40%;
   height: auto;
   padding: 20px;
   cursor: pointer;
@@ -41,4 +41,11 @@
 .products-page .product-search{
   width: 100%;
 }
+
+.products-page .product-img{
+  width: 200px;
+  height: auto;
+  margin: 10px;
+}
+  
   

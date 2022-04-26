@@ -205,6 +205,21 @@ class API {
             });
         return result;
     }
+
+    async uploadProductImages(productId, formData){
+        var result =
+            fetch(`${baseUrl}products/upload-images/${productId}`,
+            {
+                method: "POST",
+                // headers: { 'Content-Type': 'multipart/form-data' },
+                body: formData       
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
 }
 
 export default API;

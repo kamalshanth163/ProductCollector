@@ -10,6 +10,7 @@ function Products() {
   const userName = localStorage.getItem("user-name");
 
   var initialProduct = {
+    id: 0,
     name: "",
     brand: "",
     weight: 0,
@@ -24,7 +25,7 @@ function Products() {
   const [categories, setCategories] = useState([]);
   const [product, setProduct] = useState(initialProduct);
   const [uploadedImages, setUploadedImages] = useState({});
-  const [imageCode, setImageCode] = useState({});
+  const [action, setAction] = useState("create");
 
   useEffect(() => {
     new API().getAllProducts().then((data) => {
@@ -42,24 +43,8 @@ function Products() {
   const handleFileUpload = (e) => {
     setUploadedImages({...e.target.files});
   }
-
-  const saveUploadedImages = (productId, files) => {
-    var fileNames = Object.keys(files).map((f, i) => {
-      var extension = files[f].name.split(".")[1];
-      var fileName = `${productId}_${i+1}.${extension}`;
-      var file = files[f];
-
-      console.log(file)
-
-      file.mv(`${__dirname}/client/public/uploads/product-images/${fileName}`);
-
-      return fileName;
-    });
-    var code = fileNames.join(",");
-    setImageCode(code);
-  }
   
-  const handleSubmit = (e) => {
+  const handleCreate = (e) => {
     e.preventDefault(); 
     var newProduct = {
       ...product, 
@@ -67,22 +52,64 @@ function Products() {
       holder_id: parseInt(userId),
       category_id: parseInt(product.category_id)
     };
+    if(product.name !== ""){
+      new API().postProduct(newProduct).then(data => {
+        var productId = data.insertId;
+        if(productId > 0){
+          if(Object.keys(uploadedImages).length > 0){          
+            console.log(uploadedImages)
+            uploadImages(uploadedImages, newProduct);
+          }
+        }
+      });
+    }
+    setProduct(initialProduct);
+  }
 
-    new API().postProduct(newProduct).then(data => {
-      var productId = data.insertId;
-      if(productId > 0){
-        saveUploadedImages(productId, uploadedImages);
+  const handleEdit = (e) => {
+    e.preventDefault();
+    var productToUpdate = {
+      ...product, 
+      holder_id: parseInt(userId),
+      category_id: parseInt(product.category_id)
+    };
+    new API().updateProduct(productToUpdate).then(data => {
+      console.log(uploadedImages);
+      if(Object.keys(uploadedImages).length > 0){ 
+        uploadImages(uploadedImages, productToUpdate);
       }
-      newProduct = {
-        ...newProduct,
-        id: productId,
+    })
+    setAction("create");
+  } 
+
+  const uploadImages = (files, productObj) => {
+    var formData = new FormData();
+    for(var i=0; i<Object.keys(files).length; i++){
+      formData.append(`${i}`, files[i]);
+    }     
+    new API().uploadProductImages(product.id, formData).then(data => {
+      var fileNames = [...data];
+      var imageCode = fileNames.join(",");
+      productObj = {
+        ...productObj,
         image: imageCode
       }
-      new API().updateProduct(newProduct).then(data => {
-
+      new API().updateProduct(productObj).then(data => {
+        console.log(data)
       })
-    });
+    })
   }
+
+  const handleAction = (e, action, data) => {
+    setAction(action);
+    if(action == "create"){
+      setProduct(initialProduct);
+    }
+    else if(action == "edit"){
+      setProduct({...data});
+    }
+  }
+
   const handleSearch = (e) => {
 
   }
@@ -95,9 +122,10 @@ function Products() {
         <div className="container">
           <div className="row products">
             <div className="col-lg-4 product-form">
-              <h3>Create a product</h3>
+              <h3>{ action == "edit" ? "Edit the product" : "Create a product"}</h3>
               <form>
                   <hr />
+                  <input style={{display: "none"}} readOnly className="form-control" type="text" placeholder="Enter product id" name="id" id="id" value={product.id} onChange={(e)=>handleChange(e)}/>
                   <div className="form-outline mb-2">
                     <label className="form-label" for="name"><b>Name</b></label><br />
                     <input className="form-control" type="text" placeholder="Enter product name" name="name" id="name" value={product.name} required onChange={(e)=>handleChange(e)}/>
@@ -135,7 +163,14 @@ function Products() {
                     <input type="file" multiple name="image" onChange={(e) => handleFileUpload(e)}/>
                   </div>  
 
-                  <button type="submit" class="btn btn-primary btn-block mt-4" onClick={(e) => handleSubmit(e)}>Create</button>
+                  {action == "edit" 
+                    ? 
+                    <div>
+                      <button type="submit" class="btn btn-primary btn-block mt-4" onClick={(e) => handleEdit(e)}>Save</button>
+                      <button type="submit" class="btn btn-secondary btn-block mt-4 mx-2" onClick={(e) => handleAction(e, "create")}>Back to Create</button>
+                    </div>
+                    : <button type="submit" class="btn btn-primary btn-block mt-4" onClick={(e) => handleCreate(e)}>Create</button>
+                  }
               </form>
             </div>
             <div className="col-lg-8 product-list">
@@ -147,17 +182,22 @@ function Products() {
                   <input className="form-control" type="text" placeholder="Brand" name="name" id="name" value={product.name} required onChange={(e)=>handleChange(e)}/>
                 </div>
                 <div className='col'>
-                  <button type="submit" class="btn btn-primary btn-block" onClick={(e) => handleSearch(e)}>Search</button>
+                  <button type="submit" className="btn btn-primary btn-block" onClick={(e) => handleSearch(e)}>Search</button>
                 </div>
               </div>
               <div className="row">
                 { products.map((i) => {
                   return (
-                    <div className="col box">
-                      <img alt='img' />
+                    <div className="col box" key={i.id}>
+                      {i.image != "" 
+                        ? <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${i.image.split(',')[0]}`)}/>
+                        : <img alt='img' className="product-img" />
+                      }  
                       <h4>{i.name}</h4>
                       <h6>{i.brand}</h6>
                       <p>{i.description}</p>
+
+                      <button type="submit" class="btn btn-secondary btn-block mt-4 mx-2" onClick={(e) => handleAction(e, "edit", i)}>Edit</button>
                     </div>
                   )
                 })}
