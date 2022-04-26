@@ -8,6 +8,7 @@ function Products() {
   const userType = localStorage.getItem("user-type");
   const userId = localStorage.getItem("user-id");
   const userName = localStorage.getItem("user-name");
+  var emptyImage = "empty.jpg";
 
   var initialProduct = {
     id: 0,
@@ -34,7 +35,7 @@ function Products() {
     new API().getAllCategories().then((data) => {
       setCategories([...data]);
     })
-  }, [])
+  }, [product])
   
   const handleChange = (e) => {
     setProduct({...product, [e.target.name]: e.target.value});
@@ -56,8 +57,8 @@ function Products() {
       new API().postProduct(newProduct).then(data => {
         var productId = data.insertId;
         if(productId > 0){
-          if(Object.keys(uploadedImages).length > 0){          
-            console.log(uploadedImages)
+          if(Object.keys(uploadedImages).length > 0){  
+            newProduct.id = productId;
             uploadImages(uploadedImages, newProduct);
           }
         }
@@ -74,12 +75,12 @@ function Products() {
       category_id: parseInt(product.category_id)
     };
     new API().updateProduct(productToUpdate).then(data => {
-      console.log(uploadedImages);
       if(Object.keys(uploadedImages).length > 0){ 
         uploadImages(uploadedImages, productToUpdate);
       }
+      setAction("create");
     })
-    setAction("create");
+    setProduct(initialProduct);
   } 
 
   const uploadImages = (files, productObj) => {
@@ -107,6 +108,12 @@ function Products() {
     }
     else if(action == "edit"){
       setProduct({...data});
+    }
+  }
+
+  const handleDelete = (e) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      new API().deleteProduct(product.id).then(data => {});
     }
   }
 
@@ -168,6 +175,7 @@ function Products() {
                     <div>
                       <button type="submit" class="btn btn-primary btn-block mt-4" onClick={(e) => handleEdit(e)}>Save</button>
                       <button type="submit" class="btn btn-secondary btn-block mt-4 mx-2" onClick={(e) => handleAction(e, "create")}>Back to Create</button>
+                      <button type="submit" class="btn btn-block mt-4 mx-2" onClick={(e) => handleDelete(e)}>Delete</button>
                     </div>
                     : <button type="submit" class="btn btn-primary btn-block mt-4" onClick={(e) => handleCreate(e)}>Create</button>
                   }
@@ -191,12 +199,13 @@ function Products() {
                     <div className="col box" key={i.id}>
                       {i.image != "" 
                         ? <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${i.image.split(',')[0]}`)}/>
-                        : <img alt='img' className="product-img" />
-                      }  
-                      <h4>{i.name}</h4>
-                      <h6>{i.brand}</h6>
-                      <p>{i.description}</p>
-
+                        : <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${emptyImage}`)}/>
+                      }
+                      <div className='box-text'>
+                        <h4>{i.name}</h4>
+                        <h6>{i.brand}</h6>
+                        <p>{i.description}</p>
+                      </div>
                       <button type="submit" class="btn btn-secondary btn-block mt-4 mx-2" onClick={(e) => handleAction(e, "edit", i)}>Edit</button>
                     </div>
                   )

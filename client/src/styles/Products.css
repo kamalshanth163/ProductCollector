@@ -15,16 +15,6 @@
   text-align: center;
 }
 
-.products-page .products .box{
-  background: rgb(235, 235, 235);
-  border-radius: 20px;
-  margin: 10px;
-  width: 40%;
-  height: auto;
-  padding: 20px;
-  cursor: pointer;
-}
-
 .products-page .products .box span{
   font-size: 20px;
 }
@@ -43,9 +33,22 @@
 }
 
 .products-page .product-img{
-  width: 200px;
-  height: auto;
-  margin: 10px;
+  min-width: 120px;
+  max-width: 120px;
+  min-height: 120px;
+  max-height: auto;
 }
   
+.products-page .box-text{
+  padding: 10px;
+}
   
+.products-page .products .box{
+  background: rgb(255, 255, 255);
+  border-radius: 0px;
+  margin: 10px;
+  padding: 10px;
+  width: 200px !important;
+  height: auto;
+  cursor: pointer;
+}

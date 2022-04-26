@@ -220,6 +220,18 @@ class API {
             });
         return result;
     }
+
+    async deleteProduct(productId){
+        var result =
+            fetch(`${baseUrl}products/${productId}`, {
+                method: 'DELETE',
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
 }
 
 export default API;
