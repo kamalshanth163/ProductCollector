@@ -156,8 +156,11 @@ function Products() {
     setProductSearch({...productSearch, [e.target.name]: e.target.value});
   }
   
-  const handleViewAll = () => {
+  const handleReset = () => {
     setProductSearch(InitialProductSearch);
+  }
+
+  const handleViewAll = () => {
     setDisplayProducts([...products]);
   }
 
@@ -335,6 +338,7 @@ function Products() {
                 <div className='col search-buttons'>
                   <button type="submit" className="btn btn-primary btn-block mt-4" onClick={(e) => handleSearch(e)}>Search</button>
                   <button type="submit" className="btn btn-light btn-block mt-4 mx-2" onClick={(e) => handleViewAll(e)}>View all</button>
+                  <button type="submit" className="btn btn-light btn-block mt-4" onClick={(e) => handleReset(e)}>Reset</button>
                 </div>
               </div>
               <hr />
