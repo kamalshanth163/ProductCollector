@@ -24,7 +24,12 @@ function Products() {
 
   var InitialProductSearch = {
     name: "",
-    brand: ""
+    brand: "",
+    minWeight: 0,
+    maxWeight: 0,
+    minUsage: 0,
+    maxUsage: 0,
+    category_id: 1,
   }
 
   const [products, setProducts] = useState([]);
@@ -34,6 +39,7 @@ function Products() {
   const [product, setProduct] = useState(initialProduct);
   const [uploadedImages, setUploadedImages] = useState({});
   const [action, setAction] = useState("create");
+  const [showForm, setShowForm] = useState(true);
 
   useEffect(() => {
     new API().getAllProducts().then((data) => {
@@ -61,6 +67,7 @@ function Products() {
       holder_id: parseInt(userId),
       category_id: parseInt(product.category_id)
     };
+
     if(product.name !== ""){
       new API().postProduct(newProduct).then(data => {
         var productId = data.insertId;
@@ -106,7 +113,7 @@ function Products() {
         image: imageCode
       }
       new API().updateProduct(productObj).then(data => {
-        console.log(data)
+
       })
     })
   }
@@ -118,33 +125,20 @@ function Products() {
     }
     else if(action == "edit"){
       setProduct({...data});
+      setShowForm(true);
     }
   }
 
   const handleDelete = (e) => {
     if (window.confirm("Are you sure you want to delete?")) {
       new API().deleteProduct(product.id).then(data => {});
-      handleViewAll();
     }
+    handleViewAll();
   }
 
   const handleSearchChange = (e) => {
     e.preventDefault();
     setProductSearch({...productSearch, [e.target.name]: e.target.value});
-
-    var { name, brand } = productSearch;
-    var searchResult = [];
-    if(name != "" && brand != ""){
-      searchResult = products.filter(p => p.name.toLowerCase().includes(productSearch.name.toLowerCase()) && p.brand.toLowerCase().includes(productSearch.brand.toLowerCase()));
-    }
-    else if(name != ""){
-      searchResult = products.filter(p => p.name.toLowerCase().includes(productSearch.name.toLowerCase()));
-    }
-    else if(brand != ""){
-      searchResult = products.filter(p => p.brand.toLowerCase().includes(productSearch.brand.toLowerCase()));
-    }
-  
-    setDisplayProducts(searchResult);
   }
   
   const handleViewAll = () => {
@@ -152,29 +146,61 @@ function Products() {
     setProductSearch(initialProduct);
   }
 
+  const handleSearch = () => {
+    var { name, brand, minWeight, maxWeight, minUsage, maxUsage, category_id } = productSearch;
+    var searchResult = [];
+
+    if(category_id > 0){
+      searchResult = products.filter(p => p.category_id*1 == productSearch.category_id*1);
+    }
+
+    if(name !== ""){
+      searchResult = products.filter(p => p.name.toLowerCase().includes(productSearch.name.toLowerCase()));
+    }
+    if(brand !== ""){
+      searchResult = products.filter(p => p.brand.toLowerCase().includes(productSearch.brand.toLowerCase()));
+    }   
+
+    if(minWeight > 0){
+      searchResult = products.filter(p => p.weight >= productSearch.minWeight);
+    }   
+    if(maxWeight > 0){
+      searchResult = products.filter(p => p.weight <= productSearch.maxWeight);
+    }
+
+    if (minUsage > 0){
+      searchResult = products.filter(p => p.usage_time >= productSearch.minUsage);
+    } 
+    if(maxUsage > 0){
+      searchResult = products.filter(p => p.usage_time <= productSearch.maxUsage);
+    }
+  
+    setDisplayProducts(searchResult);
+  }
+
   return (
     <div>
       <NavBar />
       <div className="products-page">
-        {/* <h1>Products</h1> */}
         <div className="container">
+          <button type="submit" className="btn btn-dark btn-block mt-4" onClick={(e) => setShowForm(!showForm)}>{showForm ? "<< Hide product form" : ">> Show product form"}</button><hr />
           <div className="row products">
-            <div className="col-lg-4 product-form">
+            <div style={{display: showForm ? 'block' : "none"}} className="col-lg-4 product-form">
               <h3>{ action == "edit" ? "Edit the product" : "Create a product"}</h3>
               <form>
                   <hr />
                   <input style={{display: "none"}} readOnly className="form-control" type="text" placeholder="Enter product id" name="id" id="id" value={product.id} onChange={(e)=>handleChange(e)}/>
                   <div className="form-outline mb-2">
                     <label className="form-label" for="name"><b>Name</b></label><br />
-                    <input className="form-control" type="text" placeholder="Enter product name" name="name" id="name" value={product.name} required onChange={(e)=>handleChange(e)}/>
+                    <input className="form-control" type="text" placeholder="Enter product name" name="name" id="name" value={product.name} onChange={(e)=>handleChange(e)}/>
                   </div>
                   <div className="form-outline mb-2">
                     <label className="form-label" for="brand"><b>Brand</b></label><br />
-                    <input className="form-control" type="text" placeholder="Enter product brand" name="brand" id="brand" value={product.brand} required onChange={(e)=>handleChange(e)}/>
+                    <input className="form-control" type="text" placeholder="Enter product brand" name="brand" id="brand" value={product.brand} onChange={(e)=>handleChange(e)}/>
                   </div>
                   <div className='form-outline mb-2'>
                     <label className="form-label" for="category_id"><b>Category</b></label>
-                    <select className="form-select" name="category_id" id="category_id" value={product.category_id} required onChange={(e)=>handleChange(e)}>
+                    <select className="form-select" name="category_id" id="category_id" value={product.category_id} onChange={(e)=>handleChange(e)}>
                       {
                         categories.map(category => {
                           return <option key={category.id} value={category.id}>{category.name}</option>
@@ -185,16 +211,16 @@ function Products() {
                   <div className="form-outline mb-2 row">
                     <div className='col'>
                       <label className="form-label" for="weight"><b>Weight (Kg)</b></label><br />
-                      <input className="form-control" type="number" placeholder="Enter weight" name="weight" id="weight" value={product.weight} required onChange={(e)=>handleChange(e)}/>
+                      <input className="form-control" type="number" placeholder="Enter weight" name="weight" id="weight" value={product.weight} onChange={(e)=>handleChange(e)}/>
                     </div>
                     <div className='col'>
                       <label className="form-label" for="usage_time"><b>Usage (Year)</b></label><br />
-                      <input className="form-control" type="number" placeholder="Enter usage" name="usage_time" id="usage_time" value={product.usage_time} required onChange={(e)=>handleChange(e)}/>
+                      <input className="form-control" type="number" placeholder="Enter usage" name="usage_time" id="usage_time" value={product.usage_time} onChange={(e)=>handleChange(e)}/>
                     </div>
                   </div>
                   <div className="form-outline mb-2">
                     <label className="form-label" for="description"><b>Description</b></label><br />
-                    <textarea className="form-control" type="text" placeholder="Enter description" name="description" id="description" value={product.description} required onChange={(e)=>handleChange(e)}/>
+                    <textarea className="form-control" type="text" placeholder="Enter description" name="description" id="description" value={product.description} onChange={(e)=>handleChange(e)}/>
                   </div> 
                   <div className="form-outline mb-2">
                     <label className="form-label" for="image"><b>Images</b></label><br />
@@ -212,24 +238,65 @@ function Products() {
                   }
               </form>
             </div>
-            <div className="col-lg-7 product-list">
+            
+            <div className={showForm ? "col-lg-7 product-list" :  "col-lg-12 product-list"}>
               <div className="row product-search mb-3">
-                <div className='col'>
-                  <input className="form-control" type="text" placeholder="Name" name="name" id="name" value={productSearch.name} required onChange={(e)=>handleSearchChange(e)}/>
+                <div className='row mb-2'>
+                  <div className='col'>
+                    <label className="form-label label-small" for="name"><b>Product name</b></label>
+                    <input className="form-control" type="text" placeholder="Name" name="name" id="name" value={productSearch.name} onChange={(e)=>handleSearchChange(e)}/>
+                  </div>
+                  <div className='col'>
+                    <label className="form-label label-small" for="brand"><b>Brand</b></label>
+                    <input className="form-control" type="text" placeholder="Brand" name="brand" id="brand" value={productSearch.brand} onChange={(e)=>handleSearchChange(e)}/>
+                  </div>
+                  <div className='col'>
+                    <label className="form-label label-small" for="category_id"><b>Category</b></label>
+                    <select className="form-select" name="category_id" id="category_id" value={productSearch.category_id} onChange={(e)=>handleSearchChange(e)}>
+                      {
+                        categories.map(category => {
+                          return <option key={category.id} value={category.id}>{category.name}</option>
+                        })
+                      }  
+                    </select>
+                  </div>
                 </div>
-                <div className='col'>
-                  <input className="form-control" type="text" placeholder="Brand" name="brand" id="brand" value={productSearch.brand} required onChange={(e)=>handleSearchChange(e)}/>
+                <div className='row'>
+                  <div className='col'>
+                    <div className='row'>
+                      <div className='col'>
+                        <label className="form-label label-small" for="minWeight"><b>Min weight (Kg)</b></label><br />
+                        <input className="form-control" type="number" placeholder="Min" name="minWeight" id="minWeight" value={productSearch.minWeight} required onChange={(e)=>handleSearchChange(e)}/>
+                      </div>
+                      <div className='col'>
+                        <label className="form-label label-small" for="maxWeight"><b>Max weight (Kg)</b></label><br />
+                        <input className="form-control" type="number" placeholder="Max" name="maxWeight" id="maxWeight" value={productSearch.maxWeight} required onChange={(e)=>handleSearchChange(e)}/>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='col'>
+                    <div className='row'>
+                      <div className='col'>
+                        <label className="form-label label-small" for="minUsage"><b>Min usage (Year)</b></label><br />
+                        <input className="form-control" type="number" placeholder="Min" name="minUsage" id="minUsage" value={productSearch.minUsage} required onChange={(e)=>handleSearchChange(e)}/>
+                      </div>
+                      <div className='col'>
+                        <label className="form-label label-small" for="maxUsage"><b>Max usage (Year)</b></label><br />
+                        <input className="form-control" type="number" placeholder="Max" name="maxUsage" id="maxUsage" value={productSearch.maxUsage} required onChange={(e)=>handleSearchChange(e)}/>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className='col'>
-                  {/* <button type="submit" className="btn btn-dark btn-block" onClick={(e) => handleSearch(e)}>Search</button> */}
-                  <button type="submit" className="btn btn-light btn-block" onClick={(e) => handleViewAll(e)}>View all</button>
+                <div className='col search-buttons'>
+                  <button type="submit" className="btn btn-primary btn-block mt-4" onClick={(e) => handleSearch(e)}>Search</button>
+                  <button type="submit" className="btn btn-light btn-block mt-4 mx-2" onClick={(e) => handleViewAll(e)}>View all</button>
                 </div>
               </div>
               <div className="row">
                 { displayProducts.map((i) => {
                   return (
                     <div className="col-lg-3 box" key={i.id}>
-                      {i.image != "" 
+                      {i.image !== "" 
                         ? <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${i.image.split(',')[0]}`)}/>
                         : <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${emptyImage}`)}/>
                       }

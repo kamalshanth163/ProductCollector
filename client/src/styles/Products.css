@@ -1,10 +1,10 @@
 
 .products-page{
-  padding: 40px 60px 0px 180px;
+  padding: 20px 60px 0px 180px;
 }
 
 .products-page .container{
-  padding: 20px 60px 0px 0px;
+  padding: 0px 60px 0px 0px;
 }
 
 .products-page .products{
@@ -60,4 +60,12 @@
 .products-page .products .box .actions button{
   padding: 4px;
   margin: 2px;
+}
+
+.products-page .label-small{
+  font-size: 12px;
+}
+
+.products-page .search-buttons{
+  text-align: left;
 }
