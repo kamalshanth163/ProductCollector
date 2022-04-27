@@ -29,7 +29,8 @@ function Products() {
     maxWeight: 0,
     minUsage: 0,
     maxUsage: 0,
-    category_id: 1,
+    category_id: 0,
+    holder_id: 0,
   }
 
   const [products, setProducts] = useState([]);
@@ -39,16 +40,30 @@ function Products() {
   const [product, setProduct] = useState(initialProduct);
   const [uploadedImages, setUploadedImages] = useState({});
   const [action, setAction] = useState("create");
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(userType == "holder" ? true : false);
+  const [holders, setHolders] = useState([]);
 
   useEffect(() => {
     new API().getAllProducts().then((data) => {
-      setProducts([...data.reverse()]);
-      setDisplayProducts([...data]);
+      if(userType == "collector"){
+        setProducts([...data.reverse()]);
+        setDisplayProducts([...data.reverse()]);
+      } 
+      else if (userType == "holder"){
+        var holderProducts = data.filter(x => x.holder_id == userId*1);
+        setProducts([...holderProducts.reverse()]);
+        setDisplayProducts([...holderProducts.reverse()]);
+      }
     })
     new API().getAllCategories().then((data) => {
       setCategories([...data]);
     })
+
+    if(userType == "collector"){
+      new API().getAllHolders().then((data) => {
+        setHolders([...data]);
+      })
+    }
   }, [product])
   
   const handleChange = (e) => {
@@ -142,24 +157,36 @@ function Products() {
   }
   
   const handleViewAll = () => {
+    setProductSearch(InitialProductSearch);
     setDisplayProducts([...products]);
-    setProductSearch(initialProduct);
   }
 
   const handleSearch = () => {
-    var { name, brand, minWeight, maxWeight, minUsage, maxUsage, category_id } = productSearch;
+    var { name, brand, minWeight, maxWeight, minUsage, maxUsage, category_id, holder_id } = productSearch;
     var searchResult = [];
 
-    if(category_id > 0){
-      searchResult = products.filter(p => p.category_id*1 == productSearch.category_id*1);
-    }
-
+    
     if(name !== ""){
       searchResult = products.filter(p => p.name.toLowerCase().includes(productSearch.name.toLowerCase()));
     }
     if(brand !== ""){
       searchResult = products.filter(p => p.brand.toLowerCase().includes(productSearch.brand.toLowerCase()));
-    }   
+    } 
+      
+    if(category_id == 0){
+      searchResult = searchResult;
+    }
+    if(holder_id == 0){
+      searchResult = searchResult;
+    }
+
+    if(category_id > 0){
+      searchResult = products.filter(p => p.category_id*1 == productSearch.category_id*1);
+    }
+
+    if(holder_id > 0){
+      searchResult = products.filter(p => p.holder_id*1 == productSearch.holder_id*1);
+    }
 
     if(minWeight > 0){
       searchResult = products.filter(p => p.weight >= productSearch.minWeight);
@@ -182,8 +209,14 @@ function Products() {
     <div>
       <NavBar />
       <div className="products-page">
-        <div className="container">
-          <button type="submit" className="btn btn-dark btn-block mt-4" onClick={(e) => setShowForm(!showForm)}>{showForm ? "<< Hide product form" : ">> Show product form"}</button><hr />
+        <div className="container mt-4">
+          {userType == "holder"
+           ? 
+            <div>
+              <button type="submit" className="btn btn-dark btn-block" onClick={(e) => setShowForm(!showForm)}>{showForm ? "<< Hide product form" : ">> Show product form"}</button><hr />
+            </div>
+           : ""
+          }
           <div className="row products">
             <div style={{display: showForm ? 'block' : "none"}} className="col-lg-4 product-form">
               <h3>{ action == "edit" ? "Edit the product" : "Create a product"}</h3>
@@ -243,7 +276,7 @@ function Products() {
               <div className="row product-search mb-3">
                 <div className='row mb-2'>
                   <div className='col'>
-                    <label className="form-label label-small" for="name"><b>Product name</b></label>
+                    <label className="form-label label-small" for="name"><b>Product Name</b></label>
                     <input className="form-control" type="text" placeholder="Name" name="name" id="name" value={productSearch.name} onChange={(e)=>handleSearchChange(e)}/>
                   </div>
                   <div className='col'>
@@ -253,9 +286,21 @@ function Products() {
                   <div className='col'>
                     <label className="form-label label-small" for="category_id"><b>Category</b></label>
                     <select className="form-select" name="category_id" id="category_id" value={productSearch.category_id} onChange={(e)=>handleSearchChange(e)}>
+                      <option key={0} value={0}>All</option>
                       {
                         categories.map(category => {
                           return <option key={category.id} value={category.id}>{category.name}</option>
+                        })
+                      }  
+                    </select>
+                  </div>
+                  <div className='col'>
+                    <label className="form-label label-small" for="holder_id"><b>Product Holder</b></label>
+                    <select className="form-select" name="holder_id" id="holder_id" value={productSearch.holder_id} onChange={(e)=>handleSearchChange(e)}>
+                      <option key={0} value={0}>All</option>
+                      {
+                        holders.map(holder => {
+                          return <option key={holder.id} value={holder.id}>{holder.name}</option>
                         })
                       }  
                     </select>
@@ -265,11 +310,11 @@ function Products() {
                   <div className='col'>
                     <div className='row'>
                       <div className='col'>
-                        <label className="form-label label-small" for="minWeight"><b>Min weight (Kg)</b></label><br />
+                        <label className="form-label label-small" for="minWeight"><b>Min Weight (Kg)</b></label><br />
                         <input className="form-control" type="number" placeholder="Min" name="minWeight" id="minWeight" value={productSearch.minWeight} required onChange={(e)=>handleSearchChange(e)}/>
                       </div>
                       <div className='col'>
-                        <label className="form-label label-small" for="maxWeight"><b>Max weight (Kg)</b></label><br />
+                        <label className="form-label label-small" for="maxWeight"><b>Max Weight (Kg)</b></label><br />
                         <input className="form-control" type="number" placeholder="Max" name="maxWeight" id="maxWeight" value={productSearch.maxWeight} required onChange={(e)=>handleSearchChange(e)}/>
                       </div>
                     </div>
@@ -277,11 +322,11 @@ function Products() {
                   <div className='col'>
                     <div className='row'>
                       <div className='col'>
-                        <label className="form-label label-small" for="minUsage"><b>Min usage (Year)</b></label><br />
+                        <label className="form-label label-small" for="minUsage"><b>Min Usage (Year)</b></label><br />
                         <input className="form-control" type="number" placeholder="Min" name="minUsage" id="minUsage" value={productSearch.minUsage} required onChange={(e)=>handleSearchChange(e)}/>
                       </div>
                       <div className='col'>
-                        <label className="form-label label-small" for="maxUsage"><b>Max usage (Year)</b></label><br />
+                        <label className="form-label label-small" for="maxUsage"><b>Max Usage (Year)</b></label><br />
                         <input className="form-control" type="number" placeholder="Max" name="maxUsage" id="maxUsage" value={productSearch.maxUsage} required onChange={(e)=>handleSearchChange(e)}/>
                       </div>
                     </div>
@@ -292,6 +337,7 @@ function Products() {
                   <button type="submit" className="btn btn-light btn-block mt-4 mx-2" onClick={(e) => handleViewAll(e)}>View all</button>
                 </div>
               </div>
+              <hr />
               <div className="row">
                 { displayProducts.map((i) => {
                   return (
@@ -306,7 +352,10 @@ function Products() {
                         <p>{i.description}</p>
                       </div>
                       <div className='row actions'>
-                        <button type="submit" className="col btn btn-light btn-block" onClick={(e) => handleAction(e, "edit", i)}>Edit</button>
+                        { userType == "holder" 
+                          ? <button type="submit" className="col btn btn-light btn-block" onClick={(e) => handleAction(e, "edit", i)}>Edit</button>
+                          : ""
+                        }
                         <button type="submit" className="col btn btn-dark btn-block" onClick={(e) => handleAction(e, "view", i)}>View</button>
                       </div>
                     </div>
