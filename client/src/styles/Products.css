@@ -44,6 +44,7 @@
 .products-page .box-text{
   padding: 10px 2px;
   min-height: 140px;
+  max-height: 140px;
   overflow: hidden;
 }
   
@@ -68,4 +69,48 @@
 
 .products-page .search-buttons{
   text-align: left;
+}
+
+.product-preview .container{
+  padding: 20px 100px;
+}
+
+.product-preview .product-img{
+  /* background: red; */
+  margin-top: 10px;
+  min-width: 60px;
+  max-width: 60px;
+  min-height: 60px;
+  max-height: 60px;
+}
+
+.product-preview .product-img-preview{
+  /* background: red; */
+  min-width: 320px;
+  max-width: 320px;
+  min-height: 320px;
+  max-height: 320px;
+  margin: 0px 20px;
+}
+
+.product-preview .image-list {
+  max-width: 360px;
+  height: auto;
+  margin: 0px;
+  padding: 0px 10px;
+}
+
+.product-preview .back-btn{
+  background: none;
+  cursor: pointer;
+  margin: 20px 0px 0px;
+  width: 200px;
+  font-size: 20px;
+  border: none;
+}
+
+.product-preview .info-section{
+  /* background: red; */
+  width: 100%;
+  margin-left: -120px;
 }

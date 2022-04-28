@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import '../styles/Products.css'
 import NavBar from '../components/NavBar';
 import API from '../APIs/API';
+import { useHistory } from 'react-router';
+
 
 function Products() {
 
@@ -9,6 +11,8 @@ function Products() {
   const userId = localStorage.getItem("user-id");
   const userName = localStorage.getItem("user-name");
   var emptyImage = "empty.jpg";
+
+  const history = useHistory();
 
   var initialProduct = {
     id: 0,
@@ -120,7 +124,7 @@ function Products() {
     for(var i=0; i<Object.keys(files).length; i++){
       formData.append(`${i}`, files[i]);
     }     
-    new API().uploadProductImages(product.id, formData).then(data => {
+    new API().uploadProductImages(productObj.id, formData).then(data => {
       var fileNames = [...data];
       var imageCode = fileNames.join(",");
       productObj = {
@@ -141,6 +145,9 @@ function Products() {
     else if(action == "edit"){
       setProduct({...data});
       setShowForm(true);
+    }
+    else if(action == "view"){
+      history.push(`./products/${data.id}`);
     }
   }
 

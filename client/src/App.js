@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
 import Orders from './pages/Orders';
 import Account from './pages/Account';
+import Product from './pages/Product';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/login-page" component = {LoginPage} />
             <Route path="/register-page" component = {RegisterPage} />
             <Route path="/dashboard" component = {Dashboard} />
+            <Route path="/products/:id" component = {Product} />
             <Route path="/products" component = {Products} />
             <Route path="/orders" component = {Orders} />
             <Route path="/account" component = {Account} />
