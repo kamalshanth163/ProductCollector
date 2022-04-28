@@ -42,6 +42,8 @@ function Product() {
   const [images, setImages] = useState([]);
   const [imagePreview, setImagePreview] = useState("empty.jpg");
 
+  useEffect(() => {}, [orderStatus])
+
   useEffect(() => {
     new API().getAllProducts().then((data) => {
       var product = data.find(x => x.id == id);
@@ -64,7 +66,7 @@ function Product() {
         }
       })
     })
-  }, [product])
+  }, [])
 
   const handlePreview = (image) => {
     setImagePreview(image);
@@ -81,7 +83,7 @@ function Product() {
 
     new API().postOrder(newOrder).then(data => {
       alert("Product ordered successfully");
-      setProduct(product);
+      setOrderStatus("pending");
     })
   }
 
@@ -132,10 +134,10 @@ function Product() {
                   <h3>LKR {price.toFixed(2)}</h3>
                 </div>
               </div>
-              <hr />
               { userType == "collector" 
                 ?
                 <div className='col'>
+                  <hr />
                   { orderStatus == "pending" 
                       ? <div type="submit" className="mt-4">
                           <span>This product order is pending</span>
