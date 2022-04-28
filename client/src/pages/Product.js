@@ -64,7 +64,7 @@ function Product() {
         }
       })
     })
-  }, [])
+  }, [product])
 
   const handlePreview = (image) => {
     setImagePreview(image);
@@ -81,6 +81,7 @@ function Product() {
 
     new API().postOrder(newOrder).then(data => {
       alert("Product ordered successfully");
+      setProduct(product);
     })
   }
 
