@@ -175,6 +175,78 @@ class API {
             });
         return result;
     }
+
+    async postProduct(product){
+        var result =
+            fetch(`${baseUrl}products`,
+            {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(product)           
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
+    async postOrder(order){
+        var result =
+            fetch(`${baseUrl}orders`,
+            {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(order)           
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
+    async updateProduct(product){
+        var result =
+            fetch(`${baseUrl}products`,
+            {
+                method: "PUT",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(product)           
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
+    async uploadProductImages(productId, formData){
+        var result =
+            fetch(`${baseUrl}products/upload-images/${productId}`,
+            {
+                method: "POST",
+                // headers: { 'Content-Type': 'multipart/form-data' },
+                body: formData       
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
+    async deleteProduct(productId){
+        var result =
+            fetch(`${baseUrl}products/${productId}`, {
+                method: 'DELETE',
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
 }
 
 export default API;

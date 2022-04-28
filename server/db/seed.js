@@ -31,113 +31,6 @@ class Seed {
         categories.forEach(category => {
             this.insertCategory(category);
         });
-
-        // // seed an order and a product temporarily
-        var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
-
-        // sqlCon.query(
-        //     `INSERT INTO products (name, brand, weight, usage_time, status, image, holder_id, category_id, created_at, updated_at)
-        //     SELECT ?,?,?,?,?,?,?,?,?,?
-        //     FROM DUAL
-        //     WHERE NOT EXISTS(
-        //         SELECT 1
-        //         FROM products
-        //         WHERE name = 'Laptop'
-        //     )
-        //     LIMIT 1;`,
-        //     [
-        //         'Laptop',
-        //         "Dell",
-        //         2.3,
-        //         12,
-        //         "available",
-        //         "",
-        //         1,
-        //         1,
-        //         currentLocalTime,
-        //         currentLocalTime,
-        //     ]
-        // , (err, results) => {
-        //     if (err) {
-        //         console.log(err.message);
-        //     }
-        // });
-
-        sqlCon.query(
-            `INSERT INTO products (name, brand, weight, usage_time, status, image, holder_id, category_id, created_at, updated_at)
-            SELECT ?,?,?,?,?,?,?,?,?,?
-            FROM DUAL
-            WHERE NOT EXISTS(
-                SELECT 1
-                FROM products
-                WHERE name = 'Table'
-            )
-            LIMIT 1;`,
-            [
-                'Table',
-                "Damro",
-                3.2,
-                5,
-                "available",
-                "",
-                1,
-                3,
-                currentLocalTime,
-                currentLocalTime,
-            ]
-        , (err, results) => {
-            if (err) {
-                console.log(err.message);
-            }
-        });
-
-        // sqlCon.query(
-        //     `INSERT INTO orders (status, collector_id, product_id, price, created_at, updated_at)
-        //     SELECT ?,?,?,?,?,?
-        //     FROM DUAL
-        //     WHERE NOT EXISTS(
-        //         SELECT 1
-        //         FROM orders
-        //         WHERE collector_id = 1 AND product_id = 2
-        //     )
-        //     LIMIT 1;`,
-        //     [
-        //         'pending',
-        //         1,
-        //         2,
-        //         120.50,
-        //         currentLocalTime,
-        //         currentLocalTime,
-        //     ]
-        // , (err, results) => {
-        //     if (err) {
-        //         console.log(err.message);
-        //     }
-        // });
-
-        sqlCon.query(
-            `INSERT INTO orders (status, collector_id, product_id, price, created_at, updated_at)
-            SELECT ?,?,?,?,?,?
-            FROM DUAL
-            WHERE NOT EXISTS(
-                SELECT 1
-                FROM orders
-                WHERE collector_id = 1 AND product_id = 3
-            )
-            LIMIT 1;`,
-            [
-                'completed',
-                1,
-                3,
-                210.00,
-                currentLocalTime,
-                currentLocalTime,
-            ]
-        , (err, results) => {
-            if (err) {
-                console.log(err.message);
-            }
-        });
     }
 
     insertCategory(category) {
@@ -164,8 +57,6 @@ class Seed {
             }
         });
     }
-
-
 
     createAllTables() {
         let createTables = 
@@ -208,8 +99,8 @@ class Seed {
             name VARCHAR(100),
             brand VARCHAR(100),
             weight DECIMAL(13,2),
-            usage_time VARCHAR(100),
-            status VARCHAR(100),
+            usage_time DECIMAL(13,2),
+            description LONGTEXT,
             image VARCHAR(100),
             holder_id INT,
             category_id INT,
