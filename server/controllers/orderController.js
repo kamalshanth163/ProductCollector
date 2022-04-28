@@ -18,26 +18,28 @@ const getOrderById = (req, res) => {
 const postOrder = (req, res) => {
     var currentLocalTime = new DateTimeService().getLocalDateTime(new Date());
     sqlCon.query(
-        `INSERT INTO orders (name, address, email, phone, password, created_at, updated_at)
-        SELECT ?,?,?,?,?,?,?
+        `INSERT INTO orders (status, collector_id, product_id, price, created_at, updated_at)
+        SELECT ?,?,?,?,?,?
         FROM DUAL
         WHERE NOT EXISTS(
             SELECT 1
             FROM orders
-            WHERE email = '${req.body.email}' AND password = '${req.body.password}'
+            WHERE collector_id = '${req.body.collector_id}' AND product_id = '${req.body.product_id}'
         )
         LIMIT 1;`,
         [
-            req.body.name,
-            req.body.address,
-            req.body.email,
-            req.body.phone,
-            req.body.password,
+            req.body.status,
+            req.body.collector_id,
+            req.body.product_id,
+            req.body.price,
             currentLocalTime,
             currentLocalTime,
         ]
     , (err, results) => {
-        if(err) return res.sendStatus(400);
+        if(err) {
+            console.log(err);
+            return res.sendStatus(400);
+        }
         return res.send(results); 
     })
 }
@@ -51,15 +53,17 @@ const updateOrder = (req, res) => {
         SET SQL_MODE='ALLOW_INVALID_DATES';
         UPDATE orders 
         SET 
-        name = '${req.body.name}',
-        address = '${req.body.address}',
-        email = '${req.body.email}',
-        phone = '${req.body.phone}',
-        password = '${req.body.password}',
+        status = '${req.body.status}',
+        collector_id = '${req.body.collector_id}',
+        product_id = '${req.body.product_id}',
+        price = '${req.body.price}',
         updated_at = '${updatedAt}'
         WHERE id = '${req.body.id}';`
     , (err, results) => {
-        if(err) return res.sendStatus(400);
+        if(err) {
+            console.log(err);
+            return res.sendStatus(400);
+        }
         return res.send(results); 
     })
 }

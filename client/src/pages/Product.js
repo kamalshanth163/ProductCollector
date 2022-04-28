@@ -26,9 +26,19 @@ function Product() {
     category_id: 1,
   }
 
+  var initialOrder = {
+    id: 0,
+    status: "",
+    price: 0,
+    collector_id: 0,
+    product_id: 0,
+  }
+
   const [product, setProduct] = useState(initialProduct);
+  const [orders, setOrders] = useState([]);
   const [category, setCategory] = useState({});
   const [price, setPrice] = useState(0);
+  const [orderStatus, setOrderStatus] = useState("");
   const [images, setImages] = useState([]);
   const [imagePreview, setImagePreview] = useState("empty.jpg");
 
@@ -46,11 +56,32 @@ function Product() {
         setCategory({...category});
         setPrice(category.price_per_kg * product.weight * 1)
       })
+
+      new API().getAllOrders().then((data) => {
+        var order = data.find(x => x.collector_id == userId && x.product_id == product.id);
+        if(order){
+          setOrderStatus(order.status);
+        }
+      })
     })
   }, [])
 
   const handlePreview = (image) => {
     setImagePreview(image);
+  }
+  
+  const handleOrder = (e) => {
+    var newOrder = {
+      id: 0,
+      status: "pending",
+      price: price,
+      collector_id: userId,
+      product_id: product.id,
+    }
+
+    new API().postOrder(newOrder).then(data => {
+      alert("Product ordered successfully");
+    })
   }
 
   return (
@@ -100,6 +131,27 @@ function Product() {
                   <h3>LKR {price.toFixed(2)}</h3>
                 </div>
               </div>
+              <hr />
+              { userType == "collector" 
+                ?
+                <div className='col'>
+                  { orderStatus == "pending" 
+                      ? <div type="submit" className="mt-4">
+                          <span>This product order is pending</span>
+                          <button type="submit" className="btn btn-primary btn-block mx-2" onClick={(e) => history.push('/orders')}>View order</button>
+                        </div>
+                      : orderStatus == "completed" 
+                        ? <div type="submit" className="mt-4">
+                            <span>This product order is completed</span>
+                            <button type="submit" className="btn btn-primary btn-block mx-2" onClick={(e) => history.push('/orders')}>View order</button>
+                          </div>
+                        : <div type="submit" className="mt-4">
+                            <button type="submit" className="btn btn-success btn-block" onClick={(e) => handleOrder(e)}>Order this product</button>
+                          </div>
+                  }
+                </div>
+                : ""
+              }
           </div> 
         </div>
 

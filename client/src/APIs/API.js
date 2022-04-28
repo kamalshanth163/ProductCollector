@@ -191,6 +191,21 @@ class API {
         return result;
     }
 
+    async postOrder(order){
+        var result =
+            fetch(`${baseUrl}orders`,
+            {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(order)           
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
     async updateProduct(product){
         var result =
             fetch(`${baseUrl}products`,
