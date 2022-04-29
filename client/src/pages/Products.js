@@ -223,7 +223,7 @@ function Products() {
           {userType == "holder"
            ? 
             <div>
-              <button type="submit" className="btn btn-dark btn-block" onClick={(e) => setShowForm(!showForm)}>{showForm ? "<< Hide product form" : ">> Show product form"}</button><hr />
+              <button type="submit" className="btn btn-secondary btn-block" onClick={(e) => setShowForm(!showForm)}>{showForm ? "<< Hide product form" : ">> Show product form"}</button><hr />
             </div>
            : ""
           }

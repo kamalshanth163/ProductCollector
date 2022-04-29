@@ -1,0 +1,52 @@
+
+.orders-page{
+    padding: 30px 100px;
+}
+
+.orders-page .container{
+    padding: 30px 100px;
+}
+
+.orders-page .analytics{
+    margin-bottom: 20px;
+}
+
+.orders-page .box{
+    text-align: center;
+}
+
+.orders-page .analytics .box{
+    background: rgb(236, 236, 236);
+    border-radius: 20px;
+    margin: 10px 10px;
+    height: auto;
+    padding: 20px 40px;
+}
+
+.orders-page .reports .box{
+    background: rgb(235, 235, 235);
+    border-radius: 20px;
+    margin: 20px;
+    width: 20%;
+    height: auto;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.orders-page .reports .box:hover{
+    background: rgb(39, 39, 39);
+    color: white;
+}
+
+.orders-page .box h2{
+    font-size: 20px;
+}
+
+.orders-page .reports .box span{
+    font-size: 20px;
+}
+
+.orders-page .analytics .box span{
+    font-size: 40px;
+    font-weight: bold;
+}

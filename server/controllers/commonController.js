@@ -25,9 +25,9 @@ const getAllData = () => {
     })
 }
 
-getAllData();
 
-const getDashboardData = async (req, res) => {
+const getDashboardData = (req, res) => {
+    getAllData();
     var obj = {
         collectors: collectors,
         holders: holders,
@@ -35,8 +35,10 @@ const getDashboardData = async (req, res) => {
         categories: categories,
         orders: orders,
     }
+    console.log(obj)
     return res.send(obj);
 };
+
 
 module.exports = {
     getDashboardData

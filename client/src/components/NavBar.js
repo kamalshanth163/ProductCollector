@@ -9,6 +9,12 @@ const NavBar = () => {
   const userName = localStorage.getItem("user-name");
   const userType = localStorage.getItem("user-type");
 
+  var pathname = window.location.pathname;
+  var url = window.location.href;
+  var pathNameArray = pathname.split('/');
+  var page = pathNameArray[pathNameArray.length - 1] != "" ? pathNameArray[pathNameArray.length - 1] : pathNameArray[pathNameArray.length - 2];
+  page = page.toLowerCase();
+
   const handleLogout = (e) => {
     e.preventDefault();
     if (window.confirm("Are you sure you want to logout?")) {
@@ -36,7 +42,7 @@ const NavBar = () => {
                           return (
                             <ul className="navbar-nav me-auto main-links">
                               <li className="nav-item">
-                                <NavLink className="navLink" to="/dashboard">Dashboard</NavLink>
+                                <NavLink className={page == "dashboard" ? "navLink-active" : "navLink"} to="/dashboard">Dashboard</NavLink>
                               </li>
                             </ul>
                           )
@@ -44,13 +50,13 @@ const NavBar = () => {
                         return (
                           <ul className="navbar-nav me-auto main-links">
                             <li className="nav-item">
-                              <NavLink className="navLink" to="/dashboard">Dashboard</NavLink>
+                              <NavLink className={page == "dashboard" ? "navLink-active" : "navLink"} to="/dashboard">Dashboard</NavLink>
                             </li>
                             <li className="nav-item">
-                              <NavLink className="navLink" to="/products">Products</NavLink>
+                              <NavLink className={page == "products" ? "navLink-active" : "navLink"} to="/products">Products</NavLink>
                             </li>
                             <li className="nav-item">
-                              <NavLink className="navLink" to="/orders">Orders</NavLink>
+                              <NavLink className={page == "orders" ? "navLink-active" : "navLink"} to="/orders">Orders</NavLink>
                             </li>
                           </ul>
                         )
@@ -62,7 +68,7 @@ const NavBar = () => {
                     ? 
                     <ul className="navbar-nav mr-auto">
                       <li className="nav-item">
-                        <NavLink className="navLink" to="/account">{userName}</NavLink>
+                        <NavLink className={page == "account" ? "navLink-active" : "navLink"} to="/account">{userName}</NavLink>
                       </li>
                     </ul>
                     :

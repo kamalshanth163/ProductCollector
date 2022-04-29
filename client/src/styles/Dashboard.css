@@ -33,11 +33,6 @@
     cursor: pointer;
 }
 
-.dashboard-page .reports .box:hover{
-    background: rgb(39, 39, 39);
-    color: white;
-}
-
 .dashboard-page .box h2{
     font-size: 20px;
 }
@@ -50,3 +45,27 @@
     font-size: 40px;
     font-weight: bold;
 }
+
+.dashboard-page .reload-btn{
+    float: right;
+}
+
+.dashboard-page .reports .report-box{
+    background: url("../assets/excel-bg.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    opacity: 0.9;
+    text-align: left;
+}
+
+.dashboard-page .reports .report-box span{
+    background: rgba(0, 0, 0, 0.301);
+}
+
+
+/* .dashboard-page .reports .report-box:hover{
+    background: rgb(32, 32, 32);
+    color: white;
+} */
