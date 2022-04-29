@@ -247,6 +247,21 @@ class API {
             });
         return result;
     }
+
+    async updateOrder(order){
+        var result =
+            fetch(`${baseUrl}orders`,
+            {
+                method: "PUT",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(order)           
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
 }
 
 export default API;

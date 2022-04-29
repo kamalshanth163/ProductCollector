@@ -11,12 +11,7 @@ function Orders() {
   const userId = localStorage.getItem("user-id");
   const userName = localStorage.getItem("user-name");
 
-  var initialOrder = {
-
-  }
-
   const [holders, setHolders] = useState([]);
-  const [order, setOrder] = useState({});
   const [orders, setOrders] = useState([]);
   const [displayOrders, setDisplayOrders] = useState([]);
   const [products, setProducts] = useState([]);
@@ -47,13 +42,14 @@ function Orders() {
       })
     })
 
-
     if(userType == "collector"){
       new API().getAllHolders().then((data) => {
         setHolders([...data]);
       })
     }
   }, [])
+
+  useEffect(() => {}, [orders, filterStatus])
 
   const filterOrdersByHolder = (e) => {
     var holderId = e.target.value;
@@ -78,8 +74,12 @@ function Orders() {
     setDisplayOrders([...filteredOrders]);
   }
 
-  const updateOrderStatus = (e) => {
-
+  const updateOrderStatus = (e, order) => {
+    var status = filterStatus == "" ? filterStatus : order.status;
+    order.status = order.status == "pending" ? "completed" : "pending";
+    new API().updateOrder(order).then(data => {
+      filterOrdersByStatus(e, status)
+    })
   }
 
   return (
@@ -87,40 +87,44 @@ function Orders() {
       <NavBar />
       <div className="orders-page row">
         <div className='container'>
-          <div className='row'>
-            <div className='col'>
+          <div className='row mb-4'>
+            <div className='col mt-3'>
               <h1>Orders</h1>
             </div>
-            <div className='col'>
-              <button type="submit" className={`btn ${filterStatus == "" ? "btn-dark" : "btn-light"} btn-block mt-2`} onClick={(e) => filterOrdersByStatus(e, "")}>All</button>
-              <button type="submit" className={`btn ${filterStatus == "pending" ? "btn-dark" : "btn-light"} btn-block mt-2 mx-2`}  onClick={(e) => filterOrdersByStatus(e, 'pending')}>Pending</button>
-              <button type="submit" className={`btn ${filterStatus == "completed" ? "btn-dark" : "btn-light"} btn-block mt-2`}  onClick={(e) => filterOrdersByStatus(e, 'completed')}>Completed</button>
+            <div className='col mt-4'>
+              <button type="submit" className={`btn ${filterStatus == "" ? "btn-dark" : "btn-light"} btn-block`} onClick={(e) => filterOrdersByStatus(e, "")}>All</button>
+              <button type="submit" className={`btn ${filterStatus == "pending" ? "btn-dark" : "btn-light"} btn-block mx-2`}  onClick={(e) => filterOrdersByStatus(e, 'pending')}>Pending</button>
+              <button type="submit" className={`btn ${filterStatus == "completed" ? "btn-dark" : "btn-light"} btn-block`}  onClick={(e) => filterOrdersByStatus(e, 'completed')}>Completed</button>
             </div>
-            <div className='col'>
-              <div className='form-outline mb-4'>
-                <label className="form-label" for="category_id"><b>Product Holder</b></label>
-                <select className="form-select" name="category_id" id="category_id" value={holderId} onChange={(e)=>filterOrdersByHolder(e)}>
-                  <option key={0} value={0}>All</option>
-                  {
-                    holders.map(holder => {
-                      return <option key={holder.id} value={holder.id}>{holder.name}</option>
-                    })
-                  }  
-                </select>
-              </div>
-            </div>
-          </div>
+            {userType == "collector" ?
+              <div className='col mt-4'>
+                <div className='form-outline'>
+                  <label className="form-label"><b>Product Holder</b></label>
+                  <select className="form-select" name="category_id" id="category_id" value={holderId} onChange={(e)=>filterOrdersByHolder(e)}>
+                    <option key={0} value={0}>All</option>
+                    {
+                      holders.map(holder => {
+                        return <option key={holder.id} value={holder.id}>{holder.name}</option>
+                      })
+                    }  
+                  </select>
+                </div>
+              </div> : ""          
+            }
+          </div>      
+          <br />        
           <div className='row'>
             <div className='col'>
               <table class="table">
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Product</th>
+                    <th scope="col">Price (LKR)</th>
                     <th scope="col">Created</th>
                     <th scope="col">Updated</th>
-                    <th scope="col"></th>
+                    <th scope="col">Status</th>
+                    {userType == "collector" ? <th scope="col"></th> : ""}
                   </tr>
                 </thead>
                 <tbody>
@@ -129,13 +133,17 @@ function Orders() {
                       return (
                         <tr>
                           <td>{i+1}</td>
-                          <td>{new TextService().capitalize(order.status)}</td>
                           <td>{products.find(x => x.id == order.product_id).name}</td>
+                          <td>{order.price.toFixed(2)}</td>
                           <td>{new Date(order.created_at).toDateString()}</td>
                           <td>{new Date(order.updated_at).toDateString()}</td>
-                          <td>
-                            <button type="submit" className="btn btn-success" onClick={(e) => updateOrderStatus(e)}>Set as completed</button>
-                          </td>
+                          <td>{new TextService().capitalize(order.status)}</td>
+                          {userType == "collector" ? 
+                            <td>
+                              <button type="submit" className={`btn ${order.status == "pending" ? "btn-success" : "btn-primary"}`} onClick={(e) => updateOrderStatus(e, order)}>Set as {order.status == "pending" ? "Completed" : "Pending"}</button>
+                            </td>
+                            : ""
+                          }
                         </tr>
                       )
                     })
