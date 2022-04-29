@@ -12,13 +12,10 @@ function Dashboard() {
   const userName = localStorage.getItem("user-name");
 
   const [data, setData] = useState([]);
-  // const [db, setDb] = useState({});
 
   useEffect(() => {
     new API().getDashboardData().then((data) => {
-      // window.location.reload(true);
       getAndSetData(data);
-      // setDb({...data});
     })
   }, [])
 
