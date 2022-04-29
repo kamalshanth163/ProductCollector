@@ -12,12 +12,13 @@ function Dashboard() {
   const userName = localStorage.getItem("user-name");
 
   const [data, setData] = useState([]);
-  const [db, setDb] = useState({});
+  // const [db, setDb] = useState({});
 
   useEffect(() => {
     new API().getDashboardData().then((data) => {
-      setDb({...data});
+      // window.location.reload(true);
       getAndSetData(data);
+      // setDb({...data});
     })
   }, [])
 
@@ -36,6 +37,7 @@ function Dashboard() {
 
     if(userType == "collector"){
       orders = db.orders.filter(x => x.collector_id == userId);
+      console.log(db.orders)
       var collectorOrderedProductIds = orders.map(x => {
         if(x.collector_id == userId) return x.product_id;
       });
@@ -76,6 +78,7 @@ function Dashboard() {
       allData.push({title: "Completed Orders", data: [...completedOrders], type: "list", isReport: true});
       allData.push({title: "Total Income", data: ordersTotalPrice.toFixed(2), type: "money", isReport: false});
     }
+
     setData([...allData]);
   }
 
@@ -84,9 +87,15 @@ function Dashboard() {
       <NavBar />
       <div className="dashboard-page row">
         <div className="container">
-
+          <div className='row'>
+            <div className='col mb-2'>
+              <h1>Analytics</h1>
+            </div>
+            <div className='col'>
+              <button type="submit" className={`reload-btn btn btn-success btn-block mt-2`} onClick={(e) => window.location.reload(false)}>Reload data</button>
+            </div>
+          </div>
           <div className="row analytics">
-            <h1>Analytics</h1>
             { data.map((i) => {
               return (
                 <div className="col box">
@@ -97,9 +106,12 @@ function Dashboard() {
               )
             })}           
           </div>
-
+          <div className='row'>
+            <div className='col'>
+              <h1>Reports</h1>
+            </div>
+          </div>
           <div className="row reports">
-            <h1>Reports</h1>
             { data.map((i) => {
               if(i.isReport){
                 return (
