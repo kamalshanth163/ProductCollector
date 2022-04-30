@@ -165,10 +165,6 @@ button {
     border-radius: 10px !important;
 }
 
-.btn {
-    border: none !important;
-    border-radius: 10px !important;
-}
 
 .btn-primary, .btn-dark, .btn-success {
     background: rgb(16, 35, 59) !important;
@@ -209,4 +205,18 @@ button {
     background: white;
     font-weight: bold;
     color: rgb(12, 12, 12);
+}
+.btn {
+    border: none !important;
+    border-radius: 10px !important;
+    outline: 0 !important;
+}
+
+.caption{
+    font-size: 10px;
+}
+
+.caption-2{
+    font-size: 14px;
+    margin-left: 10px
 }

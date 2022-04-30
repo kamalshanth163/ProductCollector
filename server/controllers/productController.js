@@ -95,8 +95,11 @@ const deleteProduct = (req, res) => {
     sqlCon.query(
         `DELETE FROM products WHERE id = ${req.params.id};`
     , (err, results) => {
-        if(err) return res.sendStatus(400);
-        return res.send(results); 
+        if(err) {
+            console.log(err)
+            return res.send("fail");
+        }
+        return res.send("success"); 
     })
 }
 

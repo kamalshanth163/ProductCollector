@@ -67,16 +67,18 @@
 .products-page .box-text p{
   color: #888;
 }
-  
+
 .products-page .products .box{
   background: rgba(0, 0, 0, 0.363);
   border-radius: 10px;
-  margin: 20px;
-  padding: 10px 20px;
-  height: auto;
+  margin: 16px;
+  padding: 10px 0px 10px;
   cursor: pointer;
-  width: 200px;
-  box-shadow: 8px 9px 15px -3px #000000;
+}
+
+.products-page .note{
+  font-size: 14px;
+  color: rgba(199, 199, 199, 0.562);
 }
 
 .products-page .products .box .actions button{
@@ -135,6 +137,11 @@
 
 .products-page .search-buttons{
   text-align: left;
+}
+
+.products-page .edit-btn:focus{
+  outline: 0 !important;
+  box-shadow: none !important;
 }
 
 

@@ -31,6 +31,8 @@ const NavBar = ({theme}) => {
             <div className="container-fluid">
               <h2>PCPC</h2>
               {/* <h2>PC<sup>2</sup></h2> */}
+              {/* <h2>P<sub>2</sub>C<sub>2</sub></h2> */}
+              {/* <h2>P<sup>2</sup>C<sup>2</sup></h2> */}
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
@@ -71,7 +73,13 @@ const NavBar = ({theme}) => {
                   ? 
                   <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                      <span className="">Kamalshanth S.</span>
+                      <span className="caption caption-1">
+                        Designed & Developed By 
+                      </span>
+                      {/* <br /> */}
+                      <span className="caption caption-2">
+                        Kamalshanth S.
+                      </span>
                     </li>
                   </ul>
                   :
