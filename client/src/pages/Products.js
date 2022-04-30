@@ -231,7 +231,7 @@ function Products() {
             <div style={{display: showForm ? 'block' : "none"}} className="col-lg-4 product-form">
               <h3>{ action == "edit" ? "Edit the product" : "Create a product"}</h3>
               <form>
-                  <hr />
+                  <br />
                   <input style={{display: "none"}} readOnly className="form-control" type="text" placeholder="Enter product id" name="id" id="id" value={product.id} onChange={(e)=>handleChange(e)}/>
                   <div className="form-outline mb-2">
                     <label className="form-label" for="name"><b>Name</b></label><br />
@@ -348,11 +348,11 @@ function Products() {
                   <button type="submit" className="btn btn-light btn-block mt-4" onClick={(e) => handleReset(e)}>Reset</button>
                 </div>
               </div>
-              <hr />
+        
               <div className="row">
                 { displayProducts.map((i) => {
                   return (
-                    <div className="col-lg-3 box" key={i.id}>
+                    <div className="col-3 box" key={i.id}>
                       {i.image !== "" 
                         ? <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${i.image.split(',')[0]}`)}/>
                         : <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${emptyImage}`)}/>
@@ -360,7 +360,7 @@ function Products() {
                       <div className='box-text'>
                         <h4>{i.name}</h4>
                         <h6>{i.brand}</h6>
-                        <p>{i.description}</p>
+                        {/* <p>{i.description}</p> */}
                       </div>
                       <div className='row actions'>
                         { userType == "holder" 

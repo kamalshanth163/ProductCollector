@@ -2,7 +2,19 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
 }
+
+.home-page{
+    padding: 30px 100px;
+    background: url("../assets/bg6.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    color: white;
+  }
 
 .navbar {
     padding: 0px 10px;
@@ -63,10 +75,8 @@
 
 .navLink-active{
     color: rgb(255, 255, 255);
-    /* background: white; */
     border-radius: 10px;
     border: none;
-    /* border-bottom: 10px solid white; */
     border: 2px solid white;
     padding: 8px 14px;
     margin: 20px;
@@ -108,4 +118,95 @@
 
 .main-links{
     margin-left: 20px;
+}
+
+.home-page .welcome {
+    padding: 40px 100px;
+}
+
+.home-page .users {
+    padding: 10px 100px;
+}
+
+.home-page .welcome .title-1{
+    font-size: 80px;
+    width: 700px;
+}
+
+.home-page .welcome .title-2{
+    color: rgba(255, 255, 255, 0.959);
+    font-size: 40px;
+}
+
+.home-page .welcome .para{
+    margin-top: 20px;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.911);
+}
+
+.home-page button {
+    background: none;
+    border-radius: 10px;
+    border: 2px solid white;
+    color: white;
+}
+
+.home-page button:hover {
+    background: white;
+    font-weight: bold;
+    color: rgb(12, 12, 12);
+}
+
+input:read-only {
+    background: rgba(0, 0, 0, 0.603) !important; 
+}
+
+button {
+    border-radius: 10px !important;
+}
+
+.btn {
+    border: none !important;
+    border-radius: 10px !important;
+}
+
+.btn-primary, .btn-dark, .btn-success {
+    background: rgb(16, 35, 59) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.btn-light {
+    background: rgba(39, 39, 39, 0) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.btn-secondary {
+    background: rgba(39, 39, 39, 0) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.btn-danger {
+    background: rgb(46, 46, 46) !important;
+    border: none !important;
+    color: rgb(255, 255, 255) !important;
+    font-weight: bold !important;
+}
+
+.home-page .btn-1{
+    background: none;
+    border-radius: 10px;
+    border: 2px solid white !important;
+    color: white;
+}
+
+.home-page .btn-1:hover {
+    background: white;
+    font-weight: bold;
+    color: rgb(12, 12, 12);
 }

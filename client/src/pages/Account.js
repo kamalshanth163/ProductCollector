@@ -56,6 +56,8 @@ function Account() {
       }
       new API().updateCollector(collector).then(data => {
         alert("Account details saved successfully");
+        localStorage.setItem('user-name', collector.name);
+        window.location.reload(true);
       });
     }
     else if(userType === "holder"){
@@ -69,6 +71,8 @@ function Account() {
       }
       new API().updateHolder(holder).then(data => {
         alert("Account details saved successfully");
+        localStorage.setItem('user-name', holder.name);
+        window.location.reload(true);
       });
     }
   }
@@ -114,7 +118,7 @@ function Account() {
               <hr />
               <div className="form-outline mb-3">
                 <label className="form-label" for="name"><b>Name</b></label><br />
-                <input className="form-control" type="text" placeholder="Enter your name" name="name" id="name" value={user.name} readOnly required onChange={(e)=>handleChange(e)}/>
+                <input className="form-control" type="text" placeholder="Enter your name" name="name" id="name" value={user.name} required onChange={(e)=>handleChange(e)}/>
               </div>
               <div className="form-outline mb-3">
                 <label className="form-label" for="address"><b>Address</b></label><br />

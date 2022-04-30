@@ -45,13 +45,20 @@ function Product() {
   useEffect(() => {}, [orderStatus])
 
   useEffect(() => {
+
     new API().getAllProducts().then((data) => {
       var product = data.find(x => x.id == id);
       setProduct({...product});
 
       var imageList = product.image.split(",");
-      setImages(imageList);
-      setImagePreview(imageList[0]);
+      if(imageList[0] == ''){
+        setImages([]);
+        setImagePreview("empty.jpg");
+      }
+      else {
+        setImages(imageList);
+        setImagePreview(imageList[0]);
+      }
 
       new API().getAllCategories().then((data) => {
         var category = data.find(x => x.id == product.category_id);
@@ -66,8 +73,10 @@ function Product() {
         }
       })
     })
-  }, [])
 
+  }, [])
+  
+  console.log(images);
   const handlePreview = (image) => {
     setImagePreview(image);
   }
@@ -89,8 +98,8 @@ function Product() {
 
   return (
     <div className='product-preview'>
-      <NavBar />
-      <button className="back-btn" onClick={(e) => history.push('/products')}>{'<<'} Back</button>
+      <NavBar theme={2}/>
+      <button className="back-btn" onClick={(e) => history.push('/products')}>Go to Products</button>
       <div className='container'> 
         <div className='row'>
           <div className='col image-section'>

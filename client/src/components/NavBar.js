@@ -29,7 +29,8 @@ const NavBar = ({theme}) => {
     <div>
           <nav className={`navbar ${theme} navbar-expand-lg`}>
             <div className="container-fluid">
-              <h2>.pcpc</h2>
+              <h2>PCPC</h2>
+              {/* <h2>PC<sup>2</sup></h2> */}
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
@@ -66,6 +67,17 @@ const NavBar = ({theme}) => {
                     }
                   })()}
 
+                { userName == null
+                  ? 
+                  <ul className="navbar-nav mr-auto">
+                    <li className="nav-item">
+                      <span className="">Kamalshanth S.</span>
+                    </li>
+                  </ul>
+                  :
+                  ""
+                }
+
                 { userName !== null
                     ? 
                     <ul className="navbar-nav mr-auto">
@@ -81,7 +93,7 @@ const NavBar = ({theme}) => {
                     ? 
                     <ul className="navbar-nav mr-auto">
                       <li className="nav-item">
-                        <button className="btn btn-primary" onClick={(e) => handleLogout(e)}>Logout</button>
+                        <button className="btn btn-danger" onClick={(e) => handleLogout(e)}>Logout</button>
                       </li>
                     </ul>
                     :

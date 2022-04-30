@@ -1,0 +1,92 @@
+.login-page{
+    padding: 40px 100px;
+    background: url("../assets/bg5.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+  }
+  
+  .login-page .back-btn{
+    background: none;
+    cursor: pointer;
+    margin-bottom: 40px;
+    width: 200px;
+    font-size: 20px;
+    border: none;
+  }
+
+  .login-page .container {
+      width: 400px;
+  }
+
+  .login-page .span{
+      font-size: 16px;
+  }
+
+  .register-page{
+    padding: 40px 100px;
+    background: url("../assets/bg5.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+  }
+  
+  
+  .register-page .back-btn{
+    background: none;
+    cursor: pointer;
+    margin-bottom: 40px;
+    width: 200px;
+    font-size: 20px;
+    border: none;
+  }
+
+  .register-page .container {
+      width: 400px;
+  }
+
+  .register-page .span{
+      font-size: 16px;
+  }
+
+  .login-page .signup a{
+    font-weight: bold;
+    color: white;
+  }
+
+  .register-page .signin a{
+    font-weight: bold;
+    color: white;
+  }
+
+  .sign-page input{
+    color: white;
+    background: rgba(0, 0, 0, 0.200);
+    border: none;
+  }
+  
+  .sign-page input::placeholder{
+    color: rgba(255, 255, 255, 0.801);
+    border: none;
+  }
+  
+  .sign-page input:focus{
+    color: white;
+    background: rgba(0, 0, 0, 0.200);
+    border: none;
+  }
+  
+  .sign-page select{
+    color: white;
+    background: rgba(0, 0, 0, 0.200);
+    border: none;
+  }
+  
+  .sign-page select:focus{
+    color: white;
+    background: rgba(0, 0, 0, 0.200);
+    border: none;
+  }
+  

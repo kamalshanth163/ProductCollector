@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/Login.css';
+import '../styles/Sign.css';
 import { useHistory } from 'react-router';
 import API from '../APIs/API';
 
@@ -56,7 +56,7 @@ const Register = () => {
   }
 
   return (
-    <div className="register-page">
+    <div className="register-page sign-page">
       <button className="back-btn"  onClick={(e) => history.push('/')}>Back to Home</button>
       <form>
         <div class="container">
@@ -86,7 +86,7 @@ const Register = () => {
 
           <button type="submit" class="registerbtn btn btn-primary btn-block mb-3" onClick={(e) => handleSubmit(e)}>Register</button>
 
-          <div class="signin">
+          <div className="signin">
             <p>Already have an account? <a href="./login-page">Login</a>.</p>
           </div>
         </div>        

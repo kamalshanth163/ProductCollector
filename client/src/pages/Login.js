@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import '../styles/Login.css';
+import '../styles/Sign.css';
 import API from '../APIs/API';
 
 const Login = () => {
@@ -52,7 +52,7 @@ const Login = () => {
 
   return (
     <div>
-      <div className="login-page">
+      <div className="login-page sign-page">
         <button className="back-btn" onClick={(e) => history.push('/')}>Back to Home</button>
         <form>
           <div className="container">
