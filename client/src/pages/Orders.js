@@ -84,8 +84,8 @@ function Orders() {
 
   return (
     <div>
-      <NavBar />
       <div className="orders-page row">
+      <NavBar theme="3"/>
         <div className='container'>
           <div className='row mb-4'>
             <div className='col mt-3'>

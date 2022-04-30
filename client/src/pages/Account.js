@@ -83,8 +83,8 @@ function Account() {
 
   return (
     <div>
-      <NavBar />
       <div className="account-page row">
+      <NavBar theme="4"/>
 
         {userType === "admin" ? 
           <form>

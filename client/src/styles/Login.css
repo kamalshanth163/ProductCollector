@@ -1,7 +1,10 @@
 .login-page{
-    background: rgb(238, 238, 238);
-    height: 100%;
     padding: 40px 100px;
+    background: url("../assets/bg1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
   }
   
   .login-page .back-btn{

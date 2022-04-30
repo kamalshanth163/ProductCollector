@@ -5,8 +5,45 @@
 }
 
 .navbar {
-    padding: 0px 80px;
-    background: #222;
+    padding: 0px 10px;
+    background: rgba(0, 0, 0, 0);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    color: white;
+    margin: 0 auto;
+}
+
+.navbar-1{
+    background: url("../assets/bg1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navbar-2{
+    background: url("../assets/bg2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navbar-3{
+    background: url("../assets/bg3.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navbar-4{
+    background: url("../assets/bg4.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: white;
 }
 
@@ -21,19 +58,53 @@
 }
 
 .navLink-active:hover{
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 .navLink-active{
-    color: rgb(0, 0, 0);
-    background: white;
-    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    /* background: white; */
+    border-radius: 10px;
     border: none;
+    /* border-bottom: 10px solid white; */
+    border: 2px solid white;
     padding: 8px 14px;
     margin: 20px;
     text-decoration: none;
     font-weight: bold;
 }
+
+/* .navLink-active-1{
+    background: url("../assets/bg1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navLink-active-2{
+    background: url("../assets/bg2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navLink-active-3{
+    background: url("../assets/bg3.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navLink-active-4{
+    background: url("../assets/bg4.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+} */
 
 .main-links{
     margin-left: 20px;

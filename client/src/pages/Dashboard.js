@@ -34,7 +34,6 @@ function Dashboard() {
 
     if(userType == "collector"){
       orders = db.orders.filter(x => x.collector_id == userId);
-      console.log(db.orders)
       var collectorOrderedProductIds = orders.map(x => {
         if(x.collector_id == userId) return x.product_id;
       });
@@ -81,8 +80,8 @@ function Dashboard() {
 
   return (
     <div>
-      <NavBar />
       <div className="dashboard-page row">
+      <NavBar theme="1"/>
         <div className="container">
           <div className='row'>
             <div className='col mb-2'>
@@ -93,9 +92,9 @@ function Dashboard() {
             </div>
           </div>
           <div className="row analytics">
-            { data.map((i) => {
+            { data.map((i, index) => {
               return (
-                <div className="col box">
+                <div className={`col box box${index+1}`}>
                   {i.type == "money" ? <span style={{fontSize: "18px"}}> LKR </span> : ""}
                   <span>{i.type == "list" ? i.data.length : i.data}</span>
                   <h2>{i.title}</h2>

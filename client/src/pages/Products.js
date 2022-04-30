@@ -217,8 +217,8 @@ function Products() {
 
   return (
     <div>
-      <NavBar />
       <div className="products-page">
+      <NavBar theme="2"/>
         <div className="container mt-4">
           {userType == "holder"
            ? 

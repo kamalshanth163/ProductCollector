@@ -1,7 +1,10 @@
 .account-page{
-    background: rgb(255, 255, 255);
+    background: url("../assets/bg4.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100%;
-    padding: 40px 100px;
+    padding: 30px 100px;
   }
   
   .account-page .back-btn{
@@ -13,7 +16,7 @@
   }
 
   .account-page .container {
-      width: 400px;
+    width: 400px;
   }
 
   .account-page .span{
