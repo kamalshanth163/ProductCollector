@@ -130,7 +130,9 @@
 
 .home-page .welcome .title-1{
     font-size: 80px;
+    /* text-shadow: 2px 5px 3px rgba(0,0,0,0.28); */
     width: 700px;
+    font-weight: bold;
 }
 
 .home-page .welcome .title-2{
@@ -218,5 +220,5 @@ button {
 
 .caption-2{
     font-size: 14px;
-    margin-left: 10px
+    margin-left: 6px
 }
