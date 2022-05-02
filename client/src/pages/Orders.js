@@ -17,9 +17,10 @@ function Orders() {
   const [displayOrders, setDisplayOrders] = useState([]);
   const [products, setProducts] = useState([]);
   const [filterStatus, setFilterStatus] = useState("");
-  const [holderId, setHolderId] = useState(0);
-  const [collectorId, setCollectorId] = useState(0);
-
+  const [selectedUserId, setSelectedUserId] = useState(0);
+  // const [holderInfo, setHolderInfo] = useState({});
+  // const [collectorInfo, setCollectorInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
 
@@ -60,25 +61,38 @@ function Orders() {
   useEffect(() => {}, [orders, filterStatus])
 
   const filterOrdersByHolder = (e) => {
-    var holderId = e.target.value;
-    setHolderId(holderId)
-    filterOrders(filterStatus, holderId, "holder");
+    var selectedUserId = e.target.value;
+    setSelectedUserId(selectedUserId)
+    filterOrders(filterStatus, selectedUserId, "holder"); 
+    showUserInfo("holder", selectedUserId);
   }
 
   const filterOrdersByCollector = (e) => {
-    var collectorId = e.target.value;
-    console.log(collectorId)
-    setCollectorId(collectorId)
-    filterOrders(filterStatus, collectorId, "collector");
+    var selectedUserId = e.target.value;
+    console.log(selectedUserId)
+    setSelectedUserId(selectedUserId)
+    filterOrders(filterStatus, selectedUserId, "collector");
+    showUserInfo("collector", selectedUserId);
+  }
+
+  const showUserInfo = (userType, userId) => {
+    var userInfo = {};
+    if(userType == "collector"){
+      userInfo = collectors.find(x => x.id == userId);
+    }
+    else if (userType == "holder"){
+      userInfo = holders.find(x => x.id == userId);
+    }
+    setUserInfo({...userInfo})
   }
 
   const filterOrdersByStatus = (e, status) => {
     setFilterStatus(status);
     if(userType == "holder"){
-      filterOrders(status, collectorId, "collector");
+      filterOrders(status, selectedUserId, "collector");
     }
     else if(userType == "collector"){
-      filterOrders(status, holderId, "holder");
+      filterOrders(status, selectedUserId, "holder");
     }
   }
 
@@ -133,7 +147,7 @@ function Orders() {
               <div className='col mt-4'>
                 <div className='form-outline'>
                   <label className="form-label"><b>Product Holder</b></label>
-                  <select className="form-select" name="category_id" id="category_id" value={holderId} onChange={(e)=>filterOrdersByHolder(e)}>
+                  <select className="form-select" name="category_id" id="category_id" value={selectedUserId} onChange={(e)=>filterOrdersByHolder(e)}>
                     <option key={0} value={0}>All</option>
                     {
                       holders.map(holder => {
@@ -148,7 +162,7 @@ function Orders() {
               <div className='col mt-4'>
                 <div className='form-outline'>
                   <label className="form-label"><b>Product Collector</b></label>
-                  <select className="form-select" name="category_id" id="category_id" value={collectorId} onChange={(e)=>filterOrdersByCollector(e)}>
+                  <select className="form-select" name="category_id" id="category_id" value={selectedUserId} onChange={(e)=>filterOrdersByCollector(e)}>
                     <option key={0} value={0}>All</option>
                     {
                       collectors.map(collector => {
@@ -159,8 +173,29 @@ function Orders() {
                 </div>
               </div> : ""          
             }
-          </div>      
-          <br />        
+          </div>
+          
+          {selectedUserId != 0 ? 
+            <div className='row user-info'>
+              <h4>{userType == "collector" ? "Holder" : "Collector"}'s Info</h4>
+              <div className='col'>
+                <span>
+                  {userInfo.name}
+                </span>
+                <span>
+                  {userInfo.email}
+                </span>
+                <span>
+                  {userInfo.phone}
+                </span>
+                <span>
+                  {userInfo.address}
+                </span>
+              </div>
+            </div> : ""
+          }
+          <br />
+
           <div className='row'>
             <div className='col'>
               <table class="table">

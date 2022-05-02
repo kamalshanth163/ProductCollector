@@ -89,3 +89,13 @@
     background: rgba(0, 0, 0, 0.200);
     border: none;
   }
+
+  .orders-page .user-info {
+    background: rgba(0, 0, 0, 0.514);
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .orders-page .user-info span{
+    margin-right: 40px;
+  }
