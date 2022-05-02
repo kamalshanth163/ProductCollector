@@ -69,7 +69,6 @@ function Orders() {
 
   const filterOrdersByCollector = (e) => {
     var selectedUserId = e.target.value;
-    console.log(selectedUserId)
     setSelectedUserId(selectedUserId)
     filterOrders(filterStatus, selectedUserId, "collector");
     showUserInfo("collector", selectedUserId);
@@ -97,8 +96,6 @@ function Orders() {
   }
 
   const filterOrders = (status, userId, userType) => {
-    
-    console.log(userId, userType)
     var filteredOrdersByStatus = status == "" ? orders : orders.filter(x => x.status == status);
     var filteredOrders = [];
 
@@ -114,8 +111,6 @@ function Orders() {
       });
       filteredOrders = userId == 0 ? 
         filteredOrdersByStatus : filteredOrdersByStatus.filter(x => holderProductIds.includes(x.product_id));
-
-        console.log(filteredOrders)
     }
 
     setDisplayOrders([...filteredOrders]);
