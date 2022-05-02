@@ -12,11 +12,13 @@ function Orders() {
   const userName = localStorage.getItem("user-name");
 
   const [holders, setHolders] = useState([]);
+  const [collectors, setCollectors] = useState([]);
   const [orders, setOrders] = useState([]);
   const [displayOrders, setDisplayOrders] = useState([]);
   const [products, setProducts] = useState([]);
   const [filterStatus, setFilterStatus] = useState("");
   const [holderId, setHolderId] = useState(0);
+  const [collectorId, setCollectorId] = useState(0);
 
 
   useEffect(() => {
@@ -47,6 +49,12 @@ function Orders() {
         setHolders([...data]);
       })
     }
+
+    if(userType == "holder"){
+      new API().getAllCollectors().then((data) => {
+        setCollectors([...data]);
+      })
+    }
   }, [])
 
   useEffect(() => {}, [orders, filterStatus])
@@ -54,22 +62,47 @@ function Orders() {
   const filterOrdersByHolder = (e) => {
     var holderId = e.target.value;
     setHolderId(holderId)
-    filterOrders(filterStatus, holderId);
+    filterOrders(filterStatus, holderId, "holder");
+  }
+
+  const filterOrdersByCollector = (e) => {
+    var collectorId = e.target.value;
+    console.log(collectorId)
+    setCollectorId(collectorId)
+    filterOrders(filterStatus, collectorId, "collector");
   }
 
   const filterOrdersByStatus = (e, status) => {
     setFilterStatus(status);
-    filterOrders(status, holderId);
+    if(userType == "holder"){
+      filterOrders(status, collectorId, "collector");
+    }
+    else if(userType == "collector"){
+      filterOrders(status, holderId, "holder");
+    }
   }
 
-  const filterOrders = (status, holderId) => {
+  const filterOrders = (status, userId, userType) => {
+    
+    console.log(userId, userType)
     var filteredOrdersByStatus = status == "" ? orders : orders.filter(x => x.status == status);
+    var filteredOrders = [];
 
-    var holderProductIds = products.map(x => {
-      if(x.holder_id == holderId) return x.id;
-    });
-    var filteredOrders = holderId == 0 ? 
-      filteredOrdersByStatus : filteredOrdersByStatus.filter(x => holderProductIds.includes(x.product_id));
+    if(userType == "collector"){
+      filteredOrders = userId == 0 ? 
+        filteredOrdersByStatus : filteredOrdersByStatus.filter(x => x.collector_id == userId);
+    }
+    
+    if(userType == "holder"){
+  
+      var holderProductIds = products.map(x => {
+        if(x.holder_id == userId) return x.id;
+      });
+      filteredOrders = userId == 0 ? 
+        filteredOrdersByStatus : filteredOrdersByStatus.filter(x => holderProductIds.includes(x.product_id));
+
+        console.log(filteredOrders)
+    }
 
     setDisplayOrders([...filteredOrders]);
   }
@@ -78,7 +111,7 @@ function Orders() {
     var status = filterStatus == "" ? filterStatus : order.status;
     order.status = order.status == "pending" ? "completed" : "pending";
     new API().updateOrder(order).then(data => {
-      filterOrdersByStatus(e, status)
+      filterOrdersByStatus(e, status, "holder")
     })
   }
 
@@ -105,6 +138,21 @@ function Orders() {
                     {
                       holders.map(holder => {
                         return <option key={holder.id} value={holder.id}>{holder.name}</option>
+                      })
+                    }  
+                  </select>
+                </div>
+              </div> : ""          
+            }
+            {userType == "holder" ?
+              <div className='col mt-4'>
+                <div className='form-outline'>
+                  <label className="form-label"><b>Product Collector</b></label>
+                  <select className="form-select" name="category_id" id="category_id" value={collectorId} onChange={(e)=>filterOrdersByCollector(e)}>
+                    <option key={0} value={0}>All</option>
+                    {
+                      collectors.map(collector => {
+                        return <option key={collector.id} value={collector.id}>{collector.name}</option>
                       })
                     }  
                   </select>
