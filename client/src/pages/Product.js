@@ -76,7 +76,6 @@ function Product() {
 
   }, [])
   
-  console.log(images);
   const handlePreview = (image) => {
     setImagePreview(image);
   }
