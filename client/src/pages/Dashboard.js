@@ -48,16 +48,14 @@ function Dashboard() {
       });
       orders = db.orders.filter(x => holderProductIds.includes(x.product_id));
       products = db.products.filter(x => x.holder_id == userId);
-
     }
     
     var pendingOrders = orders.filter(x => x.status == "pending");
     var completedOrders = orders.filter(x => x.status == "completed");
     var ordersTotalPrice = completedOrders.reduce((acc, current) => acc + current.price, 0);
     
-    // should change the sort by updated_at
     var ordersSortedByDate = completedOrders.sort(function(a,b){
-      return new Date(b.created_at) - new Date(a.created_at);
+      return new Date(b.updated_at) - new Date(a.updated_at);
     });
 
     var dates = [];
@@ -65,11 +63,11 @@ function Dashboard() {
     var years = [];
 
     ordersSortedByDate.forEach(order => {
-      var created = new Date(order.created_at).toDateString();
-      var month = created.split(" ")[1];
-      var year = created.split(" ")[3];
-      if(!dates.includes(created)){
-        dates.push(created);
+      var dateValue = new Date(order.updated_at).toDateString();
+      var month = dateValue.split(" ")[1];
+      var year = dateValue.split(" ")[3];
+      if(!dates.includes(dateValue)){
+        dates.push(dateValue);
         if(!months.includes(month)){
           months.push(month);
         }
@@ -83,7 +81,7 @@ function Dashboard() {
     dailyFinances = dates.map((date, i) => {
       var amountsByDate = [];
       var ordersByDate = ordersSortedByDate.map(x => {
-        if(new Date(x.created_at).toDateString() == date) {
+        if(new Date(x.updated_at).toDateString() == date) {
           amountsByDate.push(x.price);
         }
       })
@@ -99,7 +97,7 @@ function Dashboard() {
     monthlyFinances = months.map((month, i) => {
       var amountsByMonth = [];
       var ordersByDate = ordersSortedByDate.map(x => {
-        if(new Date(x.created_at).toDateString().split(" ")[1] == month) {
+        if(new Date(x.updated_at).toDateString().split(" ")[1] == month) {
           amountsByMonth.push(x.price);
         }
       })
@@ -115,7 +113,7 @@ function Dashboard() {
     yearlyFinances = years.map((year, i) => {
       var amountsByYear = [];
       var ordersByDate = ordersSortedByDate.map(x => {
-        if(new Date(x.created_at).toDateString().split(" ")[3] == year) {
+        if(new Date(x.updated_at).toDateString().split(" ")[3] == year) {
           amountsByYear.push(x.price);
         }
       })
