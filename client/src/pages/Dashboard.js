@@ -20,11 +20,16 @@ function Dashboard() {
   }, [])
 
   const generateReport = (title, data) => {
-    var userTypeCapitalized = new TextService().capitalize(userType);
-    var wb = XLSX.utils.book_new(); 
-    var ws = XLSX.utils.json_to_sheet(data);
-    XLSX.utils.book_append_sheet(wb, ws, title);
-    XLSX.writeFile(wb, `${title} - ${userName} - ${userTypeCapitalized} - ${new Date().toDateString()}.xlsx`);
+    if(data.length == 0){
+      alert(`There is no data to generate ${title} Report`);
+    }
+    else {
+      var userTypeCapitalized = new TextService().capitalize(userType);
+      var wb = XLSX.utils.book_new(); 
+      var ws = XLSX.utils.json_to_sheet(data);
+      XLSX.utils.book_append_sheet(wb, ws, title);
+      XLSX.writeFile(wb, `${title} - ${userName} - ${userTypeCapitalized} - ${new Date().toDateString()}.xlsx`);
+    }
   }
 
   const getAndSetData = (db) => {
