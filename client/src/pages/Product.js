@@ -98,7 +98,7 @@ function Product() {
 
   return (
     <div className='product-preview'>
-      <NavBar theme={2}/>
+      <NavBar theme={3}/>
       <button className="back-btn" onClick={(e) => history.push('/products')}>Go to Products</button>
       <div className='container'> 
         <div className='row'>

@@ -31,6 +31,7 @@ function Dashboard() {
 
     var orders = [];
     var products = [];
+    var finances = [];
 
     if(userType == "collector"){
       orders = db.orders.filter(x => x.collector_id == userId);
@@ -50,6 +51,7 @@ function Dashboard() {
     var pendingOrders = orders.filter(x => x.status == "pending");
     var completedOrders = orders.filter(x => x.status == "completed");
     var ordersTotalPrice = completedOrders.reduce((acc, current) => acc + current.price, 0);
+
 
     var allData = [];
 

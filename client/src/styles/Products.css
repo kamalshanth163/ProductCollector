@@ -1,7 +1,7 @@
 
 .products-page{
   padding: 30px 100px;
-  background: url("../assets/bg2.jpg");
+  background: url("../assets/bg3.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -11,7 +11,7 @@
 
 .product-preview{
   padding: 30px 100px;
-  background: url("../assets/bg2.jpg");
+  background: url("../assets/bg3.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -78,7 +78,7 @@
 
 .products-page .note{
   font-size: 14px;
-  color: rgba(199, 199, 199, 0.562);
+  color: rgba(255, 255, 255, 0.918);
 }
 
 .products-page .products .box .actions button{
