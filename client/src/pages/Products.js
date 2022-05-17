@@ -49,23 +49,30 @@ function Products() {
   const [holders, setHolders] = useState([]);
 
   useEffect(() => {
-    new API().getAllProducts().then((data) => {
-      if(userType == "collector"){
-        setProducts([...data.reverse()]);
-        setDisplayProducts([...data.reverse()]);
-      } 
-      else if (userType == "holder"){
-        var holderProducts = data.filter(x => x.holder_id == userId*1);
-        setProducts([...holderProducts.reverse()]);
-        setDisplayProducts([...holderProducts.reverse()]);
-      }
-    })
-    new API().getAllCategories().then((data) => {
-      setCategories([...data]);
-    })
-
     new API().getAllOrders().then((data) => {
       setOrders([...data]);
+
+      var unAccessibleProducts = data.filter(x => x.collector_id != userId);
+      var unAccessibleProductIds = unAccessibleProducts.map(x => {
+        return x.product_id;
+      });
+
+      new API().getAllProducts().then((data) => {
+        if(userType == "collector"){
+          var accessibleProducts = data.filter(x => !unAccessibleProductIds.includes(x.id));
+          setProducts([...accessibleProducts.reverse()]);
+          setDisplayProducts([...accessibleProducts.reverse()]);
+        } 
+        else if (userType == "holder"){
+          var holderProducts = data.filter(x => x.holder_id == userId*1);
+          setProducts([...holderProducts.reverse()]);
+          setDisplayProducts([...holderProducts.reverse()]);
+        }
+      })
+    })
+    
+    new API().getAllCategories().then((data) => {
+      setCategories([...data]);
     })
 
     if(userType == "collector"){

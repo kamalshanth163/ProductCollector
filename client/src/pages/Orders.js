@@ -18,8 +18,6 @@ function Orders() {
   const [products, setProducts] = useState([]);
   const [filterStatus, setFilterStatus] = useState("");
   const [selectedUserId, setSelectedUserId] = useState(0);
-  // const [holderInfo, setHolderInfo] = useState({});
-  // const [collectorInfo, setCollectorInfo] = useState({});
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
