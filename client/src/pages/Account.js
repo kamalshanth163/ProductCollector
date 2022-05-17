@@ -17,10 +17,12 @@ function Account() {
     email: "",
     phone: "",
     password: "",
+    rePassword: ""
   }
 
   const [user, setUser] = useState(initialUser);
   const [showHiddenPassword, setShowHiddenPassword] = useState(false);
+  const [showHiddenRePassword, setShowHiddenRePassword] = useState(false);
 
   var admin = {
     name: "Admin",
@@ -45,35 +47,49 @@ function Account() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(userType === "collector"){
-      var collector = {
-        id: userId,
-        name: user.name,
-        address: user.address,
-        email: user.email,
-        phone: user.phone,
-        password: user.password,
-      }
-      new API().updateCollector(collector).then(data => {
-        alert("Account details saved successfully");
-        localStorage.setItem('user-name', collector.name);
-        window.location.reload(true);
-      });
+    if(user.password !== user.rePassword){
+      alert("Passwords do not match.")
     }
-    else if(userType === "holder"){
-      var holder = {
-        id: userId,
-        name: user.name,
-        address: user.address,
-        email: user.email,
-        phone: user.phone,
-        password: user.password,
+    else if(user.name === "") {
+      alert("Username cannot be empty.")
+    } 
+    else if(user.email === "") {
+      alert("Email cannot be empty.")
+    } 
+    else if(user.password === ""){
+      alert("Password cannot be empty.")
+    }
+    else {
+      if(userType === "collector"){
+        var collector = {
+          id: userId,
+          name: user.name,
+          address: user.address,
+          email: user.email,
+          phone: user.phone,
+          password: user.password,
+        }
+        new API().updateCollector(collector).then(data => {
+          alert("Account details saved successfully");
+          localStorage.setItem('user-name', collector.name);
+          window.location.reload(true);
+        });
       }
-      new API().updateHolder(holder).then(data => {
-        alert("Account details saved successfully");
-        localStorage.setItem('user-name', holder.name);
-        window.location.reload(true);
-      });
+      else if(userType === "holder"){
+        var holder = {
+          id: userId,
+          name: user.name,
+          address: user.address,
+          email: user.email,
+          phone: user.phone,
+          password: user.password,
+        }
+        new API().updateHolder(holder).then(data => {
+          alert("Account details saved successfully");
+          localStorage.setItem('user-name', holder.name);
+          window.location.reload(true);
+        });
+      }
     }
   }
 
@@ -83,6 +99,10 @@ function Account() {
 
   const showPassword = (status) => {
     setShowHiddenPassword(status);
+  }
+
+  const showRePassword = (status) => {
+    setShowHiddenRePassword(status);
   }
 
   return (
@@ -136,6 +156,11 @@ function Account() {
                 <label className="form-label" for="password"><b>Password</b></label> 
                 <span style={{"cursor": "pointer"}} onClick={(e)=>showPassword(!showHiddenPassword)}>{showHiddenPassword ? " hide" : " show"}</span><br />
                 <input className="form-control" type={showHiddenPassword ? "text" : "password"} placeholder="Enter Password" name="password" id="password" value={user.password} required onChange={(e)=>handleChange(e)}/>
+              </div>
+              <div className="form-outline mb-3">
+                <label className="form-label" for="rePassword"><b>Re Enter Password</b></label>
+                <span style={{"cursor": "pointer"}} onClick={(e)=>showRePassword(!showHiddenRePassword)}>{showHiddenRePassword ? " hide" : " show"}</span><br />
+                <input className="form-control" type={showHiddenRePassword ? "text" : "password"} placeholder="Enter Password" name="rePassword" id="rePassword" required onChange={(e)=>handleChange(e)}/>
               </div>
 
               <button type="submit" class="btn btn-primary btn-block mb-3" onClick={(e) => handleSubmit(e)}>Save</button>
