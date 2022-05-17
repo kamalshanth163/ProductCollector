@@ -19,25 +19,44 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(userType === "collector"){
-      new API().loginCollector(userData).then(data => {
-        localStorage.setItem("user-id", data.id);
-        localStorage.setItem("user-name", data.name);
-        history.push('./dashboard');
-      });
+
+    if(userData.email === ""){
+      alert("Please enter your email.")
     }
-    else if(userType === "holder"){
-      new API().loginHolder(userData).then(data => {
-        localStorage.setItem("user-id", data.id);
-        localStorage.setItem("user-name", data.name);
-        history.push('./dashboard');
-      });
+    else if(userData.password === ""){
+      alert("Please enter your password.")
     }
-    else if(userType === "admin"){
-      if(userData.email == "admin@gmail.com" && userData.password == "admin"){
-        localStorage.setItem("user-id", 0);
-        localStorage.setItem("user-name", "Admin");
-        history.push('./dashboard');
+    else {
+      if(userType === "collector"){
+        new API().loginCollector(userData).then(data => {
+          if(Object.keys(data).length === 0){
+            alert("Invalid username or password.")
+          } else {
+            localStorage.setItem("user-id", data.id);
+            localStorage.setItem("user-name", data.name);
+            history.push('./dashboard');
+          }
+        });
+      }
+      else if(userType === "holder"){
+        new API().loginHolder(userData).then(data => {
+          if(Object.keys(data).length === 0){
+            alert("Invalid username or password.")
+          } else {
+            localStorage.setItem("user-id", data.id);
+            localStorage.setItem("user-name", data.name);
+            history.push('./dashboard');
+          }
+        });
+      }
+      else if(userType === "admin"){
+        if(userData.email == "admin@gmail.com" && userData.password == "admin"){
+          localStorage.setItem("user-id", 0);
+          localStorage.setItem("user-name", "Admin");
+          history.push('./dashboard');
+        } else {
+          alert("Invalid username or password.")
+        }
       }
     }
   }

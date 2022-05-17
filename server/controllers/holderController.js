@@ -46,8 +46,8 @@ const loginHolder = (req, res) => {
     sqlCon.query(
         `SELECT * FROM holders WHERE email = "${req.body.email}" AND password = "${req.body.password}"`
     , (err, results) => {
-        if(err) return res.sendStatus(400);
-        if(results.length == 0) return res.sendStatus(404);
+        if(err) return res.send({});
+        if(results.length == 0) return res.send({});
         return res.send(results[0]);
     })
 }
