@@ -41,6 +41,7 @@ function Products() {
   const [displayProducts, setDisplayProducts] = useState([]);
   const [productSearch, setProductSearch] = useState(InitialProductSearch);
   const [categories, setCategories] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [product, setProduct] = useState(initialProduct);
   const [uploadedImages, setUploadedImages] = useState({});
   const [action, setAction] = useState("create");
@@ -61,6 +62,10 @@ function Products() {
     })
     new API().getAllCategories().then((data) => {
       setCategories([...data]);
+    })
+
+    new API().getAllOrders().then((data) => {
+      setOrders([...data]);
     })
 
     if(userType == "collector"){
@@ -215,10 +220,15 @@ function Products() {
     setDisplayProducts(searchResult);
   }
 
+  const isProductOrdered = (productId) => {
+    var productOrders = orders.filter(x => x.product_id == productId);
+    return productOrders.length > 0 ? true : false;
+  }
+
   return (
     <div>
-      <NavBar />
       <div className="products-page">
+      <NavBar theme="2"/>
         <div className="container mt-4">
           {userType == "holder"
            ? 
@@ -231,7 +241,7 @@ function Products() {
             <div style={{display: showForm ? 'block' : "none"}} className="col-lg-4 product-form">
               <h3>{ action == "edit" ? "Edit the product" : "Create a product"}</h3>
               <form>
-                  <hr />
+                  <br />
                   <input style={{display: "none"}} readOnly className="form-control" type="text" placeholder="Enter product id" name="id" id="id" value={product.id} onChange={(e)=>handleChange(e)}/>
                   <div className="form-outline mb-2">
                     <label className="form-label" for="name"><b>Name</b></label><br />
@@ -304,6 +314,8 @@ function Products() {
                       }  
                     </select>
                   </div>
+
+                  {userType == "collector" ?
                   <div className='col'>
                     <label className="form-label label-small" for="holder_id"><b>Product Holder</b></label>
                     <select className="form-select" name="holder_id" id="holder_id" value={productSearch.holder_id} onChange={(e)=>handleSearchChange(e)}>
@@ -314,7 +326,8 @@ function Products() {
                         })
                       }  
                     </select>
-                  </div>
+                  </div> : ""
+                  }
                 </div>
                 <div className='row'>
                   <div className='col'>
@@ -348,26 +361,25 @@ function Products() {
                   <button type="submit" className="btn btn-light btn-block mt-4" onClick={(e) => handleReset(e)}>Reset</button>
                 </div>
               </div>
-              <hr />
+              
+              { userType == "holder" ? 
+                <span className='note'>Ordered products can't be edited or deleted.</span> : ""
+              }
+
               <div className="row">
                 { displayProducts.map((i) => {
                   return (
-                    <div className="col-lg-3 box" key={i.id}>
+                    <div className="col-3 box" key={i.id}>
+                      <h6 onClick={(e) => handleAction(e, "view", i)}>{i.name}</h6>
                       {i.image !== "" 
-                        ? <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${i.image.split(',')[0]}`)}/>
-                        : <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${emptyImage}`)}/>
+                        ? <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${i.image.split(',')[0]}`)}  onClick={(e) => handleAction(e, "view", i)}/>
+                        : <img alt='img' className="product-img" src={require(`../../public/uploads/product-images/${emptyImage}`)} onClick={(e) => handleAction(e, "view", i)}/>
                       }
-                      <div className='box-text'>
-                        <h4>{i.name}</h4>
-                        <h6>{i.brand}</h6>
-                        <p>{i.description}</p>
-                      </div>
                       <div className='row actions'>
-                        { userType == "holder" 
-                          ? <button type="submit" className="col btn btn-light btn-block" onClick={(e) => handleAction(e, "edit", i)}>Edit</button>
-                          : ""
+                        { userType == "holder" && !isProductOrdered(i.id)
+                          ? <button type="submit" className="col btn btn-light btn-block edit-btn" onClick={(e) => handleAction(e, "edit", i)}>Edit</button>
+                          : <span></span>
                         }
-                        <button type="submit" className="col btn btn-dark btn-block" onClick={(e) => handleAction(e, "view", i)}>View</button>
                       </div>
                     </div>
                   )

@@ -3,7 +3,7 @@ import '../styles/Home.css';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
-const NavBar = () => {
+const NavBar = ({theme}) => {
 
   const history = useHistory();
   const userName = localStorage.getItem("user-name");
@@ -23,11 +23,16 @@ const NavBar = () => {
     }
   }
 
+  // var theme = `navbar-${theme}`;
+
   return (
     <div>
-          <nav className="navbar navbar-expand-lg">
+          <nav className={`navbar ${theme} navbar-expand-lg`}>
             <div className="container-fluid">
               <h2>PCPC</h2>
+              {/* <h2>PC<sup>2</sup></h2> */}
+              {/* <h2>P<sub>2</sub>C<sub>2</sub></h2> */}
+              {/* <h2>P<sup>2</sup>C<sup>2</sup></h2> */}
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
@@ -42,7 +47,7 @@ const NavBar = () => {
                           return (
                             <ul className="navbar-nav me-auto main-links">
                               <li className="nav-item">
-                                <NavLink className={page == "dashboard" ? "navLink-active" : "navLink"} to="/dashboard">Dashboard</NavLink>
+                                <NavLink className={`${page == "dashboard" ? "navLink-active navLink-active-1" : "navLink"}`} to="/dashboard">Dashboard</NavLink>
                               </li>
                             </ul>
                           )
@@ -50,13 +55,13 @@ const NavBar = () => {
                         return (
                           <ul className="navbar-nav me-auto main-links">
                             <li className="nav-item">
-                              <NavLink className={page == "dashboard" ? "navLink-active" : "navLink"} to="/dashboard">Dashboard</NavLink>
+                              <NavLink className={`${page == "dashboard" ? "navLink-active navLink-active-1" : "navLink"}`} to="/dashboard">Dashboard</NavLink>
                             </li>
                             <li className="nav-item">
-                              <NavLink className={page == "products" ? "navLink-active" : "navLink"} to="/products">Products</NavLink>
+                              <NavLink className={`${page == "products" ? "navLink-active navLink-active-2" : "navLink"}`} to="/products">Products</NavLink>
                             </li>
                             <li className="nav-item">
-                              <NavLink className={page == "orders" ? "navLink-active" : "navLink"} to="/orders">Orders</NavLink>
+                              <NavLink className={`${page == "orders" ? "navLink-active navLink-active-3" : "navLink"}`} to="/orders">Orders</NavLink>
                             </li>
                           </ul>
                         )
@@ -64,11 +69,28 @@ const NavBar = () => {
                     }
                   })()}
 
+                { userName == null
+                  ? 
+                  <ul className="navbar-nav mr-auto">
+                    <li className="nav-item">
+                      <span className="caption caption-1">
+                        Designed & Developed By 
+                      </span>
+                      {/* <br /> */}
+                      <span className="caption caption-2">
+                        Kamalshanth S.
+                      </span>
+                    </li>
+                  </ul>
+                  :
+                  ""
+                }
+
                 { userName !== null
                     ? 
                     <ul className="navbar-nav mr-auto">
                       <li className="nav-item">
-                        <NavLink className={page == "account" ? "navLink-active" : "navLink"} to="/account">{userName}</NavLink>
+                        <NavLink className={`${page == "account" ? "navLink-active navLink-active-4" : "navLink"}`} to="/account">{userName}</NavLink>
                       </li>
                     </ul>
                     :
@@ -79,7 +101,7 @@ const NavBar = () => {
                     ? 
                     <ul className="navbar-nav mr-auto">
                       <li className="nav-item">
-                        <button className="btn btn-primary" onClick={(e) => handleLogout(e)}>Logout</button>
+                        <button className="btn btn-danger" onClick={(e) => handleLogout(e)}>Logout</button>
                       </li>
                     </ul>
                     :

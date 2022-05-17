@@ -1,10 +1,16 @@
 
 .orders-page{
     padding: 30px 100px;
+    background: url("../assets/bg3.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
 }
 
 .orders-page .container{
     padding: 30px 100px;
+    margin-bottom: 200px;
 }
 
 .orders-page .analytics{
@@ -50,3 +56,46 @@
     font-size: 40px;
     font-weight: bold;
 }
+
+.orders-page label{
+    color: white;
+  }
+  
+  .orders-page input{
+    color: white;
+    background: rgba(0, 0, 0, 0.200);
+    border: none;
+  }
+  
+  .orders-page input::placeholder{
+    color: rgba(255, 255, 255, 0.801);
+    border: none;
+  }
+  
+  .orders-page input:focus{
+    color: white;
+    background: rgba(0, 0, 0, 0.200);
+    border: none;
+  }
+  
+  .orders-page select{
+    color: white;
+    background: rgba(0, 0, 0, 0.200);
+    border: none;
+  }
+  
+  .orders-page select:focus{
+    color: white;
+    background: rgba(0, 0, 0, 0.200);
+    border: none;
+  }
+
+  .orders-page .user-info {
+    background: rgba(0, 0, 0, 0.514);
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .orders-page .user-info span{
+    margin-right: 40px;
+  }

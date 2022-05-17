@@ -1,6 +1,14 @@
 
 .dashboard-page{
     padding: 30px 100px;
+    background: #222;
+    color: white;
+    background: url("../assets/bg1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    padding-bottom: 200px;
 }
 
 .dashboard-page .container{
@@ -16,11 +24,12 @@
 }
 
 .dashboard-page .analytics .box{
-    background: rgb(236, 236, 236);
+    background: rgba(92, 92, 92, 0.137);
     border-radius: 20px;
     margin: 10px 10px;
     height: auto;
     padding: 20px 40px;
+    box-shadow: 8px 9px 15px -3px #181818;
 }
 
 .dashboard-page .reports .box{
@@ -31,10 +40,12 @@
     height: auto;
     padding: 20px;
     cursor: pointer;
+    box-shadow: 8px 9px 15px -3px #0c0c0c;
 }
 
 .dashboard-page .box h2{
     font-size: 20px;
+    color: rgb(231, 231, 231);
 }
 
 .dashboard-page .reports .box span{
@@ -42,6 +53,7 @@
 }
 
 .dashboard-page .analytics .box span{
+    color: rgb(255, 255, 255);
     font-size: 40px;
     font-weight: bold;
 }
@@ -60,9 +72,9 @@
     text-align: left;
 }
 
-.dashboard-page .reports .report-box span{
+/* .dashboard-page .reports .report-box span{
     background: rgba(0, 0, 0, 0.301);
-}
+} */
 
 
 /* .dashboard-page .reports .report-box:hover{

@@ -35,7 +35,6 @@ const getDashboardData = (req, res) => {
         categories: categories,
         orders: orders,
     }
-    console.log(obj)
     return res.send(obj);
 };
 

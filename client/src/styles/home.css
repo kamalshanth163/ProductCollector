@@ -2,11 +2,61 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
 }
 
+.home-page{
+    padding: 30px 100px;
+    background: url("../assets/bg6.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    color: white;
+    padding-bottom: 100px;
+  }
+
 .navbar {
-    padding: 0px 80px;
-    background: #222;
+    padding: 0px 10px;
+    background: rgba(0, 0, 0, 0);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    color: white;
+    margin: 0 auto;
+}
+
+.navbar-1{
+    background: url("../assets/bg1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navbar-2{
+    background: url("../assets/bg2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navbar-3{
+    background: url("../assets/bg3.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navbar-4{
+    background: url("../assets/bg4.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: white;
 }
 
@@ -21,20 +71,155 @@
 }
 
 .navLink-active:hover{
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 .navLink-active{
-    color: rgb(0, 0, 0);
-    background: white;
-    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
     border: none;
+    border: 2px solid white;
     padding: 8px 14px;
     margin: 20px;
     text-decoration: none;
     font-weight: bold;
 }
 
+/* .navLink-active-1{
+    background: url("../assets/bg1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navLink-active-2{
+    background: url("../assets/bg2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navLink-active-3{
+    background: url("../assets/bg3.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.navLink-active-4{
+    background: url("../assets/bg4.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+} */
+
 .main-links{
     margin-left: 20px;
+}
+
+.home-page .welcome {
+    padding: 40px 100px;
+}
+
+.home-page .users {
+    padding: 10px 100px;
+}
+
+.home-page .welcome .title-1{
+    font-size: 80px;
+    /* text-shadow: 2px 5px 3px rgba(0,0,0,0.28); */
+    width: 700px;
+    font-weight: bold;
+}
+
+.home-page .welcome .title-2{
+    color: rgba(255, 255, 255, 0.959);
+    font-size: 40px;
+}
+
+.home-page .welcome .para{
+    margin-top: 20px;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.911);
+}
+
+.home-page button {
+    background: none;
+    border-radius: 10px;
+    border: 2px solid white;
+    color: white;
+}
+
+.home-page button:hover {
+    background: white;
+    font-weight: bold;
+    color: rgb(12, 12, 12);
+}
+
+input:read-only {
+    background: rgba(0, 0, 0, 0.603) !important; 
+}
+
+button {
+    border-radius: 10px !important;
+}
+
+
+.btn-primary, .btn-dark, .btn-success {
+    background: rgb(16, 35, 59) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.btn-light {
+    background: rgba(39, 39, 39, 0) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.btn-secondary {
+    background: rgba(39, 39, 39, 0) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.btn-danger {
+    background: rgb(46, 46, 46) !important;
+    border: none !important;
+    color: rgb(255, 255, 255) !important;
+    font-weight: bold !important;
+}
+
+.home-page .btn-1{
+    background: none;
+    border-radius: 10px;
+    border: 2px solid white !important;
+    color: white;
+}
+
+.home-page .btn-1:hover {
+    background: white;
+    font-weight: bold;
+    color: rgb(12, 12, 12);
+}
+.btn {
+    border: none !important;
+    border-radius: 10px !important;
+    outline: 0 !important;
+}
+
+.caption{
+    font-size: 10px;
+}
+
+.caption-2{
+    font-size: 14px;
+    margin-left: 6px
 }
