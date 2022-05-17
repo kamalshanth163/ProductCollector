@@ -124,6 +124,20 @@ function Orders() {
     })
   }
 
+  const cancelOrder = (e, order) => {
+    new API().deleteOrder(order.id).then(data => {     
+      if (window.confirm("Are you sure you want to cancel this order?")) {
+        new API().getAllOrders().then((data) => {
+          if(userType == "collector"){
+            var collectorOrders = data.filter(x => x.collector_id == userId).reverse();
+            setOrders([...collectorOrders]);
+            setDisplayOrders([...collectorOrders]);
+          }
+        })
+      }
+    })
+  }
+
   return (
     <div>
       <div className="orders-page row">
@@ -219,6 +233,11 @@ function Orders() {
                           {userType == "collector" ? 
                             <td>
                               <button type="submit" className={`btn ${order.status == "pending" ? "btn-success" : "btn-primary"}`} onClick={(e) => updateOrderStatus(e, order)}>Set as {order.status == "pending" ? "Completed" : "Pending"}</button>
+                              { 
+                                order.status == "pending" ?
+                                <button type="submit" className={`btn btn-danger mx-2`} onClick={(e) => cancelOrder(e, order)}>X</button>
+                                : ""
+                              }
                             </td>
                             : ""
                           }

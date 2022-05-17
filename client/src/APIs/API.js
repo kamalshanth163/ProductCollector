@@ -248,6 +248,19 @@ class API {
         return result;
     }
 
+    async deleteOrder(orderId){
+        var result =
+            fetch(`${baseUrl}orders/${orderId}`, {
+                method: 'DELETE',
+            })
+            .then((response) => response.json())
+            .then((a) => {
+                return a;
+            });
+        return result;
+    }
+
+
     async updateOrder(order){
         var result =
             fetch(`${baseUrl}orders`,
