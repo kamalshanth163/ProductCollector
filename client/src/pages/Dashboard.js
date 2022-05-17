@@ -198,7 +198,7 @@ function Dashboard() {
             { data.map((i) => {
               if(i.isReport){
                 return (
-                  <div className="col box report-box" onClick={() => generateReport(i.title, i.data)}>
+                  <div className="col-3 box report-box" onClick={() => generateReport(i.title, i.data)}>
                     <span>Generate {i.title} Report</span>
                   </div>
                 )
