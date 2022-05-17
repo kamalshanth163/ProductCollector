@@ -20,7 +20,7 @@ const Home = () => {
             <div className='col'>
               <h3 className="title-2">Welcome to</h3>
               <h1 className="title-1">Post-Consumer Product Collector</h1>
-              <p className='para'>This easy to maintain data driven web application is a Product selling platform which allows Product Collectors to search, filter and view products that are created and managed by the Product Holders. Unlike any other product selling systems Post-Consumer Product Collector application helps the Collector and the Holder to buy and sell unwanted products for a small price which is based the metrics such as Product Weight and Usage. Easy to use features with various Report Generating Capabilities makes this stand out from the rest.</p>
+              <p className='para'>This easy to maintain data driven web application is a Product selling platform which allows Product Collectors to search, filter and view products that are created and managed by the Product Holders. Unlike any other product selling systems Post-Consumer Product Collector application helps the Collector and the Holder to buy and sell unwanted products for a small price which is based on the metrics such as Product Weight and Usage. Easy to use features with various Report Generating Capabilities makes this stand out from the rest.</p>
             </div>
           </div><hr />
           <div className='row users'>
